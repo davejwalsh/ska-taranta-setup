@@ -19,24 +19,148 @@ Add it as a dev dependency, run one command, and you get:
 The dashboards are a starting point: import them, then move and delete things
 in Taranta's editor as usual.
 
-## Quick start
+## Step by step
+
+These steps work for any SKA Tango project that deploys with Helm (via
+`make k8s-install-chart`, with or without helmfile). `<project>` is your
+repository; `<namespace>` is the Kubernetes namespace it deploys to
+(`KUBE_NAMESPACE`, usually the project name).
+
+### 0. Prerequisites
+
+* minikube, kubectl and helm (and helmfile, if your project uses it);
+* the project's own Python environment, with uv or poetry. `ska-taranta`
+  runs inside it so it can import your device classes; pytango comes with
+  your project;
+* a Taranta account, or the shared dev account (see
+  [Which account do dashboards go to?](#which-account-do-dashboards-go-to)).
+
+### 1. Make a branch
 
 ```bash
-uv add --dev ska-taranta-setup         # or: poetry add --group dev ska-taranta-setup
-uv run ska-taranta setup               # init + discover + generate
-uv run ska-taranta preview             # optional: wireframes in dashboards/preview.html
+cd <project> && git switch -c <ticket>-taranta && git submodule update --init
 ```
 
-Then deploy as you normally do, and load the dashboards:
+The submodule step matters if your helmfile templates live in a submodule
+(e.g. `helmfile.d/.deploy`): device discovery renders them.
+
+### 2. Add ska-taranta-setup as a dev dependency
+
+Once the package is published to the SKAO package index:
 
 ```bash
-make k8s-install-chart                 # creates the auth secret first (pre-install hook)
-make taranta-minikube-setup            # ingress + tunnel + port-forward
-make taranta-upload                    # or import dashboards/*.wj in the Taranta UI
+uv add --dev ska-taranta-setup
 ```
 
-Taranta is then at `http://localhost:8080/<namespace>/taranta/`
-(`make taranta-url`). `upload` prints a direct link to each dashboard.
+or with poetry: `poetry add --group dev ska-taranta-setup`. Until then, or to
+try a local checkout, clone this repository next to your project and run:
+
+```bash
+uv add --dev --editable ../ska-taranta-setup
+```
+
+That writes a local path into `pyproject.toml`, which CI can't resolve, so
+don't merge it.
+
+### 3. Set up Taranta and generate the dashboards
+
+```bash
+uv run ska-taranta setup
+```
+
+This runs three steps (each is also its own command):
+
+1. **`init`** adds the Taranta, taranta-auth and TangoGQL subcharts and their
+   values to your umbrella chart, writes `taranta.mk` and includes it from the
+   `Makefile`, and records its settings under `[tool.ska-taranta-setup]` in
+   `pyproject.toml`. It only adds things, never overwrites, and is safe to
+   re-run. Use `--dry-run` to see what it would do.
+2. **`discover`** finds the devices you deploy (from your helm/helmfile
+   values), starts each device class locally with no Tango database to read
+   its full interface, and saves it all to `taranta/devices.json`. Nothing is
+   contacted: hosts are pointed at `127.0.0.1`.
+3. **`generate`** writes the linked dashboards to `dashboards/`.
+
+Check what it did with `git diff`. If a device class failed to start, see
+[Troubleshooting](#troubleshooting).
+
+### 4. Choose your Taranta account
+
+Add this to the `[tool.ska-taranta-setup]` table that `init` created:
+
+```toml
+taranta_user = "<your Taranta user>"
+```
+
+The password is never stored: `upload` prompts for it, or reads
+`$TARANTA_PASSWORD`. Without this setting, dashboards go to the shared dev
+account `user1`.
+
+### 5. Optionally, tune the generation, then preview
+
+Subsystems are worked out automatically. You can also define them, turn off
+the per-device pages (`generate --no-device-pages`), override widgets, and so
+on: see [Generation options](#generation-options). To check a layout without
+deploying, write wireframes of every page to `dashboards/preview.html`:
+
+```bash
+uv run ska-taranta preview
+```
+
+### 6. Deploy
+
+Use your project's usual install target. The Taranta auth secret is created
+automatically first, as a `k8s-pre-install-chart` hook:
+
+```bash
+minikube start
+```
+```bash
+make k8s-install-chart
+```
+```bash
+kubectl get pods -n <namespace> -w
+```
+
+Wait until every pod is `Running` or `Completed`, then press Ctrl-C.
+
+### 7. Expose Taranta on localhost
+
+This enables the minikube ingress and starts a tunnel and a port-forward. It
+may ask for sudo for the tunnel.
+
+```bash
+make taranta-minikube-setup
+```
+
+### 8. Upload the dashboards and open them
+
+```bash
+make taranta-upload
+```
+
+It logs in, creates or updates every dashboard (matched by name, so links
+between pages keep working), and prints a link to each. Open the
+**Overview** link (or `make taranta-url`) and log in as the same account.
+From there, *Open <subsystem>* and *Details* go down the hierarchy and
+*Overview* / *<subsystem>* come back up.
+
+You can import `dashboards/*.wj` through the Taranta UI instead, but don't
+re-import a name that already exists: see
+[Troubleshooting](#troubleshooting).
+
+### Day to day
+
+| When | Run |
+| --- | --- |
+| Devices or their attributes changed | `make taranta-dashboards`, then `make taranta-upload` |
+| Only `[tool.ska-taranta-setup]` settings changed | `uv run ska-taranta generate`, then `make taranta-upload` |
+| Against a running system rather than local servers | `make taranta-dashboards-live` (uses `TANGO_HOST`) |
+| Finished for the day | `make taranta-minikube-teardown`, then `make k8s-uninstall-chart` |
+
+Commit `taranta/devices.json` and `dashboards/*.wj` alongside code changes
+that affect them, so the dashboards are reviewed with the code. Generation
+is deterministic, so the diffs show only real changes.
 
 ### Which account do dashboards go to?
 
@@ -47,21 +171,34 @@ library of whichever account you upload as, and survive tearing minikube down.
 
 * By default that's the shared dev account `user1` (password `abc123`), which
   anyone can log in as. Don't upload anything you wouldn't want shared.
-* To use your own account, set it once in `pyproject.toml`; the password is
-  asked for, or read from `$TARANTA_PASSWORD`, and never stored:
-
-  ```toml
-  [tool.ska-taranta-setup]
-  taranta_user = "WOMBAT"
-  ```
-
-  or one-off: `ska-taranta upload --user WOMBAT`.
+* To use your own account, set `taranta_user` (step 4), or one-off:
+  `ska-taranta upload --user <user>`.
 * If your account signs in with Microsoft SSO (no password), log in to Taranta
   in a browser, copy the `taranta_jwt` cookie, and use
   `TARANTA_JWT=<cookie> ska-taranta upload` (or `--token`).
 
-When your devices change, run `make taranta-dashboards` and commit the
-updated `.wj` files.
+### Troubleshooting
+
+* **No devices found.** `discover` renders your helmfile environment
+  (`helmfile_environment`, default `minikube-ci`). Set the right one, or list
+  devices explicitly with `devices = { MyDevice = ["my/device/1"] }`.
+* **A device class didn't start** (`discover` reports it). It probably needs a
+  mandatory property that the deployment doesn't provide offline. Add it under
+  `[tool.ska-taranta-setup.properties.<Class>]`, raise `startup_timeout`, or
+  use `discover --live` against a deployment.
+* **Simulator or helper devices on the dashboards.** Add them to
+  `exclude_classes` / `exclude_devices` (`.*Simulator$` is excluded by default).
+* **A link button does nothing, or opens an old version.** Links find their
+  target dashboard by name in *your* library. Upload all the pages together,
+  with the account you view them with. Importing an existing name in the UI
+  creates `<name> copy 1`; delete stale copies in Taranta's dashboard library,
+  then run `make taranta-upload` again.
+* **Everything looks half or double size.** The layout is sized for a grid of
+  `tile_size` pixels (10, as in the SKA Taranta image). Check
+  `MIN_WIDGET_SIZE` in `http://localhost:8080/<namespace>/config.js` and set
+  `tile_size` to match.
+* **Blank space under the mode dropdowns.** That's deliberate: Taranta clips
+  a dropdown's menu to the widget, so each one reserves room to open its menu.
 
 ## Commands
 
@@ -71,7 +208,7 @@ updated `.wj` files.
 | `ska-taranta discover` | Finds your devices and records their full interfaces in `taranta/devices.json`. `--live` queries running devices instead. |
 | `ska-taranta generate` | Writes the linked dashboards: `<project>-overview.wj`, one `<project>-subsystem-<name>.wj` per subsystem and one `.wj` per device. `--no-device-pages` skips the per-device pages; `-d REGEX` limits it to some devices; `--columns N` sets the layout width. |
 | `ska-taranta preview` | Draws wireframes of the dashboards into an HTML page, so you can check a layout without deploying. |
-| `ska-taranta upload` | Logs in to a running Taranta and creates or updates the dashboards (matched by name), printing a link to each. `--user`, `--token`: see below. |
+| `ska-taranta upload` | Logs in to a running Taranta and creates or updates the dashboards (matched by name), printing a link to each. `--user`, `--token`: see [Which account](#which-account-do-dashboards-go-to). |
 | `ska-taranta setup` | `init`, `discover` and `generate` in one go. |
 
 `-C PATH` runs any command against another project; `-v` shows detail.
