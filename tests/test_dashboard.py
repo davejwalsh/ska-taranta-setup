@@ -25,7 +25,7 @@ def test_generated_files(tmp_path, sat_lmc_snapshot):
     """Files are importable-shaped, ids unique, and nothing overlaps."""
     devices = [d for d in sat_lmc_snapshot.devices if d.interface]
     files = write_dashboards("SAT", devices, sat_lmc_snapshot, tmp_path, "taranta")
-    assert len(files) == len(devices) + 1
+    assert len(files) == len(devices) + 2  # overview + UTC subsystem
     assert files[0].name == "sat-overview.wj"
 
     for path in files:
@@ -88,3 +88,15 @@ def test_preview(tmp_path, sat_lmc_snapshot):
     files = write_dashboards("S", devices, sat_lmc_snapshot, tmp_path, "t")
     html = write_preview(files, tmp_path / "preview.html").read_text()
     assert html.count("<svg") == len(files)
+
+
+def test_css_is_one_declaration_per_line(tmp_path, sat_lmc_snapshot):
+    """Taranta ignores one-line ``a:1;b:2;`` CSS, so never emit it."""
+    devices = [d for d in sat_lmc_snapshot.devices if d.interface]
+    for path in write_dashboards("S", devices, sat_lmc_snapshot, tmp_path, "t"):
+        for widget in _all(json.loads(path.read_text())["widget"]):
+            for key, value in widget["inputs"].items():
+                if key.lower().endswith("css") and value:
+                    for line in value.split("\n"):
+                        assert line.count(":") == 1, (widget["type"], key, value)
+                        assert ";" not in line, (widget["type"], key, value)

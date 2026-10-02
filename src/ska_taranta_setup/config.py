@@ -15,6 +15,8 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any
 
+from ska_taranta_setup.options import GenerateOptions, SubsystemSpec, build
+
 TOOL_KEY = "ska-taranta-setup"
 
 
@@ -28,6 +30,9 @@ class Config:
     title: str = ""
     #: Number of columns sections are packed into.
     columns: int = 4
+    #: Taranta's grid size in pixels (``MIN_WIDGET_SIZE`` in its config.js).
+    #: The SKA Taranta image uses 10; upstream Taranta defaults to 20.
+    tile_size: int = 10
     #: Helm umbrella chart that gets the Taranta subcharts added.
     chart: str = ""
     #: Where generated dashboards (.wj) are written.
@@ -53,6 +58,9 @@ class Config:
     #: Name of the Tango DB as Taranta sees it (the URL path segment before
     #: ``/taranta``, e.g. ``/ska-sat-lmc/taranta/`` -> ``taranta``).
     tango_db: str = "taranta"
+    #: Taranta account ``upload`` logs in as. The password is never stored:
+    #: it comes from ``$TARANTA_PASSWORD`` or a prompt.
+    taranta_user: str = "user1"
     #: Taranta-facing Tango host, used by ``discover --live``.
     tango_host: str = ""
     #: Seconds to wait for each device server to start when introspecting.
@@ -61,6 +69,13 @@ class Config:
     taranta_version: str = "2.18.9"
     taranta_auth_version: str = "0.3.1"
     tangogql_version: str = "1.0.13"
+    #: ``[tool.ska-taranta-setup.generate]``: what goes on the dashboards.
+    generate: GenerateOptions = field(default_factory=GenerateOptions)
+    #: ``[tool.ska-taranta-setup.layout]``: sizes, passed to ``LayoutOptions``.
+    layout: dict[str, Any] = field(default_factory=dict)
+    #: ``[[tool.ska-taranta-setup.subsystems]]``: hand-defined subsystem pages
+    #: (None: work them out from the devices).
+    subsystems: list[SubsystemSpec] | None = None
 
     @property
     def snapshot_path(self) -> Path:
@@ -120,9 +135,26 @@ def load_config(root: Path | str = ".") -> Config:
     for class_name, props in raw.pop("properties", {}).items():
         properties.setdefault(class_name, {}).update(props)
 
+    where = f"tool.{TOOL_KEY}"
+    generate = build(GenerateOptions, raw.pop("generate", {}), f"{where}.generate")
+    layout = dict(raw.pop("layout", {}))
+    specs = raw.pop("subsystems", None)
+    subsystems = (
+        [build(SubsystemSpec, s, f"[{where}.subsystems]") for s in specs]
+        if specs is not None
+        else None
+    )
+
     known = {k.replace("-", "_"): v for k, v in raw.items()}
     known = {k: v for k, v in known.items() if k in Config.__dataclass_fields__}
-    config = Config(root=root, project_name=project_name, properties=properties)
+    config = Config(
+        root=root,
+        project_name=project_name,
+        properties=properties,
+        generate=generate,
+        layout=layout,
+        subsystems=subsystems,
+    )
     for key, value in known.items():
         setattr(config, key, value)
     if not config.chart:

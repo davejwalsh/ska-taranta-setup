@@ -2,7 +2,14 @@
 
 import json
 
-from ska_taranta_setup.upload import TarantaClient, api_base, upload_files
+import pytest
+
+from ska_taranta_setup.upload import (
+    TarantaClient,
+    UploadError,
+    api_base,
+    upload_files,
+)
 
 
 class FakeResponse:
@@ -25,6 +32,8 @@ class FakeSession:
         self.cookies = {}
 
     def get(self, url, params=None, timeout=None):
+        if url.endswith("/auth/user"):
+            return FakeResponse(200, {"username": "user1", "groups": []})
         assert url.endswith("/dashboards/user/dashboards")
         return FakeResponse(200, [{"id": "abc", "name": "Old"}])
 
@@ -47,9 +56,30 @@ def test_upload_creates_and_updates(tmp_path):
         )
     session = FakeSession()
     client = TarantaClient(base="http://h/ns", session=session, tango_db="taranta")
-    lines = upload_files(client, sorted(tmp_path.glob("*.wj")))
-    assert lines == ["created: New (New.wj)", "updated: Old (Old.wj)"]
+    assert client.whoami() == "user1"
+    results = upload_files(client, sorted(tmp_path.glob("*.wj")))
+    assert [(r.name, r.created) for r in results] == [("New", True), ("Old", False)]
+    assert results[1].url == "http://h/ns/taranta/dashboard?id=abc&mode=run"
     bodies = {body["name"]: body for _, body in session.posts}
     assert bodies["Old"]["id"] == "abc"
     assert bodies["New"]["widgets"] == [{"id": "1"}]
     assert bodies["New"]["tangoDB"] == "taranta"
+
+
+def test_html_response_is_an_error():
+    """A proxy or the UI answering instead of the API must not pass silently."""
+
+    class HtmlSession(FakeSession):
+        def post(self, url, json=None, timeout=None):
+            response = FakeResponse(200, None)
+            response.text = "<!doctype html>"
+
+            def bad_json():
+                raise ValueError("not json")
+
+            response.json = bad_json
+            return response
+
+    client = TarantaClient(base="http://h/ns", session=HtmlSession())
+    with pytest.raises(UploadError, match="unexpected response"):
+        client.save({"name": "X", "widget": []})

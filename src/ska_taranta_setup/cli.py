@@ -13,6 +13,7 @@ import click
 from ska_taranta_setup.config import Config, load_config
 from ska_taranta_setup.dashboard import LayoutOptions, write_dashboards
 from ska_taranta_setup.model import DeviceInstance, Snapshot
+from ska_taranta_setup.options import OptionsError, build
 
 
 def _config(ctx: click.Context) -> Config:
@@ -41,7 +42,10 @@ def main(ctx: click.Context, project: Path, verbose: bool) -> None:
         level=logging.INFO if verbose else logging.WARNING,
         format="%(levelname)s %(message)s",
     )
-    ctx.obj = {"config": load_config(project)}
+    try:
+        ctx.obj = {"config": load_config(project)}
+    except OptionsError as exc:
+        raise click.ClickException(f"pyproject.toml: {exc}") from exc
 
 
 # --------------------------------------------------------------------------
@@ -194,7 +198,12 @@ def _generate(
         raise click.ClickException(
             "No introspected devices to generate dashboards for."
         )
-    opts = LayoutOptions(columns=columns or config.columns)
+    try:
+        opts = build(LayoutOptions, config.layout, "tool.ska-taranta-setup.layout")
+    except (OptionsError, TypeError) as exc:
+        raise click.ClickException(str(exc)) from exc
+    opts.tile_size = config.layout.get("tile_size", config.tile_size)
+    opts.columns = columns or config.layout.get("columns", config.columns)
     return write_dashboards(
         config.title,
         selected,
@@ -202,6 +211,8 @@ def _generate(
         out or config.dashboards_path,
         config.tango_db,
         opts,
+        config.generate,
+        config.subsystems,
     )
 
 
@@ -221,6 +232,12 @@ def _generate(
     help="Only these devices (regex on TRL, or exact class name). Repeatable.",
 )
 @click.option("--columns", type=int, help="Columns to pack sections into.")
+@click.option(
+    "--device-pages/--no-device-pages",
+    default=None,
+    help="Also write a detailed page per device (default: on, or "
+    "`generate.device_dashboards` in pyproject.toml).",
+)
 @click.pass_context
 def generate(
     ctx: click.Context,
@@ -228,9 +245,18 @@ def generate(
     output_dir: Path | None,
     devices: tuple[str, ...],
     columns: int | None,
+    device_pages: bool | None,
 ) -> None:
-    """Write Taranta dashboards (.wj) from the discovered devices."""
+    """
+    Write Taranta dashboards (.wj) from the discovered devices.
+
+    Always an overview, plus a page per subsystem (worked out from device
+    references, or `[[subsystems]]` in pyproject.toml), plus, unless
+    --no-device-pages, a detailed page per device. Pages link to each other.
+    """
     config = _config(ctx)
+    if device_pages is not None:
+        config.generate.device_dashboards = device_pages
     path = snapshot_path or config.snapshot_path
     if not path.is_file():
         raise click.ClickException(
@@ -292,7 +318,9 @@ def preview(ctx: click.Context, files: tuple[Path, ...], output: Path | None) ->
     paths = list(files) or sorted(config.dashboards_path.glob("*.wj"))
     if not paths:
         raise click.ClickException("No dashboards; run `ska-taranta generate` first.")
-    out = write_preview(paths, output or config.dashboards_path / "preview.html")
+    out = write_preview(
+        paths, output or config.dashboards_path / "preview.html", config.tile_size
+    )
     click.echo(f"Wrote {_rel(config, out)}")
 
 
@@ -311,10 +339,21 @@ def preview(ctx: click.Context, files: tuple[Path, ...], output: Path | None) ->
     help="Taranta URL, e.g. http://localhost:8080/<namespace>/taranta/ ($TARANTA_URL).",
 )
 @click.option(
-    "--user", envvar="TARANTA_USER", default=None, help="Taranta user ($TARANTA_USER)."
+    "--user",
+    envvar="TARANTA_USER",
+    default=None,
+    help="Taranta user ($TARANTA_USER; default: `taranta_user` in pyproject.toml, "
+    "else user1).",
 )
 @click.option(
     "--password", envvar="TARANTA_PASSWORD", default=None, help="($TARANTA_PASSWORD)."
+)
+@click.option(
+    "--token",
+    envvar="TARANTA_JWT",
+    default=None,
+    help="Upload as yourself: the `taranta_jwt` cookie from a logged-in browser "
+    "($TARANTA_JWT). Overrides --user/--password.",
 )
 @click.pass_context
 def upload(
@@ -323,8 +362,16 @@ def upload(
     url: str,
     user: str | None,
     password: str | None,
+    token: str | None,
 ) -> None:
-    """Upload dashboards to a running Taranta (all generated ones by default)."""
+    """
+    Upload dashboards to a running Taranta (all generated ones by default).
+
+    Dashboards go to the library of the account you upload as, matched by
+    name, so re-uploading updates them. That's `taranta_user` from
+    pyproject.toml (default: the shared dev account user1), --user, or
+    whoever --token belongs to.
+    """
     from ska_taranta_setup.upload import (
         DEFAULT_PASSWORD,
         DEFAULT_USER,
@@ -343,14 +390,33 @@ def upload(
             "No dashboards to upload; run `ska-taranta generate`."
         )
     try:
-        client = TarantaClient.login(
-            url, user or DEFAULT_USER, password or DEFAULT_PASSWORD, config.tango_db
+        if token:
+            client = TarantaClient.from_token(url, token, config.tango_db)
+        else:
+            user = user or config.taranta_user or DEFAULT_USER
+            if password is None:
+                password = (
+                    DEFAULT_PASSWORD
+                    if user == DEFAULT_USER
+                    else click.prompt(f"Taranta password for {user}", hide_input=True)
+                )
+            client = TarantaClient.login(url, user, password, config.tango_db)
+        username = client.whoami()
+        click.echo(
+            f"Uploading {len(paths)} dashboard(s) as {username} via {client.base}"
         )
-        for line in upload_files(client, paths):
-            click.echo(f"  {line}")
+        results = upload_files(client, paths)
     except (UploadError, OSError) as exc:
         raise click.ClickException(str(exc)) from exc
-    click.echo(f"Open {url}")
+    for result in results:
+        action = "created" if result.created else "updated"
+        click.echo(f"  {action}: {result.name}")
+        click.echo(f"           {result.url}")
+    click.echo(
+        f"\nThey're in {username}'s dashboard library: log in to Taranta as "
+        f"{username} to see them"
+        + (" (or pass --token to upload as yourself)." if not token else ".")
+    )
 
 
 if __name__ == "__main__":

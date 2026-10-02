@@ -10,8 +10,8 @@
   "widget": [
     {
       "type": "LABEL",
-      "width": 75,
-      "height": 2.0,
+      "width": 148.0,
+      "height": 4.1,
       "inputs": {
         "text": "ska-sat-lmc — low-sat/endnode/ci-1  (SatWhiteRabbit)",
         "textColor": "#1a1a1a",
@@ -22,22 +22,62 @@
         "automaticResize": "Disabled",
         "size": 1.4,
         "linkTo": "",
-        "customCss": ""
+        "customCss": "padding: 0 12px\nbox-sizing: border-box"
       },
-      "x": 1,
-      "y": 0.5,
+      "x": 3.0,
+      "y": 1.5,
       "id": "1",
       "canvas": "0",
       "order": 0,
       "valid": 1
     },
     {
+      "type": "DASHLINK",
+      "width": 17.0,
+      "height": 4.1,
+      "inputs": {
+        "DefaultDashboard": "ska-sat-lmc - Overview",
+        "HideDropdown": true,
+        "NewTab": false,
+        "ButtonText": "Overview",
+        "DropDownCss": "",
+        "ButtonCss": "width: 100%\nfont-weight: bold",
+        "CustomCss": "padding: 0 4px\nbox-sizing: border-box"
+      },
+      "x": 152.5,
+      "y": 1.5,
+      "id": "2",
+      "canvas": "0",
+      "order": 1,
+      "valid": 1
+    },
+    {
+      "type": "DASHLINK",
+      "width": 17.0,
+      "height": 4.1,
+      "inputs": {
+        "DefaultDashboard": "ska-sat-lmc - UTC",
+        "HideDropdown": true,
+        "NewTab": false,
+        "ButtonText": "UTC",
+        "DropDownCss": "",
+        "ButtonCss": "width: 100%\nfont-weight: bold",
+        "CustomCss": "padding: 0 4px\nbox-sizing: border-box"
+      },
+      "x": 171.0,
+      "y": 1.5,
+      "id": "3",
+      "canvas": "0",
+      "order": 2,
+      "valid": 1
+    },
+    {
       "type": "BOX",
-      "width": 18,
-      "height": 22.6,
+      "width": 44.0,
+      "height": 53.8,
       "inputs": {
         "title": "Device",
-        "bigWidget": 6,
+        "bigWidget": 5,
         "smallWidget": 1,
         "textColor": "#1a1a1a",
         "backgroundColor": "#ffffff",
@@ -48,14 +88,14 @@
         "fontFamily": "Helvetica",
         "layout": "vertical",
         "alignment": "Left",
-        "padding": 0,
-        "customCss": "font-weight:bold;"
+        "padding": 0.25,
+        "customCss": "font-weight: bold"
       },
       "innerWidgets": [
         {
           "type": "DEVICE_STATUS",
-          "width": 17.9,
-          "height": 1.5,
+          "width": 43.8,
+          "height": 3.8,
           "inputs": {
             "device": "taranta://low-sat/endnode/ci-1",
             "state": {
@@ -72,19 +112,19 @@
             "backgroundColor": "#ffffff",
             "textSize": 1,
             "linkTo": "",
-            "widgetCss": ""
+            "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 1.05,
-          "y": 3.55,
-          "id": "3",
+          "x": 3.1,
+          "y": 8.7,
+          "id": "5",
           "canvas": "0",
           "order": 0,
           "valid": 1
         },
         {
           "type": "LED_DISPLAY",
-          "width": 17.9,
-          "height": 1.5,
+          "width": 43.8,
+          "height": 3.8,
           "inputs": {
             "attribute": {
               "device": "taranta://low-sat/endnode/ci-1",
@@ -103,19 +143,19 @@
             "showAttribute": "Label",
             "alignTextCenter": false,
             "alignValueRight": true,
-            "customCss": ""
+            "customCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 1.05,
-          "y": 5.05,
-          "id": "4",
+          "x": 3.1,
+          "y": 12.5,
+          "id": "6",
           "canvas": "0",
           "order": 1,
           "valid": 1
         },
         {
           "type": "ATTRIBUTE_DISPLAY",
-          "width": 17.9,
-          "height": 1.5,
+          "width": 43.8,
+          "height": 3.8,
           "inputs": {
             "attribute": {
               "device": "taranta://low-sat/endnode/ci-1",
@@ -138,19 +178,19 @@
             "backgroundColor": "#ffffff",
             "size": 1,
             "font": "Helvetica",
-            "widgetCss": "background:#f7f8fa;border:1px solid #dde1e6;border-radius:4px;padding:2px 6px;"
+            "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 1.05,
-          "y": 6.55,
-          "id": "5",
+          "x": 3.1,
+          "y": 16.3,
+          "id": "7",
           "canvas": "0",
           "order": 2,
           "valid": 1
         },
         {
           "type": "ATTRIBUTE WRITER DROPDOWN",
-          "width": 17.9,
-          "height": 1.5,
+          "width": 43.8,
+          "height": 3.8,
           "inputs": {
             "attribute": {
               "device": "taranta://low-sat/endnode/ci-1",
@@ -183,19 +223,19 @@
             "font": "Helvetica",
             "dropdownButtonCss": "",
             "submitButtonCss": "",
-            "customCss": ""
+            "customCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 1.05,
-          "y": 8.05,
-          "id": "6",
+          "x": 3.1,
+          "y": 20.1,
+          "id": "8",
           "canvas": "0",
           "order": 3,
           "valid": 1
         },
         {
           "type": "ATTRIBUTE WRITER DROPDOWN",
-          "width": 17.9,
-          "height": 1.5,
+          "width": 43.8,
+          "height": 3.8,
           "inputs": {
             "attribute": {
               "device": "taranta://low-sat/endnode/ci-1",
@@ -232,19 +272,19 @@
             "font": "Helvetica",
             "dropdownButtonCss": "",
             "submitButtonCss": "",
-            "customCss": ""
+            "customCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 1.05,
-          "y": 9.55,
-          "id": "7",
+          "x": 3.1,
+          "y": 23.9,
+          "id": "9",
           "canvas": "0",
           "order": 4,
           "valid": 1
         },
         {
           "type": "ATTRIBUTE_LOGGER",
-          "width": 17.9,
-          "height": 9.0,
+          "width": 43.8,
+          "height": 19.0,
           "inputs": {
             "attribute": {
               "device": "taranta://low-sat/endnode/ci-1",
@@ -257,21 +297,21 @@
             "showTangoDB": false,
             "showAttribute": "Label",
             "showTime": true,
-            "OuterDivCSS": "background:#f7f8fa;border:1px solid #dde1e6;border-radius:4px;padding:2px 6px;",
+            "OuterDivCSS": "padding: 0 10px\nbox-sizing: border-box",
             "LastValueCSS": "",
-            "TableCSS": "font-size:11px;"
+            "TableCSS": "font-size: 11px"
           },
-          "x": 1.05,
-          "y": 11.05,
-          "id": "8",
+          "x": 3.1,
+          "y": 27.7,
+          "id": "10",
           "canvas": "0",
           "order": 5,
           "valid": 1
         },
         {
           "type": "ATTRIBUTE_DISPLAY",
-          "width": 17.9,
-          "height": 1.5,
+          "width": 43.8,
+          "height": 3.8,
           "inputs": {
             "attribute": {
               "device": "taranta://low-sat/endnode/ci-1",
@@ -294,19 +334,19 @@
             "backgroundColor": "#ffffff",
             "size": 1,
             "font": "Helvetica",
-            "widgetCss": "background:#f7f8fa;border:1px solid #dde1e6;border-radius:4px;padding:2px 6px;"
+            "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 1.05,
-          "y": 20.05,
-          "id": "9",
+          "x": 3.1,
+          "y": 46.7,
+          "id": "11",
           "canvas": "0",
           "order": 6,
           "valid": 1
         },
         {
           "type": "ATTRIBUTE_DISPLAY",
-          "width": 17.9,
-          "height": 1.5,
+          "width": 43.8,
+          "height": 3.8,
           "inputs": {
             "attribute": {
               "device": "taranta://low-sat/endnode/ci-1",
@@ -329,19 +369,19 @@
             "backgroundColor": "#ffffff",
             "size": 1,
             "font": "Helvetica",
-            "widgetCss": "background:#f7f8fa;border:1px solid #dde1e6;border-radius:4px;padding:2px 6px;"
+            "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 1.05,
-          "y": 21.55,
-          "id": "10",
+          "x": 3.1,
+          "y": 50.5,
+          "id": "12",
           "canvas": "0",
           "order": 7,
           "valid": 1
         },
         {
           "type": "ATTRIBUTE WRITER DROPDOWN",
-          "width": 17.9,
-          "height": 1.5,
+          "width": 43.8,
+          "height": 3.8,
           "inputs": {
             "attribute": {
               "device": "taranta://low-sat/endnode/ci-1",
@@ -390,30 +430,30 @@
             "font": "Helvetica",
             "dropdownButtonCss": "",
             "submitButtonCss": "",
-            "customCss": ""
+            "customCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 1.05,
-          "y": 23.05,
-          "id": "11",
+          "x": 3.1,
+          "y": 54.3,
+          "id": "13",
           "canvas": "0",
           "order": 8,
           "valid": 1
         }
       ],
-      "x": 1,
-      "y": 2.5,
-      "id": "2",
+      "x": 3.0,
+      "y": 5.6,
+      "id": "4",
       "canvas": "0",
-      "order": 1,
+      "order": 3,
       "valid": 1
     },
     {
       "type": "BOX",
-      "width": 18,
-      "height": 9.1,
+      "width": 44.0,
+      "height": 23.4,
       "inputs": {
         "title": "Status",
-        "bigWidget": 6,
+        "bigWidget": 5,
         "smallWidget": 1,
         "textColor": "#1a1a1a",
         "backgroundColor": "#ffffff",
@@ -424,14 +464,14 @@
         "fontFamily": "Helvetica",
         "layout": "vertical",
         "alignment": "Left",
-        "padding": 0,
-        "customCss": "font-weight:bold;"
+        "padding": 0.25,
+        "customCss": "font-weight: bold"
       },
       "innerWidgets": [
         {
           "type": "LED_DISPLAY",
-          "width": 17.9,
-          "height": 1.5,
+          "width": 43.8,
+          "height": 3.8,
           "inputs": {
             "attribute": {
               "device": "taranta://low-sat/endnode/ci-1",
@@ -450,19 +490,19 @@
             "showAttribute": "Label",
             "alignTextCenter": false,
             "alignValueRight": true,
-            "customCss": ""
+            "customCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 20.05,
-          "y": 3.55,
-          "id": "13",
+          "x": 50.1,
+          "y": 8.7,
+          "id": "15",
           "canvas": "0",
           "order": 0,
           "valid": 1
         },
         {
           "type": "LED_DISPLAY",
-          "width": 17.9,
-          "height": 1.5,
+          "width": 43.8,
+          "height": 3.8,
           "inputs": {
             "attribute": {
               "device": "taranta://low-sat/endnode/ci-1",
@@ -481,19 +521,19 @@
             "showAttribute": "Label",
             "alignTextCenter": false,
             "alignValueRight": true,
-            "customCss": ""
+            "customCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 20.05,
-          "y": 5.05,
-          "id": "14",
+          "x": 50.1,
+          "y": 12.5,
+          "id": "16",
           "canvas": "0",
           "order": 1,
           "valid": 1
         },
         {
           "type": "LED_DISPLAY",
-          "width": 17.9,
-          "height": 1.5,
+          "width": 43.8,
+          "height": 3.8,
           "inputs": {
             "attribute": {
               "device": "taranta://low-sat/endnode/ci-1",
@@ -512,19 +552,19 @@
             "showAttribute": "Label",
             "alignTextCenter": false,
             "alignValueRight": true,
-            "customCss": ""
+            "customCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 20.05,
-          "y": 6.55,
-          "id": "15",
+          "x": 50.1,
+          "y": 16.3,
+          "id": "17",
           "canvas": "0",
           "order": 2,
           "valid": 1
         },
         {
           "type": "LED_DISPLAY",
-          "width": 17.9,
-          "height": 1.5,
+          "width": 43.8,
+          "height": 3.8,
           "inputs": {
             "attribute": {
               "device": "taranta://low-sat/endnode/ci-1",
@@ -543,19 +583,19 @@
             "showAttribute": "Label",
             "alignTextCenter": false,
             "alignValueRight": true,
-            "customCss": ""
+            "customCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 20.05,
-          "y": 8.05,
-          "id": "16",
+          "x": 50.1,
+          "y": 20.1,
+          "id": "18",
           "canvas": "0",
           "order": 3,
           "valid": 1
         },
         {
           "type": "LED_DISPLAY",
-          "width": 17.9,
-          "height": 1.5,
+          "width": 43.8,
+          "height": 3.8,
           "inputs": {
             "attribute": {
               "device": "taranta://low-sat/endnode/ci-1",
@@ -574,30 +614,30 @@
             "showAttribute": "Label",
             "alignTextCenter": false,
             "alignValueRight": true,
-            "customCss": ""
+            "customCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 20.05,
-          "y": 9.55,
-          "id": "17",
+          "x": 50.1,
+          "y": 23.9,
+          "id": "19",
           "canvas": "0",
           "order": 4,
           "valid": 1
         }
       ],
-      "x": 20,
-      "y": 2.5,
-      "id": "12",
+      "x": 50.0,
+      "y": 5.6,
+      "id": "14",
       "canvas": "0",
-      "order": 2,
+      "order": 4,
       "valid": 1
     },
     {
       "type": "BOX",
-      "width": 18,
-      "height": 51.1,
+      "width": 44.0,
+      "height": 118.4,
       "inputs": {
         "title": "NET",
-        "bigWidget": 6,
+        "bigWidget": 5,
         "smallWidget": 1,
         "textColor": "#1a1a1a",
         "backgroundColor": "#ffffff",
@@ -608,14 +648,14 @@
         "fontFamily": "Helvetica",
         "layout": "vertical",
         "alignment": "Left",
-        "padding": 0,
-        "customCss": "font-weight:bold;"
+        "padding": 0.25,
+        "customCss": "font-weight: bold"
       },
       "innerWidgets": [
         {
           "type": "LED_DISPLAY",
-          "width": 17.9,
-          "height": 1.5,
+          "width": 43.8,
+          "height": 3.8,
           "inputs": {
             "attribute": {
               "device": "taranta://low-sat/endnode/ci-1",
@@ -634,19 +674,19 @@
             "showAttribute": "Label",
             "alignTextCenter": false,
             "alignValueRight": true,
-            "customCss": ""
+            "customCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 39.05,
-          "y": 3.55,
-          "id": "19",
+          "x": 97.1,
+          "y": 8.7,
+          "id": "21",
           "canvas": "0",
           "order": 0,
           "valid": 1
         },
         {
           "type": "ATTRIBUTE_DISPLAY",
-          "width": 17.9,
-          "height": 1.5,
+          "width": 43.8,
+          "height": 3.8,
           "inputs": {
             "attribute": {
               "device": "taranta://low-sat/endnode/ci-1",
@@ -669,19 +709,19 @@
             "backgroundColor": "#ffffff",
             "size": 1,
             "font": "Helvetica",
-            "widgetCss": "background:#f7f8fa;border:1px solid #dde1e6;border-radius:4px;padding:2px 6px;"
+            "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 39.05,
-          "y": 5.05,
-          "id": "20",
+          "x": 97.1,
+          "y": 12.5,
+          "id": "22",
           "canvas": "0",
           "order": 1,
           "valid": 1
         },
         {
           "type": "ATTRIBUTE_DISPLAY",
-          "width": 17.9,
-          "height": 1.5,
+          "width": 43.8,
+          "height": 3.8,
           "inputs": {
             "attribute": {
               "device": "taranta://low-sat/endnode/ci-1",
@@ -704,19 +744,19 @@
             "backgroundColor": "#ffffff",
             "size": 1,
             "font": "Helvetica",
-            "widgetCss": "background:#f7f8fa;border:1px solid #dde1e6;border-radius:4px;padding:2px 6px;"
+            "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 39.05,
-          "y": 6.55,
-          "id": "21",
+          "x": 97.1,
+          "y": 16.3,
+          "id": "23",
           "canvas": "0",
           "order": 2,
           "valid": 1
         },
         {
           "type": "ATTRIBUTE_DISPLAY",
-          "width": 17.9,
-          "height": 1.5,
+          "width": 43.8,
+          "height": 3.8,
           "inputs": {
             "attribute": {
               "device": "taranta://low-sat/endnode/ci-1",
@@ -739,19 +779,19 @@
             "backgroundColor": "#ffffff",
             "size": 1,
             "font": "Helvetica",
-            "widgetCss": "background:#f7f8fa;border:1px solid #dde1e6;border-radius:4px;padding:2px 6px;"
+            "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 39.05,
-          "y": 8.05,
-          "id": "22",
+          "x": 97.1,
+          "y": 20.1,
+          "id": "24",
           "canvas": "0",
           "order": 3,
           "valid": 1
         },
         {
           "type": "ATTRIBUTE_DISPLAY",
-          "width": 17.9,
-          "height": 1.5,
+          "width": 43.8,
+          "height": 3.8,
           "inputs": {
             "attribute": {
               "device": "taranta://low-sat/endnode/ci-1",
@@ -774,19 +814,19 @@
             "backgroundColor": "#ffffff",
             "size": 1,
             "font": "Helvetica",
-            "widgetCss": "background:#f7f8fa;border:1px solid #dde1e6;border-radius:4px;padding:2px 6px;"
+            "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 39.05,
-          "y": 9.55,
-          "id": "23",
+          "x": 97.1,
+          "y": 23.9,
+          "id": "25",
           "canvas": "0",
           "order": 4,
           "valid": 1
         },
         {
           "type": "ATTRIBUTE_DISPLAY",
-          "width": 17.9,
-          "height": 1.5,
+          "width": 43.8,
+          "height": 3.8,
           "inputs": {
             "attribute": {
               "device": "taranta://low-sat/endnode/ci-1",
@@ -809,19 +849,19 @@
             "backgroundColor": "#ffffff",
             "size": 1,
             "font": "Helvetica",
-            "widgetCss": "background:#f7f8fa;border:1px solid #dde1e6;border-radius:4px;padding:2px 6px;"
+            "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 39.05,
-          "y": 11.05,
-          "id": "24",
+          "x": 97.1,
+          "y": 27.7,
+          "id": "26",
           "canvas": "0",
           "order": 5,
           "valid": 1
         },
         {
           "type": "ATTRIBUTE_DISPLAY",
-          "width": 17.9,
-          "height": 1.5,
+          "width": 43.8,
+          "height": 3.8,
           "inputs": {
             "attribute": {
               "device": "taranta://low-sat/endnode/ci-1",
@@ -844,19 +884,19 @@
             "backgroundColor": "#ffffff",
             "size": 1,
             "font": "Helvetica",
-            "widgetCss": "background:#f7f8fa;border:1px solid #dde1e6;border-radius:4px;padding:2px 6px;"
+            "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 39.05,
-          "y": 12.55,
-          "id": "25",
+          "x": 97.1,
+          "y": 31.5,
+          "id": "27",
           "canvas": "0",
           "order": 6,
           "valid": 1
         },
         {
           "type": "ATTRIBUTE_DISPLAY",
-          "width": 17.9,
-          "height": 1.5,
+          "width": 43.8,
+          "height": 3.8,
           "inputs": {
             "attribute": {
               "device": "taranta://low-sat/endnode/ci-1",
@@ -879,19 +919,19 @@
             "backgroundColor": "#ffffff",
             "size": 1,
             "font": "Helvetica",
-            "widgetCss": "background:#f7f8fa;border:1px solid #dde1e6;border-radius:4px;padding:2px 6px;"
+            "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 39.05,
-          "y": 14.05,
-          "id": "26",
+          "x": 97.1,
+          "y": 35.3,
+          "id": "28",
           "canvas": "0",
           "order": 7,
           "valid": 1
         },
         {
           "type": "ATTRIBUTE_DISPLAY",
-          "width": 17.9,
-          "height": 1.5,
+          "width": 43.8,
+          "height": 3.8,
           "inputs": {
             "attribute": {
               "device": "taranta://low-sat/endnode/ci-1",
@@ -914,19 +954,19 @@
             "backgroundColor": "#ffffff",
             "size": 1,
             "font": "Helvetica",
-            "widgetCss": "background:#f7f8fa;border:1px solid #dde1e6;border-radius:4px;padding:2px 6px;"
+            "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 39.05,
-          "y": 15.55,
-          "id": "27",
+          "x": 97.1,
+          "y": 39.1,
+          "id": "29",
           "canvas": "0",
           "order": 8,
           "valid": 1
         },
         {
           "type": "ATTRIBUTE_DISPLAY",
-          "width": 17.9,
-          "height": 1.5,
+          "width": 43.8,
+          "height": 3.8,
           "inputs": {
             "attribute": {
               "device": "taranta://low-sat/endnode/ci-1",
@@ -949,19 +989,19 @@
             "backgroundColor": "#ffffff",
             "size": 1,
             "font": "Helvetica",
-            "widgetCss": "background:#f7f8fa;border:1px solid #dde1e6;border-radius:4px;padding:2px 6px;"
+            "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 39.05,
-          "y": 17.05,
-          "id": "28",
+          "x": 97.1,
+          "y": 42.9,
+          "id": "30",
           "canvas": "0",
           "order": 9,
           "valid": 1
         },
         {
           "type": "ATTRIBUTE_DISPLAY",
-          "width": 17.9,
-          "height": 1.5,
+          "width": 43.8,
+          "height": 3.8,
           "inputs": {
             "attribute": {
               "device": "taranta://low-sat/endnode/ci-1",
@@ -984,19 +1024,19 @@
             "backgroundColor": "#ffffff",
             "size": 1,
             "font": "Helvetica",
-            "widgetCss": "background:#f7f8fa;border:1px solid #dde1e6;border-radius:4px;padding:2px 6px;"
+            "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 39.05,
-          "y": 18.55,
-          "id": "29",
+          "x": 97.1,
+          "y": 46.7,
+          "id": "31",
           "canvas": "0",
           "order": 10,
           "valid": 1
         },
         {
           "type": "LED_DISPLAY",
-          "width": 17.9,
-          "height": 1.5,
+          "width": 43.8,
+          "height": 3.8,
           "inputs": {
             "attribute": {
               "device": "taranta://low-sat/endnode/ci-1",
@@ -1015,19 +1055,19 @@
             "showAttribute": "Label",
             "alignTextCenter": false,
             "alignValueRight": true,
-            "customCss": ""
+            "customCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 39.05,
-          "y": 20.05,
-          "id": "30",
+          "x": 97.1,
+          "y": 50.5,
+          "id": "32",
           "canvas": "0",
           "order": 11,
           "valid": 1
         },
         {
           "type": "ATTRIBUTE_DISPLAY",
-          "width": 17.9,
-          "height": 1.5,
+          "width": 43.8,
+          "height": 3.8,
           "inputs": {
             "attribute": {
               "device": "taranta://low-sat/endnode/ci-1",
@@ -1050,19 +1090,19 @@
             "backgroundColor": "#ffffff",
             "size": 1,
             "font": "Helvetica",
-            "widgetCss": "background:#f7f8fa;border:1px solid #dde1e6;border-radius:4px;padding:2px 6px;"
+            "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 39.05,
-          "y": 21.55,
-          "id": "31",
+          "x": 97.1,
+          "y": 54.3,
+          "id": "33",
           "canvas": "0",
           "order": 12,
           "valid": 1
         },
         {
           "type": "ATTRIBUTE_DISPLAY",
-          "width": 17.9,
-          "height": 1.5,
+          "width": 43.8,
+          "height": 3.8,
           "inputs": {
             "attribute": {
               "device": "taranta://low-sat/endnode/ci-1",
@@ -1085,19 +1125,19 @@
             "backgroundColor": "#ffffff",
             "size": 1,
             "font": "Helvetica",
-            "widgetCss": "background:#f7f8fa;border:1px solid #dde1e6;border-radius:4px;padding:2px 6px;"
+            "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 39.05,
-          "y": 23.05,
-          "id": "32",
+          "x": 97.1,
+          "y": 58.1,
+          "id": "34",
           "canvas": "0",
           "order": 13,
           "valid": 1
         },
         {
           "type": "ATTRIBUTE_DISPLAY",
-          "width": 17.9,
-          "height": 1.5,
+          "width": 43.8,
+          "height": 3.8,
           "inputs": {
             "attribute": {
               "device": "taranta://low-sat/endnode/ci-1",
@@ -1120,19 +1160,19 @@
             "backgroundColor": "#ffffff",
             "size": 1,
             "font": "Helvetica",
-            "widgetCss": "background:#f7f8fa;border:1px solid #dde1e6;border-radius:4px;padding:2px 6px;"
+            "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 39.05,
-          "y": 24.55,
-          "id": "33",
+          "x": 97.1,
+          "y": 61.9,
+          "id": "35",
           "canvas": "0",
           "order": 14,
           "valid": 1
         },
         {
           "type": "BOX",
-          "width": 17.9,
-          "height": 9.0,
+          "width": 43.8,
+          "height": 19.0,
           "inputs": {
             "title": "",
             "bigWidget": 5,
@@ -1152,8 +1192,8 @@
           "innerWidgets": [
             {
               "type": "ATTRIBUTE_DIAL",
-              "width": 5.97,
-              "height": 9.0,
+              "width": 14.6,
+              "height": 19.0,
               "inputs": {
                 "attribute": {
                   "device": "taranta://low-sat/endnode/ci-1",
@@ -1167,17 +1207,17 @@
                 "showTangoDB": false,
                 "widgetCss": ""
               },
-              "x": 39.05,
-              "y": 26.05,
-              "id": "35",
+              "x": 97.1,
+              "y": 65.7,
+              "id": "37",
               "canvas": "0",
               "order": 0,
               "valid": 1
             },
             {
               "type": "ATTRIBUTE_DIAL",
-              "width": 5.96,
-              "height": 9.0,
+              "width": 14.6,
+              "height": 19.0,
               "inputs": {
                 "attribute": {
                   "device": "taranta://low-sat/endnode/ci-1",
@@ -1191,17 +1231,17 @@
                 "showTangoDB": false,
                 "widgetCss": ""
               },
-              "x": 45.02,
-              "y": 26.05,
-              "id": "36",
+              "x": 111.7,
+              "y": 65.7,
+              "id": "38",
               "canvas": "0",
               "order": 1,
               "valid": 1
             },
             {
               "type": "ATTRIBUTE_DIAL",
-              "width": 5.97,
-              "height": 9.0,
+              "width": 14.6,
+              "height": 19.0,
               "inputs": {
                 "attribute": {
                   "device": "taranta://low-sat/endnode/ci-1",
@@ -1215,25 +1255,25 @@
                 "showTangoDB": false,
                 "widgetCss": ""
               },
-              "x": 50.98,
-              "y": 26.05,
-              "id": "37",
+              "x": 126.3,
+              "y": 65.7,
+              "id": "39",
               "canvas": "0",
               "order": 2,
               "valid": 1
             }
           ],
-          "x": 39.05,
-          "y": 26.05,
-          "id": "34",
+          "x": 97.1,
+          "y": 65.7,
+          "id": "36",
           "canvas": "0",
           "order": 15,
           "valid": 1
         },
         {
           "type": "ATTRIBUTE_PLOT",
-          "width": 17.9,
-          "height": 9.0,
+          "width": 43.8,
+          "height": 19.0,
           "inputs": {
             "timeWindow": 600,
             "attributes": [
@@ -1257,17 +1297,17 @@
             "textColor": "#000000",
             "backgroundColor": "#ffffff"
           },
-          "x": 39.05,
-          "y": 35.05,
-          "id": "38",
+          "x": 97.1,
+          "y": 84.7,
+          "id": "40",
           "canvas": "0",
           "order": 16,
           "valid": 1
         },
         {
           "type": "ATTRIBUTE_PLOT",
-          "width": 17.9,
-          "height": 9.0,
+          "width": 43.8,
+          "height": 19.0,
           "inputs": {
             "timeWindow": 600,
             "attributes": [
@@ -1301,28 +1341,28 @@
             "textColor": "#000000",
             "backgroundColor": "#ffffff"
           },
-          "x": 39.05,
-          "y": 44.05,
-          "id": "39",
+          "x": 97.1,
+          "y": 103.7,
+          "id": "41",
           "canvas": "0",
           "order": 17,
           "valid": 1
         }
       ],
-      "x": 39,
-      "y": 2.5,
-      "id": "18",
+      "x": 97.0,
+      "y": 5.6,
+      "id": "20",
       "canvas": "0",
-      "order": 3,
+      "order": 5,
       "valid": 1
     },
     {
       "type": "BOX",
-      "width": 18,
-      "height": 36.1,
+      "width": 44.0,
+      "height": 80.4,
       "inputs": {
         "title": "PWSL",
-        "bigWidget": 6,
+        "bigWidget": 5,
         "smallWidget": 1,
         "textColor": "#1a1a1a",
         "backgroundColor": "#ffffff",
@@ -1333,14 +1373,14 @@
         "fontFamily": "Helvetica",
         "layout": "vertical",
         "alignment": "Left",
-        "padding": 0,
-        "customCss": "font-weight:bold;"
+        "padding": 0.25,
+        "customCss": "font-weight: bold"
       },
       "innerWidgets": [
         {
           "type": "LED_DISPLAY",
-          "width": 17.9,
-          "height": 1.5,
+          "width": 43.8,
+          "height": 3.8,
           "inputs": {
             "attribute": {
               "device": "taranta://low-sat/endnode/ci-1",
@@ -1359,19 +1399,19 @@
             "showAttribute": "Label",
             "alignTextCenter": false,
             "alignValueRight": true,
-            "customCss": ""
+            "customCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 58.05,
-          "y": 3.55,
-          "id": "41",
+          "x": 144.1,
+          "y": 8.7,
+          "id": "43",
           "canvas": "0",
           "order": 0,
           "valid": 1
         },
         {
           "type": "ATTRIBUTE_DISPLAY",
-          "width": 17.9,
-          "height": 1.5,
+          "width": 43.8,
+          "height": 3.8,
           "inputs": {
             "attribute": {
               "device": "taranta://low-sat/endnode/ci-1",
@@ -1394,19 +1434,19 @@
             "backgroundColor": "#ffffff",
             "size": 1,
             "font": "Helvetica",
-            "widgetCss": "background:#f7f8fa;border:1px solid #dde1e6;border-radius:4px;padding:2px 6px;"
+            "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 58.05,
-          "y": 5.05,
-          "id": "42",
+          "x": 144.1,
+          "y": 12.5,
+          "id": "44",
           "canvas": "0",
           "order": 1,
           "valid": 1
         },
         {
           "type": "ATTRIBUTE_DISPLAY",
-          "width": 17.9,
-          "height": 1.5,
+          "width": 43.8,
+          "height": 3.8,
           "inputs": {
             "attribute": {
               "device": "taranta://low-sat/endnode/ci-1",
@@ -1429,19 +1469,19 @@
             "backgroundColor": "#ffffff",
             "size": 1,
             "font": "Helvetica",
-            "widgetCss": "background:#f7f8fa;border:1px solid #dde1e6;border-radius:4px;padding:2px 6px;"
+            "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 58.05,
-          "y": 6.55,
-          "id": "43",
+          "x": 144.1,
+          "y": 16.3,
+          "id": "45",
           "canvas": "0",
           "order": 2,
           "valid": 1
         },
         {
           "type": "ATTRIBUTE_DISPLAY",
-          "width": 17.9,
-          "height": 1.5,
+          "width": 43.8,
+          "height": 3.8,
           "inputs": {
             "attribute": {
               "device": "taranta://low-sat/endnode/ci-1",
@@ -1464,19 +1504,19 @@
             "backgroundColor": "#ffffff",
             "size": 1,
             "font": "Helvetica",
-            "widgetCss": "background:#f7f8fa;border:1px solid #dde1e6;border-radius:4px;padding:2px 6px;"
+            "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 58.05,
-          "y": 8.05,
-          "id": "44",
+          "x": 144.1,
+          "y": 20.1,
+          "id": "46",
           "canvas": "0",
           "order": 3,
           "valid": 1
         },
         {
           "type": "ATTRIBUTE_DISPLAY",
-          "width": 17.9,
-          "height": 1.5,
+          "width": 43.8,
+          "height": 3.8,
           "inputs": {
             "attribute": {
               "device": "taranta://low-sat/endnode/ci-1",
@@ -1499,19 +1539,19 @@
             "backgroundColor": "#ffffff",
             "size": 1,
             "font": "Helvetica",
-            "widgetCss": "background:#f7f8fa;border:1px solid #dde1e6;border-radius:4px;padding:2px 6px;"
+            "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 58.05,
-          "y": 9.55,
-          "id": "45",
+          "x": 144.1,
+          "y": 23.9,
+          "id": "47",
           "canvas": "0",
           "order": 4,
           "valid": 1
         },
         {
           "type": "BOX",
-          "width": 17.9,
-          "height": 9.0,
+          "width": 43.8,
+          "height": 19.0,
           "inputs": {
             "title": "",
             "bigWidget": 5,
@@ -1531,8 +1571,8 @@
           "innerWidgets": [
             {
               "type": "ATTRIBUTE_DIAL",
-              "width": 17.9,
-              "height": 9.0,
+              "width": 43.8,
+              "height": 19.0,
               "inputs": {
                 "attribute": {
                   "device": "taranta://low-sat/endnode/ci-1",
@@ -1546,25 +1586,25 @@
                 "showTangoDB": false,
                 "widgetCss": ""
               },
-              "x": 58.05,
-              "y": 11.05,
-              "id": "47",
+              "x": 144.1,
+              "y": 27.7,
+              "id": "49",
               "canvas": "0",
               "order": 0,
               "valid": 1
             }
           ],
-          "x": 58.05,
-          "y": 11.05,
-          "id": "46",
+          "x": 144.1,
+          "y": 27.7,
+          "id": "48",
           "canvas": "0",
           "order": 5,
           "valid": 1
         },
         {
           "type": "ATTRIBUTE_PLOT",
-          "width": 17.9,
-          "height": 9.0,
+          "width": 43.8,
+          "height": 19.0,
           "inputs": {
             "timeWindow": 600,
             "attributes": [
@@ -1598,17 +1638,17 @@
             "textColor": "#000000",
             "backgroundColor": "#ffffff"
           },
-          "x": 58.05,
-          "y": 20.05,
-          "id": "48",
+          "x": 144.1,
+          "y": 46.7,
+          "id": "50",
           "canvas": "0",
           "order": 6,
           "valid": 1
         },
         {
           "type": "ATTRIBUTE_PLOT",
-          "width": 17.9,
-          "height": 9.0,
+          "width": 43.8,
+          "height": 19.0,
           "inputs": {
             "timeWindow": 600,
             "attributes": [
@@ -1642,28 +1682,28 @@
             "textColor": "#000000",
             "backgroundColor": "#ffffff"
           },
-          "x": 58.05,
-          "y": 29.05,
-          "id": "49",
+          "x": 144.1,
+          "y": 65.7,
+          "id": "51",
           "canvas": "0",
           "order": 7,
           "valid": 1
         }
       ],
-      "x": 58,
-      "y": 2.5,
-      "id": "40",
+      "x": 144.0,
+      "y": 5.6,
+      "id": "42",
       "canvas": "0",
-      "order": 4,
+      "order": 6,
       "valid": 1
     },
     {
       "type": "BOX",
-      "width": 18,
-      "height": 36.1,
+      "width": 44.0,
+      "height": 80.4,
       "inputs": {
         "title": "PWSR",
-        "bigWidget": 6,
+        "bigWidget": 5,
         "smallWidget": 1,
         "textColor": "#1a1a1a",
         "backgroundColor": "#ffffff",
@@ -1674,14 +1714,14 @@
         "fontFamily": "Helvetica",
         "layout": "vertical",
         "alignment": "Left",
-        "padding": 0,
-        "customCss": "font-weight:bold;"
+        "padding": 0.25,
+        "customCss": "font-weight: bold"
       },
       "innerWidgets": [
         {
           "type": "LED_DISPLAY",
-          "width": 17.9,
-          "height": 1.5,
+          "width": 43.8,
+          "height": 3.8,
           "inputs": {
             "attribute": {
               "device": "taranta://low-sat/endnode/ci-1",
@@ -1700,19 +1740,19 @@
             "showAttribute": "Label",
             "alignTextCenter": false,
             "alignValueRight": true,
-            "customCss": ""
+            "customCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 20.05,
-          "y": 13.65,
-          "id": "51",
+          "x": 50.1,
+          "y": 35.1,
+          "id": "53",
           "canvas": "0",
           "order": 0,
           "valid": 1
         },
         {
           "type": "ATTRIBUTE_DISPLAY",
-          "width": 17.9,
-          "height": 1.5,
+          "width": 43.8,
+          "height": 3.8,
           "inputs": {
             "attribute": {
               "device": "taranta://low-sat/endnode/ci-1",
@@ -1735,19 +1775,19 @@
             "backgroundColor": "#ffffff",
             "size": 1,
             "font": "Helvetica",
-            "widgetCss": "background:#f7f8fa;border:1px solid #dde1e6;border-radius:4px;padding:2px 6px;"
+            "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 20.05,
-          "y": 15.15,
-          "id": "52",
+          "x": 50.1,
+          "y": 38.9,
+          "id": "54",
           "canvas": "0",
           "order": 1,
           "valid": 1
         },
         {
           "type": "ATTRIBUTE_DISPLAY",
-          "width": 17.9,
-          "height": 1.5,
+          "width": 43.8,
+          "height": 3.8,
           "inputs": {
             "attribute": {
               "device": "taranta://low-sat/endnode/ci-1",
@@ -1770,19 +1810,19 @@
             "backgroundColor": "#ffffff",
             "size": 1,
             "font": "Helvetica",
-            "widgetCss": "background:#f7f8fa;border:1px solid #dde1e6;border-radius:4px;padding:2px 6px;"
+            "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 20.05,
-          "y": 16.65,
-          "id": "53",
+          "x": 50.1,
+          "y": 42.7,
+          "id": "55",
           "canvas": "0",
           "order": 2,
           "valid": 1
         },
         {
           "type": "ATTRIBUTE_DISPLAY",
-          "width": 17.9,
-          "height": 1.5,
+          "width": 43.8,
+          "height": 3.8,
           "inputs": {
             "attribute": {
               "device": "taranta://low-sat/endnode/ci-1",
@@ -1805,19 +1845,19 @@
             "backgroundColor": "#ffffff",
             "size": 1,
             "font": "Helvetica",
-            "widgetCss": "background:#f7f8fa;border:1px solid #dde1e6;border-radius:4px;padding:2px 6px;"
+            "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 20.05,
-          "y": 18.15,
-          "id": "54",
+          "x": 50.1,
+          "y": 46.5,
+          "id": "56",
           "canvas": "0",
           "order": 3,
           "valid": 1
         },
         {
           "type": "ATTRIBUTE_DISPLAY",
-          "width": 17.9,
-          "height": 1.5,
+          "width": 43.8,
+          "height": 3.8,
           "inputs": {
             "attribute": {
               "device": "taranta://low-sat/endnode/ci-1",
@@ -1840,19 +1880,19 @@
             "backgroundColor": "#ffffff",
             "size": 1,
             "font": "Helvetica",
-            "widgetCss": "background:#f7f8fa;border:1px solid #dde1e6;border-radius:4px;padding:2px 6px;"
+            "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 20.05,
-          "y": 19.65,
-          "id": "55",
+          "x": 50.1,
+          "y": 50.3,
+          "id": "57",
           "canvas": "0",
           "order": 4,
           "valid": 1
         },
         {
           "type": "BOX",
-          "width": 17.9,
-          "height": 9.0,
+          "width": 43.8,
+          "height": 19.0,
           "inputs": {
             "title": "",
             "bigWidget": 5,
@@ -1872,8 +1912,8 @@
           "innerWidgets": [
             {
               "type": "ATTRIBUTE_DIAL",
-              "width": 17.9,
-              "height": 9.0,
+              "width": 43.8,
+              "height": 19.0,
               "inputs": {
                 "attribute": {
                   "device": "taranta://low-sat/endnode/ci-1",
@@ -1887,25 +1927,25 @@
                 "showTangoDB": false,
                 "widgetCss": ""
               },
-              "x": 20.05,
-              "y": 21.15,
-              "id": "57",
+              "x": 50.1,
+              "y": 54.1,
+              "id": "59",
               "canvas": "0",
               "order": 0,
               "valid": 1
             }
           ],
-          "x": 20.05,
-          "y": 21.15,
-          "id": "56",
+          "x": 50.1,
+          "y": 54.1,
+          "id": "58",
           "canvas": "0",
           "order": 5,
           "valid": 1
         },
         {
           "type": "ATTRIBUTE_PLOT",
-          "width": 17.9,
-          "height": 9.0,
+          "width": 43.8,
+          "height": 19.0,
           "inputs": {
             "timeWindow": 600,
             "attributes": [
@@ -1939,17 +1979,17 @@
             "textColor": "#000000",
             "backgroundColor": "#ffffff"
           },
-          "x": 20.05,
-          "y": 30.15,
-          "id": "58",
+          "x": 50.1,
+          "y": 73.1,
+          "id": "60",
           "canvas": "0",
           "order": 6,
           "valid": 1
         },
         {
           "type": "ATTRIBUTE_PLOT",
-          "width": 17.9,
-          "height": 9.0,
+          "width": 43.8,
+          "height": 19.0,
           "inputs": {
             "timeWindow": 600,
             "attributes": [
@@ -1983,28 +2023,28 @@
             "textColor": "#000000",
             "backgroundColor": "#ffffff"
           },
-          "x": 20.05,
-          "y": 39.15,
-          "id": "59",
+          "x": 50.1,
+          "y": 92.1,
+          "id": "61",
           "canvas": "0",
           "order": 7,
           "valid": 1
         }
       ],
-      "x": 20,
-      "y": 12.6,
-      "id": "50",
+      "x": 50.0,
+      "y": 32.0,
+      "id": "52",
       "canvas": "0",
-      "order": 5,
+      "order": 7,
       "valid": 1
     },
     {
       "type": "BOX",
-      "width": 18,
-      "height": 15.1,
+      "width": 44.0,
+      "height": 38.6,
       "inputs": {
         "title": "Vclock",
-        "bigWidget": 6,
+        "bigWidget": 5,
         "smallWidget": 1,
         "textColor": "#1a1a1a",
         "backgroundColor": "#ffffff",
@@ -2015,14 +2055,14 @@
         "fontFamily": "Helvetica",
         "layout": "vertical",
         "alignment": "Left",
-        "padding": 0,
-        "customCss": "font-weight:bold;"
+        "padding": 0.25,
+        "customCss": "font-weight: bold"
       },
       "innerWidgets": [
         {
           "type": "LED_DISPLAY",
-          "width": 17.9,
-          "height": 1.5,
+          "width": 43.8,
+          "height": 3.8,
           "inputs": {
             "attribute": {
               "device": "taranta://low-sat/endnode/ci-1",
@@ -2041,19 +2081,19 @@
             "showAttribute": "Label",
             "alignTextCenter": false,
             "alignValueRight": true,
-            "customCss": ""
+            "customCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 1.05,
-          "y": 27.15,
-          "id": "61",
+          "x": 3.1,
+          "y": 65.5,
+          "id": "63",
           "canvas": "0",
           "order": 0,
           "valid": 1
         },
         {
           "type": "ATTRIBUTE_DISPLAY",
-          "width": 17.9,
-          "height": 1.5,
+          "width": 43.8,
+          "height": 3.8,
           "inputs": {
             "attribute": {
               "device": "taranta://low-sat/endnode/ci-1",
@@ -2076,19 +2116,19 @@
             "backgroundColor": "#ffffff",
             "size": 1,
             "font": "Helvetica",
-            "widgetCss": "background:#f7f8fa;border:1px solid #dde1e6;border-radius:4px;padding:2px 6px;"
+            "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 1.05,
-          "y": 28.65,
-          "id": "62",
+          "x": 3.1,
+          "y": 69.3,
+          "id": "64",
           "canvas": "0",
           "order": 1,
           "valid": 1
         },
         {
           "type": "ATTRIBUTE_DISPLAY",
-          "width": 17.9,
-          "height": 1.5,
+          "width": 43.8,
+          "height": 3.8,
           "inputs": {
             "attribute": {
               "device": "taranta://low-sat/endnode/ci-1",
@@ -2111,19 +2151,19 @@
             "backgroundColor": "#ffffff",
             "size": 1,
             "font": "Helvetica",
-            "widgetCss": "background:#f7f8fa;border:1px solid #dde1e6;border-radius:4px;padding:2px 6px;"
+            "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 1.05,
-          "y": 30.15,
-          "id": "63",
+          "x": 3.1,
+          "y": 73.1,
+          "id": "65",
           "canvas": "0",
           "order": 2,
           "valid": 1
         },
         {
           "type": "ATTRIBUTE_DISPLAY",
-          "width": 17.9,
-          "height": 1.5,
+          "width": 43.8,
+          "height": 3.8,
           "inputs": {
             "attribute": {
               "device": "taranta://low-sat/endnode/ci-1",
@@ -2146,19 +2186,19 @@
             "backgroundColor": "#ffffff",
             "size": 1,
             "font": "Helvetica",
-            "widgetCss": "background:#f7f8fa;border:1px solid #dde1e6;border-radius:4px;padding:2px 6px;"
+            "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 1.05,
-          "y": 31.65,
-          "id": "64",
+          "x": 3.1,
+          "y": 76.9,
+          "id": "66",
           "canvas": "0",
           "order": 3,
           "valid": 1
         },
         {
           "type": "ATTRIBUTE_DISPLAY",
-          "width": 17.9,
-          "height": 1.5,
+          "width": 43.8,
+          "height": 3.8,
           "inputs": {
             "attribute": {
               "device": "taranta://low-sat/endnode/ci-1",
@@ -2181,19 +2221,19 @@
             "backgroundColor": "#ffffff",
             "size": 1,
             "font": "Helvetica",
-            "widgetCss": "background:#f7f8fa;border:1px solid #dde1e6;border-radius:4px;padding:2px 6px;"
+            "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 1.05,
-          "y": 33.15,
-          "id": "65",
+          "x": 3.1,
+          "y": 80.7,
+          "id": "67",
           "canvas": "0",
           "order": 4,
           "valid": 1
         },
         {
           "type": "ATTRIBUTE_DISPLAY",
-          "width": 17.9,
-          "height": 1.5,
+          "width": 43.8,
+          "height": 3.8,
           "inputs": {
             "attribute": {
               "device": "taranta://low-sat/endnode/ci-1",
@@ -2216,19 +2256,19 @@
             "backgroundColor": "#ffffff",
             "size": 1,
             "font": "Helvetica",
-            "widgetCss": "background:#f7f8fa;border:1px solid #dde1e6;border-radius:4px;padding:2px 6px;"
+            "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 1.05,
-          "y": 34.65,
-          "id": "66",
+          "x": 3.1,
+          "y": 84.5,
+          "id": "68",
           "canvas": "0",
           "order": 5,
           "valid": 1
         },
         {
           "type": "ATTRIBUTE_DISPLAY",
-          "width": 17.9,
-          "height": 1.5,
+          "width": 43.8,
+          "height": 3.8,
           "inputs": {
             "attribute": {
               "device": "taranta://low-sat/endnode/ci-1",
@@ -2251,19 +2291,19 @@
             "backgroundColor": "#ffffff",
             "size": 1,
             "font": "Helvetica",
-            "widgetCss": "background:#f7f8fa;border:1px solid #dde1e6;border-radius:4px;padding:2px 6px;"
+            "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 1.05,
-          "y": 36.15,
-          "id": "67",
+          "x": 3.1,
+          "y": 88.3,
+          "id": "69",
           "canvas": "0",
           "order": 6,
           "valid": 1
         },
         {
           "type": "ATTRIBUTE_DISPLAY",
-          "width": 17.9,
-          "height": 1.5,
+          "width": 43.8,
+          "height": 3.8,
           "inputs": {
             "attribute": {
               "device": "taranta://low-sat/endnode/ci-1",
@@ -2286,19 +2326,19 @@
             "backgroundColor": "#ffffff",
             "size": 1,
             "font": "Helvetica",
-            "widgetCss": "background:#f7f8fa;border:1px solid #dde1e6;border-radius:4px;padding:2px 6px;"
+            "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 1.05,
-          "y": 37.65,
-          "id": "68",
+          "x": 3.1,
+          "y": 92.1,
+          "id": "70",
           "canvas": "0",
           "order": 7,
           "valid": 1
         },
         {
           "type": "ATTRIBUTE_DISPLAY",
-          "width": 17.9,
-          "height": 1.5,
+          "width": 43.8,
+          "height": 3.8,
           "inputs": {
             "attribute": {
               "device": "taranta://low-sat/endnode/ci-1",
@@ -2321,30 +2361,30 @@
             "backgroundColor": "#ffffff",
             "size": 1,
             "font": "Helvetica",
-            "widgetCss": "background:#f7f8fa;border:1px solid #dde1e6;border-radius:4px;padding:2px 6px;"
+            "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 1.05,
-          "y": 39.15,
-          "id": "69",
+          "x": 3.1,
+          "y": 95.9,
+          "id": "71",
           "canvas": "0",
           "order": 8,
           "valid": 1
         }
       ],
-      "x": 1,
-      "y": 26.1,
-      "id": "60",
+      "x": 3.0,
+      "y": 62.4,
+      "id": "62",
       "canvas": "0",
-      "order": 6,
+      "order": 8,
       "valid": 1
     },
     {
       "type": "BOX",
-      "width": 18,
-      "height": 16.6,
+      "width": 44.0,
+      "height": 42.4,
       "inputs": {
         "title": "TSRC1",
-        "bigWidget": 6,
+        "bigWidget": 5,
         "smallWidget": 1,
         "textColor": "#1a1a1a",
         "backgroundColor": "#ffffff",
@@ -2355,14 +2395,14 @@
         "fontFamily": "Helvetica",
         "layout": "vertical",
         "alignment": "Left",
-        "padding": 0,
-        "customCss": "font-weight:bold;"
+        "padding": 0.25,
+        "customCss": "font-weight: bold"
       },
       "innerWidgets": [
         {
           "type": "ATTRIBUTE_DISPLAY",
-          "width": 17.9,
-          "height": 1.5,
+          "width": 43.8,
+          "height": 3.8,
           "inputs": {
             "attribute": {
               "device": "taranta://low-sat/endnode/ci-1",
@@ -2385,19 +2425,19 @@
             "backgroundColor": "#ffffff",
             "size": 1,
             "font": "Helvetica",
-            "widgetCss": "background:#f7f8fa;border:1px solid #dde1e6;border-radius:4px;padding:2px 6px;"
+            "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 58.05,
-          "y": 40.65,
-          "id": "71",
+          "x": 144.1,
+          "y": 92.1,
+          "id": "73",
           "canvas": "0",
           "order": 0,
           "valid": 1
         },
         {
           "type": "ATTRIBUTE_DISPLAY",
-          "width": 17.9,
-          "height": 1.5,
+          "width": 43.8,
+          "height": 3.8,
           "inputs": {
             "attribute": {
               "device": "taranta://low-sat/endnode/ci-1",
@@ -2420,19 +2460,19 @@
             "backgroundColor": "#ffffff",
             "size": 1,
             "font": "Helvetica",
-            "widgetCss": "background:#f7f8fa;border:1px solid #dde1e6;border-radius:4px;padding:2px 6px;"
+            "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 58.05,
-          "y": 42.15,
-          "id": "72",
+          "x": 144.1,
+          "y": 95.9,
+          "id": "74",
           "canvas": "0",
           "order": 1,
           "valid": 1
         },
         {
           "type": "ATTRIBUTE_DISPLAY",
-          "width": 17.9,
-          "height": 1.5,
+          "width": 43.8,
+          "height": 3.8,
           "inputs": {
             "attribute": {
               "device": "taranta://low-sat/endnode/ci-1",
@@ -2455,19 +2495,19 @@
             "backgroundColor": "#ffffff",
             "size": 1,
             "font": "Helvetica",
-            "widgetCss": "background:#f7f8fa;border:1px solid #dde1e6;border-radius:4px;padding:2px 6px;"
+            "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 58.05,
-          "y": 43.65,
-          "id": "73",
+          "x": 144.1,
+          "y": 99.7,
+          "id": "75",
           "canvas": "0",
           "order": 2,
           "valid": 1
         },
         {
           "type": "LED_DISPLAY",
-          "width": 17.9,
-          "height": 1.5,
+          "width": 43.8,
+          "height": 3.8,
           "inputs": {
             "attribute": {
               "device": "taranta://low-sat/endnode/ci-1",
@@ -2486,19 +2526,19 @@
             "showAttribute": "Label",
             "alignTextCenter": false,
             "alignValueRight": true,
-            "customCss": ""
+            "customCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 58.05,
-          "y": 45.15,
-          "id": "74",
+          "x": 144.1,
+          "y": 103.5,
+          "id": "76",
           "canvas": "0",
           "order": 3,
           "valid": 1
         },
         {
           "type": "ATTRIBUTE_DISPLAY",
-          "width": 17.9,
-          "height": 1.5,
+          "width": 43.8,
+          "height": 3.8,
           "inputs": {
             "attribute": {
               "device": "taranta://low-sat/endnode/ci-1",
@@ -2521,19 +2561,19 @@
             "backgroundColor": "#ffffff",
             "size": 1,
             "font": "Helvetica",
-            "widgetCss": "background:#f7f8fa;border:1px solid #dde1e6;border-radius:4px;padding:2px 6px;"
+            "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 58.05,
-          "y": 46.65,
-          "id": "75",
+          "x": 144.1,
+          "y": 107.3,
+          "id": "77",
           "canvas": "0",
           "order": 4,
           "valid": 1
         },
         {
           "type": "ATTRIBUTE_DISPLAY",
-          "width": 17.9,
-          "height": 1.5,
+          "width": 43.8,
+          "height": 3.8,
           "inputs": {
             "attribute": {
               "device": "taranta://low-sat/endnode/ci-1",
@@ -2556,19 +2596,19 @@
             "backgroundColor": "#ffffff",
             "size": 1,
             "font": "Helvetica",
-            "widgetCss": "background:#f7f8fa;border:1px solid #dde1e6;border-radius:4px;padding:2px 6px;"
+            "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 58.05,
-          "y": 48.15,
-          "id": "76",
+          "x": 144.1,
+          "y": 111.1,
+          "id": "78",
           "canvas": "0",
           "order": 5,
           "valid": 1
         },
         {
           "type": "ATTRIBUTE_DISPLAY",
-          "width": 17.9,
-          "height": 1.5,
+          "width": 43.8,
+          "height": 3.8,
           "inputs": {
             "attribute": {
               "device": "taranta://low-sat/endnode/ci-1",
@@ -2591,19 +2631,19 @@
             "backgroundColor": "#ffffff",
             "size": 1,
             "font": "Helvetica",
-            "widgetCss": "background:#f7f8fa;border:1px solid #dde1e6;border-radius:4px;padding:2px 6px;"
+            "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 58.05,
-          "y": 49.65,
-          "id": "77",
+          "x": 144.1,
+          "y": 114.9,
+          "id": "79",
           "canvas": "0",
           "order": 6,
           "valid": 1
         },
         {
           "type": "ATTRIBUTE_DISPLAY",
-          "width": 17.9,
-          "height": 1.5,
+          "width": 43.8,
+          "height": 3.8,
           "inputs": {
             "attribute": {
               "device": "taranta://low-sat/endnode/ci-1",
@@ -2626,19 +2666,19 @@
             "backgroundColor": "#ffffff",
             "size": 1,
             "font": "Helvetica",
-            "widgetCss": "background:#f7f8fa;border:1px solid #dde1e6;border-radius:4px;padding:2px 6px;"
+            "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 58.05,
-          "y": 51.15,
-          "id": "78",
+          "x": 144.1,
+          "y": 118.7,
+          "id": "80",
           "canvas": "0",
           "order": 7,
           "valid": 1
         },
         {
           "type": "ATTRIBUTE_DISPLAY",
-          "width": 17.9,
-          "height": 1.5,
+          "width": 43.8,
+          "height": 3.8,
           "inputs": {
             "attribute": {
               "device": "taranta://low-sat/endnode/ci-1",
@@ -2661,19 +2701,19 @@
             "backgroundColor": "#ffffff",
             "size": 1,
             "font": "Helvetica",
-            "widgetCss": "background:#f7f8fa;border:1px solid #dde1e6;border-radius:4px;padding:2px 6px;"
+            "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 58.05,
-          "y": 52.65,
-          "id": "79",
+          "x": 144.1,
+          "y": 122.5,
+          "id": "81",
           "canvas": "0",
           "order": 8,
           "valid": 1
         },
         {
           "type": "ATTRIBUTE_DISPLAY",
-          "width": 17.9,
-          "height": 1.5,
+          "width": 43.8,
+          "height": 3.8,
           "inputs": {
             "attribute": {
               "device": "taranta://low-sat/endnode/ci-1",
@@ -2696,30 +2736,30 @@
             "backgroundColor": "#ffffff",
             "size": 1,
             "font": "Helvetica",
-            "widgetCss": "background:#f7f8fa;border:1px solid #dde1e6;border-radius:4px;padding:2px 6px;"
+            "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 58.05,
-          "y": 54.15,
-          "id": "80",
+          "x": 144.1,
+          "y": 126.3,
+          "id": "82",
           "canvas": "0",
           "order": 9,
           "valid": 1
         }
       ],
-      "x": 58,
-      "y": 39.6,
-      "id": "70",
+      "x": 144.0,
+      "y": 89.0,
+      "id": "72",
       "canvas": "0",
-      "order": 7,
+      "order": 9,
       "valid": 1
     },
     {
       "type": "BOX",
-      "width": 18,
-      "height": 16.6,
+      "width": 44.0,
+      "height": 42.4,
       "inputs": {
         "title": "TSRC2",
-        "bigWidget": 6,
+        "bigWidget": 5,
         "smallWidget": 1,
         "textColor": "#1a1a1a",
         "backgroundColor": "#ffffff",
@@ -2730,14 +2770,14 @@
         "fontFamily": "Helvetica",
         "layout": "vertical",
         "alignment": "Left",
-        "padding": 0,
-        "customCss": "font-weight:bold;"
+        "padding": 0.25,
+        "customCss": "font-weight: bold"
       },
       "innerWidgets": [
         {
           "type": "ATTRIBUTE_DISPLAY",
-          "width": 17.9,
-          "height": 1.5,
+          "width": 43.8,
+          "height": 3.8,
           "inputs": {
             "attribute": {
               "device": "taranta://low-sat/endnode/ci-1",
@@ -2760,19 +2800,19 @@
             "backgroundColor": "#ffffff",
             "size": 1,
             "font": "Helvetica",
-            "widgetCss": "background:#f7f8fa;border:1px solid #dde1e6;border-radius:4px;padding:2px 6px;"
+            "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 1.05,
-          "y": 43.25,
-          "id": "82",
+          "x": 3.1,
+          "y": 107.1,
+          "id": "84",
           "canvas": "0",
           "order": 0,
           "valid": 1
         },
         {
           "type": "ATTRIBUTE_DISPLAY",
-          "width": 17.9,
-          "height": 1.5,
+          "width": 43.8,
+          "height": 3.8,
           "inputs": {
             "attribute": {
               "device": "taranta://low-sat/endnode/ci-1",
@@ -2795,19 +2835,19 @@
             "backgroundColor": "#ffffff",
             "size": 1,
             "font": "Helvetica",
-            "widgetCss": "background:#f7f8fa;border:1px solid #dde1e6;border-radius:4px;padding:2px 6px;"
+            "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 1.05,
-          "y": 44.75,
-          "id": "83",
+          "x": 3.1,
+          "y": 110.9,
+          "id": "85",
           "canvas": "0",
           "order": 1,
           "valid": 1
         },
         {
           "type": "ATTRIBUTE_DISPLAY",
-          "width": 17.9,
-          "height": 1.5,
+          "width": 43.8,
+          "height": 3.8,
           "inputs": {
             "attribute": {
               "device": "taranta://low-sat/endnode/ci-1",
@@ -2830,19 +2870,19 @@
             "backgroundColor": "#ffffff",
             "size": 1,
             "font": "Helvetica",
-            "widgetCss": "background:#f7f8fa;border:1px solid #dde1e6;border-radius:4px;padding:2px 6px;"
+            "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 1.05,
-          "y": 46.25,
-          "id": "84",
+          "x": 3.1,
+          "y": 114.7,
+          "id": "86",
           "canvas": "0",
           "order": 2,
           "valid": 1
         },
         {
           "type": "LED_DISPLAY",
-          "width": 17.9,
-          "height": 1.5,
+          "width": 43.8,
+          "height": 3.8,
           "inputs": {
             "attribute": {
               "device": "taranta://low-sat/endnode/ci-1",
@@ -2861,19 +2901,19 @@
             "showAttribute": "Label",
             "alignTextCenter": false,
             "alignValueRight": true,
-            "customCss": ""
+            "customCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 1.05,
-          "y": 47.75,
-          "id": "85",
+          "x": 3.1,
+          "y": 118.5,
+          "id": "87",
           "canvas": "0",
           "order": 3,
           "valid": 1
         },
         {
           "type": "ATTRIBUTE_DISPLAY",
-          "width": 17.9,
-          "height": 1.5,
+          "width": 43.8,
+          "height": 3.8,
           "inputs": {
             "attribute": {
               "device": "taranta://low-sat/endnode/ci-1",
@@ -2896,19 +2936,19 @@
             "backgroundColor": "#ffffff",
             "size": 1,
             "font": "Helvetica",
-            "widgetCss": "background:#f7f8fa;border:1px solid #dde1e6;border-radius:4px;padding:2px 6px;"
+            "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 1.05,
-          "y": 49.25,
-          "id": "86",
+          "x": 3.1,
+          "y": 122.3,
+          "id": "88",
           "canvas": "0",
           "order": 4,
           "valid": 1
         },
         {
           "type": "ATTRIBUTE_DISPLAY",
-          "width": 17.9,
-          "height": 1.5,
+          "width": 43.8,
+          "height": 3.8,
           "inputs": {
             "attribute": {
               "device": "taranta://low-sat/endnode/ci-1",
@@ -2931,19 +2971,19 @@
             "backgroundColor": "#ffffff",
             "size": 1,
             "font": "Helvetica",
-            "widgetCss": "background:#f7f8fa;border:1px solid #dde1e6;border-radius:4px;padding:2px 6px;"
+            "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 1.05,
-          "y": 50.75,
-          "id": "87",
+          "x": 3.1,
+          "y": 126.1,
+          "id": "89",
           "canvas": "0",
           "order": 5,
           "valid": 1
         },
         {
           "type": "ATTRIBUTE_DISPLAY",
-          "width": 17.9,
-          "height": 1.5,
+          "width": 43.8,
+          "height": 3.8,
           "inputs": {
             "attribute": {
               "device": "taranta://low-sat/endnode/ci-1",
@@ -2966,19 +3006,19 @@
             "backgroundColor": "#ffffff",
             "size": 1,
             "font": "Helvetica",
-            "widgetCss": "background:#f7f8fa;border:1px solid #dde1e6;border-radius:4px;padding:2px 6px;"
+            "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 1.05,
-          "y": 52.25,
-          "id": "88",
+          "x": 3.1,
+          "y": 129.9,
+          "id": "90",
           "canvas": "0",
           "order": 6,
           "valid": 1
         },
         {
           "type": "ATTRIBUTE_DISPLAY",
-          "width": 17.9,
-          "height": 1.5,
+          "width": 43.8,
+          "height": 3.8,
           "inputs": {
             "attribute": {
               "device": "taranta://low-sat/endnode/ci-1",
@@ -3001,19 +3041,19 @@
             "backgroundColor": "#ffffff",
             "size": 1,
             "font": "Helvetica",
-            "widgetCss": "background:#f7f8fa;border:1px solid #dde1e6;border-radius:4px;padding:2px 6px;"
+            "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 1.05,
-          "y": 53.75,
-          "id": "89",
+          "x": 3.1,
+          "y": 133.7,
+          "id": "91",
           "canvas": "0",
           "order": 7,
           "valid": 1
         },
         {
           "type": "ATTRIBUTE_DISPLAY",
-          "width": 17.9,
-          "height": 1.5,
+          "width": 43.8,
+          "height": 3.8,
           "inputs": {
             "attribute": {
               "device": "taranta://low-sat/endnode/ci-1",
@@ -3036,19 +3076,19 @@
             "backgroundColor": "#ffffff",
             "size": 1,
             "font": "Helvetica",
-            "widgetCss": "background:#f7f8fa;border:1px solid #dde1e6;border-radius:4px;padding:2px 6px;"
+            "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 1.05,
-          "y": 55.25,
-          "id": "90",
+          "x": 3.1,
+          "y": 137.5,
+          "id": "92",
           "canvas": "0",
           "order": 8,
           "valid": 1
         },
         {
           "type": "ATTRIBUTE_DISPLAY",
-          "width": 17.9,
-          "height": 1.5,
+          "width": 43.8,
+          "height": 3.8,
           "inputs": {
             "attribute": {
               "device": "taranta://low-sat/endnode/ci-1",
@@ -3071,30 +3111,30 @@
             "backgroundColor": "#ffffff",
             "size": 1,
             "font": "Helvetica",
-            "widgetCss": "background:#f7f8fa;border:1px solid #dde1e6;border-radius:4px;padding:2px 6px;"
+            "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 1.05,
-          "y": 56.75,
-          "id": "91",
+          "x": 3.1,
+          "y": 141.3,
+          "id": "93",
           "canvas": "0",
           "order": 9,
           "valid": 1
         }
       ],
-      "x": 1,
-      "y": 42.2,
-      "id": "81",
+      "x": 3.0,
+      "y": 104.0,
+      "id": "83",
       "canvas": "0",
-      "order": 8,
+      "order": 10,
       "valid": 1
     },
     {
       "type": "BOX",
-      "width": 18,
-      "height": 15.1,
+      "width": 44.0,
+      "height": 34.8,
       "inputs": {
         "title": "NTP",
-        "bigWidget": 6,
+        "bigWidget": 5,
         "smallWidget": 1,
         "textColor": "#1a1a1a",
         "backgroundColor": "#ffffff",
@@ -3105,14 +3145,14 @@
         "fontFamily": "Helvetica",
         "layout": "vertical",
         "alignment": "Left",
-        "padding": 0,
-        "customCss": "font-weight:bold;"
+        "padding": 0.25,
+        "customCss": "font-weight: bold"
       },
       "innerWidgets": [
         {
           "type": "ATTRIBUTE_DISPLAY",
-          "width": 17.9,
-          "height": 1.5,
+          "width": 43.8,
+          "height": 3.8,
           "inputs": {
             "attribute": {
               "device": "taranta://low-sat/endnode/ci-1",
@@ -3135,19 +3175,19 @@
             "backgroundColor": "#ffffff",
             "size": 1,
             "font": "Helvetica",
-            "widgetCss": "background:#f7f8fa;border:1px solid #dde1e6;border-radius:4px;padding:2px 6px;"
+            "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 20.05,
-          "y": 50.75,
-          "id": "93",
+          "x": 50.1,
+          "y": 118.5,
+          "id": "95",
           "canvas": "0",
           "order": 0,
           "valid": 1
         },
         {
           "type": "LED_DISPLAY",
-          "width": 17.9,
-          "height": 1.5,
+          "width": 43.8,
+          "height": 3.8,
           "inputs": {
             "attribute": {
               "device": "taranta://low-sat/endnode/ci-1",
@@ -3166,19 +3206,19 @@
             "showAttribute": "Label",
             "alignTextCenter": false,
             "alignValueRight": true,
-            "customCss": ""
+            "customCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 20.05,
-          "y": 52.25,
-          "id": "94",
+          "x": 50.1,
+          "y": 122.3,
+          "id": "96",
           "canvas": "0",
           "order": 1,
           "valid": 1
         },
         {
           "type": "ATTRIBUTE_DISPLAY",
-          "width": 17.9,
-          "height": 1.5,
+          "width": 43.8,
+          "height": 3.8,
           "inputs": {
             "attribute": {
               "device": "taranta://low-sat/endnode/ci-1",
@@ -3201,19 +3241,19 @@
             "backgroundColor": "#ffffff",
             "size": 1,
             "font": "Helvetica",
-            "widgetCss": "background:#f7f8fa;border:1px solid #dde1e6;border-radius:4px;padding:2px 6px;"
+            "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 20.05,
-          "y": 53.75,
-          "id": "95",
+          "x": 50.1,
+          "y": 126.1,
+          "id": "97",
           "canvas": "0",
           "order": 2,
           "valid": 1
         },
         {
           "type": "ATTRIBUTE_PLOT",
-          "width": 17.9,
-          "height": 9.0,
+          "width": 43.8,
+          "height": 19.0,
           "inputs": {
             "timeWindow": 600,
             "attributes": [
@@ -3237,28 +3277,28 @@
             "textColor": "#000000",
             "backgroundColor": "#ffffff"
           },
-          "x": 20.05,
-          "y": 55.25,
-          "id": "96",
+          "x": 50.1,
+          "y": 129.9,
+          "id": "98",
           "canvas": "0",
           "order": 3,
           "valid": 1
         }
       ],
-      "x": 20,
-      "y": 49.7,
-      "id": "92",
+      "x": 50.0,
+      "y": 115.4,
+      "id": "94",
       "canvas": "0",
-      "order": 9,
+      "order": 11,
       "valid": 1
     },
     {
       "type": "BOX",
-      "width": 18,
-      "height": 37.6,
+      "width": 44.0,
+      "height": 84.2,
       "inputs": {
         "title": "Measurements",
-        "bigWidget": 6,
+        "bigWidget": 5,
         "smallWidget": 1,
         "textColor": "#1a1a1a",
         "backgroundColor": "#ffffff",
@@ -3269,14 +3309,14 @@
         "fontFamily": "Helvetica",
         "layout": "vertical",
         "alignment": "Left",
-        "padding": 0,
-        "customCss": "font-weight:bold;"
+        "padding": 0.25,
+        "customCss": "font-weight: bold"
       },
       "innerWidgets": [
         {
           "type": "ATTRIBUTE_DISPLAY",
-          "width": 17.9,
-          "height": 1.5,
+          "width": 43.8,
+          "height": 3.8,
           "inputs": {
             "attribute": {
               "device": "taranta://low-sat/endnode/ci-1",
@@ -3299,19 +3339,19 @@
             "backgroundColor": "#ffffff",
             "size": 1,
             "font": "Helvetica",
-            "widgetCss": "background:#f7f8fa;border:1px solid #dde1e6;border-radius:4px;padding:2px 6px;"
+            "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 39.05,
-          "y": 55.65,
-          "id": "98",
+          "x": 97.1,
+          "y": 130.1,
+          "id": "100",
           "canvas": "0",
           "order": 0,
           "valid": 1
         },
         {
           "type": "ATTRIBUTE_DISPLAY",
-          "width": 17.9,
-          "height": 1.5,
+          "width": 43.8,
+          "height": 3.8,
           "inputs": {
             "attribute": {
               "device": "taranta://low-sat/endnode/ci-1",
@@ -3334,19 +3374,19 @@
             "backgroundColor": "#ffffff",
             "size": 1,
             "font": "Helvetica",
-            "widgetCss": "background:#f7f8fa;border:1px solid #dde1e6;border-radius:4px;padding:2px 6px;"
+            "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 39.05,
-          "y": 57.15,
-          "id": "99",
+          "x": 97.1,
+          "y": 133.9,
+          "id": "101",
           "canvas": "0",
           "order": 1,
           "valid": 1
         },
         {
           "type": "ATTRIBUTE_DISPLAY",
-          "width": 17.9,
-          "height": 1.5,
+          "width": 43.8,
+          "height": 3.8,
           "inputs": {
             "attribute": {
               "device": "taranta://low-sat/endnode/ci-1",
@@ -3369,19 +3409,19 @@
             "backgroundColor": "#ffffff",
             "size": 1,
             "font": "Helvetica",
-            "widgetCss": "background:#f7f8fa;border:1px solid #dde1e6;border-radius:4px;padding:2px 6px;"
+            "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 39.05,
-          "y": 58.65,
-          "id": "100",
+          "x": 97.1,
+          "y": 137.7,
+          "id": "102",
           "canvas": "0",
           "order": 2,
           "valid": 1
         },
         {
           "type": "ATTRIBUTE_DISPLAY",
-          "width": 17.9,
-          "height": 1.5,
+          "width": 43.8,
+          "height": 3.8,
           "inputs": {
             "attribute": {
               "device": "taranta://low-sat/endnode/ci-1",
@@ -3404,19 +3444,19 @@
             "backgroundColor": "#ffffff",
             "size": 1,
             "font": "Helvetica",
-            "widgetCss": "background:#f7f8fa;border:1px solid #dde1e6;border-radius:4px;padding:2px 6px;"
+            "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 39.05,
-          "y": 60.15,
-          "id": "101",
+          "x": 97.1,
+          "y": 141.5,
+          "id": "103",
           "canvas": "0",
           "order": 3,
           "valid": 1
         },
         {
           "type": "ATTRIBUTE_DISPLAY",
-          "width": 17.9,
-          "height": 1.5,
+          "width": 43.8,
+          "height": 3.8,
           "inputs": {
             "attribute": {
               "device": "taranta://low-sat/endnode/ci-1",
@@ -3439,19 +3479,19 @@
             "backgroundColor": "#ffffff",
             "size": 1,
             "font": "Helvetica",
-            "widgetCss": "background:#f7f8fa;border:1px solid #dde1e6;border-radius:4px;padding:2px 6px;"
+            "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 39.05,
-          "y": 61.65,
-          "id": "102",
+          "x": 97.1,
+          "y": 145.3,
+          "id": "104",
           "canvas": "0",
           "order": 4,
           "valid": 1
         },
         {
           "type": "ATTRIBUTE_DISPLAY",
-          "width": 17.9,
-          "height": 1.5,
+          "width": 43.8,
+          "height": 3.8,
           "inputs": {
             "attribute": {
               "device": "taranta://low-sat/endnode/ci-1",
@@ -3474,19 +3514,19 @@
             "backgroundColor": "#ffffff",
             "size": 1,
             "font": "Helvetica",
-            "widgetCss": "background:#f7f8fa;border:1px solid #dde1e6;border-radius:4px;padding:2px 6px;"
+            "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 39.05,
-          "y": 63.15,
-          "id": "103",
+          "x": 97.1,
+          "y": 149.1,
+          "id": "105",
           "canvas": "0",
           "order": 5,
           "valid": 1
         },
         {
           "type": "BOX",
-          "width": 17.9,
-          "height": 9.0,
+          "width": 43.8,
+          "height": 19.0,
           "inputs": {
             "title": "",
             "bigWidget": 5,
@@ -3506,8 +3546,8 @@
           "innerWidgets": [
             {
               "type": "ATTRIBUTE_DIAL",
-              "width": 5.97,
-              "height": 9.0,
+              "width": 14.6,
+              "height": 19.0,
               "inputs": {
                 "attribute": {
                   "device": "taranta://low-sat/endnode/ci-1",
@@ -3521,17 +3561,17 @@
                 "showTangoDB": false,
                 "widgetCss": ""
               },
-              "x": 39.05,
-              "y": 64.65,
-              "id": "105",
+              "x": 97.1,
+              "y": 152.9,
+              "id": "107",
               "canvas": "0",
               "order": 0,
               "valid": 1
             },
             {
               "type": "ATTRIBUTE_DIAL",
-              "width": 5.96,
-              "height": 9.0,
+              "width": 14.6,
+              "height": 19.0,
               "inputs": {
                 "attribute": {
                   "device": "taranta://low-sat/endnode/ci-1",
@@ -3545,17 +3585,17 @@
                 "showTangoDB": false,
                 "widgetCss": ""
               },
-              "x": 45.02,
-              "y": 64.65,
-              "id": "106",
+              "x": 111.7,
+              "y": 152.9,
+              "id": "108",
               "canvas": "0",
               "order": 1,
               "valid": 1
             },
             {
               "type": "ATTRIBUTE_DIAL",
-              "width": 5.97,
-              "height": 9.0,
+              "width": 14.6,
+              "height": 19.0,
               "inputs": {
                 "attribute": {
                   "device": "taranta://low-sat/endnode/ci-1",
@@ -3569,25 +3609,25 @@
                 "showTangoDB": false,
                 "widgetCss": ""
               },
-              "x": 50.98,
-              "y": 64.65,
-              "id": "107",
+              "x": 126.3,
+              "y": 152.9,
+              "id": "109",
               "canvas": "0",
               "order": 2,
               "valid": 1
             }
           ],
-          "x": 39.05,
-          "y": 64.65,
-          "id": "104",
+          "x": 97.1,
+          "y": 152.9,
+          "id": "106",
           "canvas": "0",
           "order": 6,
           "valid": 1
         },
         {
           "type": "ATTRIBUTE_PLOT",
-          "width": 17.9,
-          "height": 9.0,
+          "width": 43.8,
+          "height": 19.0,
           "inputs": {
             "timeWindow": 600,
             "attributes": [
@@ -3631,17 +3671,17 @@
             "textColor": "#000000",
             "backgroundColor": "#ffffff"
           },
-          "x": 39.05,
-          "y": 73.65,
-          "id": "108",
+          "x": 97.1,
+          "y": 171.9,
+          "id": "110",
           "canvas": "0",
           "order": 7,
           "valid": 1
         },
         {
           "type": "ATTRIBUTE_PLOT",
-          "width": 17.9,
-          "height": 9.0,
+          "width": 43.8,
+          "height": 19.0,
           "inputs": {
             "timeWindow": 600,
             "attributes": [
@@ -3675,28 +3715,28 @@
             "textColor": "#000000",
             "backgroundColor": "#ffffff"
           },
-          "x": 39.05,
-          "y": 82.65,
-          "id": "109",
+          "x": 97.1,
+          "y": 190.9,
+          "id": "111",
           "canvas": "0",
           "order": 8,
           "valid": 1
         }
       ],
-      "x": 39,
-      "y": 54.6,
-      "id": "97",
+      "x": 97.0,
+      "y": 127.0,
+      "id": "99",
       "canvas": "0",
-      "order": 10,
+      "order": 12,
       "valid": 1
     },
     {
       "type": "BOX",
-      "width": 18,
-      "height": 10.6,
+      "width": 44.0,
+      "height": 27.2,
       "inputs": {
         "title": "Information",
-        "bigWidget": 6,
+        "bigWidget": 5,
         "smallWidget": 1,
         "textColor": "#1a1a1a",
         "backgroundColor": "#ffffff",
@@ -3707,14 +3747,14 @@
         "fontFamily": "Helvetica",
         "layout": "vertical",
         "alignment": "Left",
-        "padding": 0,
-        "customCss": "font-weight:bold;"
+        "padding": 0.25,
+        "customCss": "font-weight: bold"
       },
       "innerWidgets": [
         {
           "type": "ATTRIBUTE_DISPLAY",
-          "width": 17.9,
-          "height": 1.5,
+          "width": 43.8,
+          "height": 3.8,
           "inputs": {
             "attribute": {
               "device": "taranta://low-sat/endnode/ci-1",
@@ -3737,19 +3777,19 @@
             "backgroundColor": "#ffffff",
             "size": 1,
             "font": "Helvetica",
-            "widgetCss": "background:#f7f8fa;border:1px solid #dde1e6;border-radius:4px;padding:2px 6px;"
+            "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 58.05,
-          "y": 58.25,
-          "id": "111",
+          "x": 144.1,
+          "y": 137.5,
+          "id": "113",
           "canvas": "0",
           "order": 0,
           "valid": 1
         },
         {
           "type": "ATTRIBUTE_DISPLAY",
-          "width": 17.9,
-          "height": 1.5,
+          "width": 43.8,
+          "height": 3.8,
           "inputs": {
             "attribute": {
               "device": "taranta://low-sat/endnode/ci-1",
@@ -3772,19 +3812,19 @@
             "backgroundColor": "#ffffff",
             "size": 1,
             "font": "Helvetica",
-            "widgetCss": "background:#f7f8fa;border:1px solid #dde1e6;border-radius:4px;padding:2px 6px;"
+            "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 58.05,
-          "y": 59.75,
-          "id": "112",
+          "x": 144.1,
+          "y": 141.3,
+          "id": "114",
           "canvas": "0",
           "order": 1,
           "valid": 1
         },
         {
           "type": "ATTRIBUTE_DISPLAY",
-          "width": 17.9,
-          "height": 1.5,
+          "width": 43.8,
+          "height": 3.8,
           "inputs": {
             "attribute": {
               "device": "taranta://low-sat/endnode/ci-1",
@@ -3807,19 +3847,19 @@
             "backgroundColor": "#ffffff",
             "size": 1,
             "font": "Helvetica",
-            "widgetCss": "background:#f7f8fa;border:1px solid #dde1e6;border-radius:4px;padding:2px 6px;"
+            "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 58.05,
-          "y": 61.25,
-          "id": "113",
+          "x": 144.1,
+          "y": 145.1,
+          "id": "115",
           "canvas": "0",
           "order": 2,
           "valid": 1
         },
         {
           "type": "ATTRIBUTE_DISPLAY",
-          "width": 17.9,
-          "height": 1.5,
+          "width": 43.8,
+          "height": 3.8,
           "inputs": {
             "attribute": {
               "device": "taranta://low-sat/endnode/ci-1",
@@ -3842,19 +3882,19 @@
             "backgroundColor": "#ffffff",
             "size": 1,
             "font": "Helvetica",
-            "widgetCss": "background:#f7f8fa;border:1px solid #dde1e6;border-radius:4px;padding:2px 6px;"
+            "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 58.05,
-          "y": 62.75,
-          "id": "114",
+          "x": 144.1,
+          "y": 148.9,
+          "id": "116",
           "canvas": "0",
           "order": 3,
           "valid": 1
         },
         {
           "type": "ATTRIBUTE_DISPLAY",
-          "width": 17.9,
-          "height": 1.5,
+          "width": 43.8,
+          "height": 3.8,
           "inputs": {
             "attribute": {
               "device": "taranta://low-sat/endnode/ci-1",
@@ -3877,19 +3917,19 @@
             "backgroundColor": "#ffffff",
             "size": 1,
             "font": "Helvetica",
-            "widgetCss": "background:#f7f8fa;border:1px solid #dde1e6;border-radius:4px;padding:2px 6px;"
+            "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 58.05,
-          "y": 64.25,
-          "id": "115",
+          "x": 144.1,
+          "y": 152.7,
+          "id": "117",
           "canvas": "0",
           "order": 4,
           "valid": 1
         },
         {
           "type": "ATTRIBUTE_DISPLAY",
-          "width": 17.9,
-          "height": 1.5,
+          "width": 43.8,
+          "height": 3.8,
           "inputs": {
             "attribute": {
               "device": "taranta://low-sat/endnode/ci-1",
@@ -3912,30 +3952,30 @@
             "backgroundColor": "#ffffff",
             "size": 1,
             "font": "Helvetica",
-            "widgetCss": "background:#f7f8fa;border:1px solid #dde1e6;border-radius:4px;padding:2px 6px;"
+            "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 58.05,
-          "y": 65.75,
-          "id": "116",
+          "x": 144.1,
+          "y": 156.5,
+          "id": "118",
           "canvas": "0",
           "order": 5,
           "valid": 1
         }
       ],
-      "x": 58,
-      "y": 57.2,
-      "id": "110",
+      "x": 144.0,
+      "y": 134.4,
+      "id": "112",
       "canvas": "0",
-      "order": 11,
+      "order": 13,
       "valid": 1
     },
     {
       "type": "BOX",
-      "width": 18,
-      "height": 3.1,
+      "width": 44.0,
+      "height": 8.2,
       "inputs": {
         "title": "Settings",
-        "bigWidget": 6,
+        "bigWidget": 5,
         "smallWidget": 1,
         "textColor": "#1a1a1a",
         "backgroundColor": "#ffffff",
@@ -3946,14 +3986,14 @@
         "fontFamily": "Helvetica",
         "layout": "vertical",
         "alignment": "Left",
-        "padding": 0,
-        "customCss": "font-weight:bold;"
+        "padding": 0.25,
+        "customCss": "font-weight: bold"
       },
       "innerWidgets": [
         {
           "type": "ATTRIBUTE WRITER DROPDOWN",
-          "width": 17.9,
-          "height": 1.5,
+          "width": 43.8,
+          "height": 3.8,
           "inputs": {
             "attribute": {
               "device": "taranta://low-sat/endnode/ci-1",
@@ -4050,30 +4090,30 @@
             "font": "Helvetica",
             "dropdownButtonCss": "",
             "submitButtonCss": "",
-            "customCss": ""
+            "customCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 1.05,
-          "y": 60.85,
-          "id": "118",
+          "x": 3.1,
+          "y": 152.5,
+          "id": "120",
           "canvas": "0",
           "order": 0,
           "valid": 1
         }
       ],
-      "x": 1,
-      "y": 59.800000000000004,
-      "id": "117",
+      "x": 3.0,
+      "y": 149.4,
+      "id": "119",
       "canvas": "0",
-      "order": 12,
+      "order": 14,
       "valid": 1
     },
     {
       "type": "BOX",
-      "width": 18,
-      "height": 3.1,
+      "width": 44.0,
+      "height": 8.2,
       "inputs": {
         "title": "Commands",
-        "bigWidget": 6,
+        "bigWidget": 5,
         "smallWidget": 1,
         "textColor": "#1a1a1a",
         "backgroundColor": "#ffffff",
@@ -4084,14 +4124,14 @@
         "fontFamily": "Helvetica",
         "layout": "vertical",
         "alignment": "Left",
-        "padding": 0,
-        "customCss": "font-weight:bold;"
+        "padding": 0.25,
+        "customCss": "font-weight: bold"
       },
       "innerWidgets": [
         {
           "type": "COMMAND",
-          "width": 17.9,
-          "height": 1.5,
+          "width": 43.8,
+          "height": 3.8,
           "inputs": {
             "title": "Get Version Info",
             "buttonText": "GetVersionInfo",
@@ -4117,21 +4157,21 @@
             "size": 1,
             "font": "Helvetica",
             "btnCss": "",
-            "widgetCss": ""
+            "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 1.05,
-          "y": 64.95,
-          "id": "120",
+          "x": 50.1,
+          "y": 156.3,
+          "id": "122",
           "canvas": "0",
           "order": 0,
           "valid": 1
         }
       ],
-      "x": 1,
-      "y": 63.900000000000006,
-      "id": "119",
+      "x": 50.0,
+      "y": 153.2,
+      "id": "121",
       "canvas": "0",
-      "order": 13,
+      "order": 15,
       "valid": 1
     }
   ],

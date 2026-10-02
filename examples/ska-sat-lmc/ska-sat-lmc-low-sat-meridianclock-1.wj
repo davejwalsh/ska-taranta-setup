@@ -10,8 +10,8 @@
   "widget": [
     {
       "type": "LABEL",
-      "width": 75,
-      "height": 2.0,
+      "width": 166.5,
+      "height": 4.1,
       "inputs": {
         "text": "ska-sat-lmc — low-sat/meridianclock/1  (SatMeridianClock)",
         "textColor": "#1a1a1a",
@@ -22,22 +22,42 @@
         "automaticResize": "Disabled",
         "size": 1.4,
         "linkTo": "",
-        "customCss": ""
+        "customCss": "padding: 0 12px\nbox-sizing: border-box"
       },
-      "x": 1,
-      "y": 0.5,
+      "x": 3.0,
+      "y": 1.5,
       "id": "1",
       "canvas": "0",
       "order": 0,
       "valid": 1
     },
     {
+      "type": "DASHLINK",
+      "width": 17.0,
+      "height": 4.1,
+      "inputs": {
+        "DefaultDashboard": "ska-sat-lmc - Overview",
+        "HideDropdown": true,
+        "NewTab": false,
+        "ButtonText": "Overview",
+        "DropDownCss": "",
+        "ButtonCss": "width: 100%\nfont-weight: bold",
+        "CustomCss": "padding: 0 4px\nbox-sizing: border-box"
+      },
+      "x": 171.0,
+      "y": 1.5,
+      "id": "2",
+      "canvas": "0",
+      "order": 1,
+      "valid": 1
+    },
+    {
       "type": "BOX",
-      "width": 18,
-      "height": 22.6,
+      "width": 44.0,
+      "height": 53.8,
       "inputs": {
         "title": "Device",
-        "bigWidget": 6,
+        "bigWidget": 5,
         "smallWidget": 1,
         "textColor": "#1a1a1a",
         "backgroundColor": "#ffffff",
@@ -48,14 +68,14 @@
         "fontFamily": "Helvetica",
         "layout": "vertical",
         "alignment": "Left",
-        "padding": 0,
-        "customCss": "font-weight:bold;"
+        "padding": 0.25,
+        "customCss": "font-weight: bold"
       },
       "innerWidgets": [
         {
           "type": "DEVICE_STATUS",
-          "width": 17.9,
-          "height": 1.5,
+          "width": 43.8,
+          "height": 3.8,
           "inputs": {
             "device": "taranta://low-sat/meridianclock/1",
             "state": {
@@ -72,19 +92,19 @@
             "backgroundColor": "#ffffff",
             "textSize": 1,
             "linkTo": "",
-            "widgetCss": ""
+            "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 1.05,
-          "y": 3.55,
-          "id": "3",
+          "x": 3.1,
+          "y": 8.7,
+          "id": "4",
           "canvas": "0",
           "order": 0,
           "valid": 1
         },
         {
           "type": "LED_DISPLAY",
-          "width": 17.9,
-          "height": 1.5,
+          "width": 43.8,
+          "height": 3.8,
           "inputs": {
             "attribute": {
               "device": "taranta://low-sat/meridianclock/1",
@@ -103,19 +123,19 @@
             "showAttribute": "Label",
             "alignTextCenter": false,
             "alignValueRight": true,
-            "customCss": ""
+            "customCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 1.05,
-          "y": 5.05,
-          "id": "4",
+          "x": 3.1,
+          "y": 12.5,
+          "id": "5",
           "canvas": "0",
           "order": 1,
           "valid": 1
         },
         {
           "type": "ATTRIBUTE_DISPLAY",
-          "width": 17.9,
-          "height": 1.5,
+          "width": 43.8,
+          "height": 3.8,
           "inputs": {
             "attribute": {
               "device": "taranta://low-sat/meridianclock/1",
@@ -138,19 +158,19 @@
             "backgroundColor": "#ffffff",
             "size": 1,
             "font": "Helvetica",
-            "widgetCss": "background:#f7f8fa;border:1px solid #dde1e6;border-radius:4px;padding:2px 6px;"
+            "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 1.05,
-          "y": 6.55,
-          "id": "5",
+          "x": 3.1,
+          "y": 16.3,
+          "id": "6",
           "canvas": "0",
           "order": 2,
           "valid": 1
         },
         {
           "type": "ATTRIBUTE WRITER DROPDOWN",
-          "width": 17.9,
-          "height": 1.5,
+          "width": 43.8,
+          "height": 3.8,
           "inputs": {
             "attribute": {
               "device": "taranta://low-sat/meridianclock/1",
@@ -183,19 +203,19 @@
             "font": "Helvetica",
             "dropdownButtonCss": "",
             "submitButtonCss": "",
-            "customCss": ""
+            "customCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 1.05,
-          "y": 8.05,
-          "id": "6",
+          "x": 3.1,
+          "y": 20.1,
+          "id": "7",
           "canvas": "0",
           "order": 3,
           "valid": 1
         },
         {
           "type": "ATTRIBUTE WRITER DROPDOWN",
-          "width": 17.9,
-          "height": 1.5,
+          "width": 43.8,
+          "height": 3.8,
           "inputs": {
             "attribute": {
               "device": "taranta://low-sat/meridianclock/1",
@@ -232,19 +252,19 @@
             "font": "Helvetica",
             "dropdownButtonCss": "",
             "submitButtonCss": "",
-            "customCss": ""
+            "customCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 1.05,
-          "y": 9.55,
-          "id": "7",
+          "x": 3.1,
+          "y": 23.9,
+          "id": "8",
           "canvas": "0",
           "order": 4,
           "valid": 1
         },
         {
           "type": "ATTRIBUTE_LOGGER",
-          "width": 17.9,
-          "height": 9.0,
+          "width": 43.8,
+          "height": 19.0,
           "inputs": {
             "attribute": {
               "device": "taranta://low-sat/meridianclock/1",
@@ -257,21 +277,21 @@
             "showTangoDB": false,
             "showAttribute": "Label",
             "showTime": true,
-            "OuterDivCSS": "background:#f7f8fa;border:1px solid #dde1e6;border-radius:4px;padding:2px 6px;",
+            "OuterDivCSS": "padding: 0 10px\nbox-sizing: border-box",
             "LastValueCSS": "",
-            "TableCSS": "font-size:11px;"
+            "TableCSS": "font-size: 11px"
           },
-          "x": 1.05,
-          "y": 11.05,
-          "id": "8",
+          "x": 3.1,
+          "y": 27.7,
+          "id": "9",
           "canvas": "0",
           "order": 5,
           "valid": 1
         },
         {
           "type": "ATTRIBUTE_DISPLAY",
-          "width": 17.9,
-          "height": 1.5,
+          "width": 43.8,
+          "height": 3.8,
           "inputs": {
             "attribute": {
               "device": "taranta://low-sat/meridianclock/1",
@@ -294,19 +314,19 @@
             "backgroundColor": "#ffffff",
             "size": 1,
             "font": "Helvetica",
-            "widgetCss": "background:#f7f8fa;border:1px solid #dde1e6;border-radius:4px;padding:2px 6px;"
+            "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 1.05,
-          "y": 20.05,
-          "id": "9",
+          "x": 3.1,
+          "y": 46.7,
+          "id": "10",
           "canvas": "0",
           "order": 6,
           "valid": 1
         },
         {
           "type": "ATTRIBUTE_DISPLAY",
-          "width": 17.9,
-          "height": 1.5,
+          "width": 43.8,
+          "height": 3.8,
           "inputs": {
             "attribute": {
               "device": "taranta://low-sat/meridianclock/1",
@@ -329,19 +349,19 @@
             "backgroundColor": "#ffffff",
             "size": 1,
             "font": "Helvetica",
-            "widgetCss": "background:#f7f8fa;border:1px solid #dde1e6;border-radius:4px;padding:2px 6px;"
+            "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 1.05,
-          "y": 21.55,
-          "id": "10",
+          "x": 3.1,
+          "y": 50.5,
+          "id": "11",
           "canvas": "0",
           "order": 7,
           "valid": 1
         },
         {
           "type": "ATTRIBUTE WRITER DROPDOWN",
-          "width": 17.9,
-          "height": 1.5,
+          "width": 43.8,
+          "height": 3.8,
           "inputs": {
             "attribute": {
               "device": "taranta://low-sat/meridianclock/1",
@@ -390,30 +410,30 @@
             "font": "Helvetica",
             "dropdownButtonCss": "",
             "submitButtonCss": "",
-            "customCss": ""
+            "customCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 1.05,
-          "y": 23.05,
-          "id": "11",
+          "x": 3.1,
+          "y": 54.3,
+          "id": "12",
           "canvas": "0",
           "order": 8,
           "valid": 1
         }
       ],
-      "x": 1,
-      "y": 2.5,
-      "id": "2",
+      "x": 3.0,
+      "y": 5.6,
+      "id": "3",
       "canvas": "0",
-      "order": 1,
+      "order": 2,
       "valid": 1
     },
     {
       "type": "BOX",
-      "width": 18,
-      "height": 40.6,
+      "width": 44.0,
+      "height": 99.4,
       "inputs": {
         "title": "GNTP",
-        "bigWidget": 6,
+        "bigWidget": 5,
         "smallWidget": 1,
         "textColor": "#1a1a1a",
         "backgroundColor": "#ffffff",
@@ -424,14 +444,14 @@
         "fontFamily": "Helvetica",
         "layout": "vertical",
         "alignment": "Left",
-        "padding": 0,
-        "customCss": "font-weight:bold;"
+        "padding": 0.25,
+        "customCss": "font-weight: bold"
       },
       "innerWidgets": [
         {
           "type": "ATTRIBUTE_DISPLAY",
-          "width": 17.9,
-          "height": 1.5,
+          "width": 43.8,
+          "height": 3.8,
           "inputs": {
             "attribute": {
               "device": "taranta://low-sat/meridianclock/1",
@@ -454,19 +474,19 @@
             "backgroundColor": "#ffffff",
             "size": 1,
             "font": "Helvetica",
-            "widgetCss": "background:#f7f8fa;border:1px solid #dde1e6;border-radius:4px;padding:2px 6px;"
+            "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 20.05,
-          "y": 3.55,
-          "id": "13",
+          "x": 50.1,
+          "y": 8.7,
+          "id": "14",
           "canvas": "0",
           "order": 0,
           "valid": 1
         },
         {
           "type": "ATTRIBUTE_DISPLAY",
-          "width": 17.9,
-          "height": 1.5,
+          "width": 43.8,
+          "height": 3.8,
           "inputs": {
             "attribute": {
               "device": "taranta://low-sat/meridianclock/1",
@@ -489,19 +509,19 @@
             "backgroundColor": "#ffffff",
             "size": 1,
             "font": "Helvetica",
-            "widgetCss": "background:#f7f8fa;border:1px solid #dde1e6;border-radius:4px;padding:2px 6px;"
+            "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 20.05,
-          "y": 5.05,
-          "id": "14",
+          "x": 50.1,
+          "y": 12.5,
+          "id": "15",
           "canvas": "0",
           "order": 1,
           "valid": 1
         },
         {
           "type": "ATTRIBUTE_DISPLAY",
-          "width": 17.9,
-          "height": 1.5,
+          "width": 43.8,
+          "height": 3.8,
           "inputs": {
             "attribute": {
               "device": "taranta://low-sat/meridianclock/1",
@@ -524,19 +544,19 @@
             "backgroundColor": "#ffffff",
             "size": 1,
             "font": "Helvetica",
-            "widgetCss": "background:#f7f8fa;border:1px solid #dde1e6;border-radius:4px;padding:2px 6px;"
+            "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 20.05,
-          "y": 6.55,
-          "id": "15",
+          "x": 50.1,
+          "y": 16.3,
+          "id": "16",
           "canvas": "0",
           "order": 2,
           "valid": 1
         },
         {
           "type": "ATTRIBUTE_DISPLAY",
-          "width": 17.9,
-          "height": 1.5,
+          "width": 43.8,
+          "height": 3.8,
           "inputs": {
             "attribute": {
               "device": "taranta://low-sat/meridianclock/1",
@@ -559,19 +579,19 @@
             "backgroundColor": "#ffffff",
             "size": 1,
             "font": "Helvetica",
-            "widgetCss": "background:#f7f8fa;border:1px solid #dde1e6;border-radius:4px;padding:2px 6px;"
+            "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 20.05,
-          "y": 8.05,
-          "id": "16",
+          "x": 50.1,
+          "y": 20.1,
+          "id": "17",
           "canvas": "0",
           "order": 3,
           "valid": 1
         },
         {
           "type": "ATTRIBUTE_DISPLAY",
-          "width": 17.9,
-          "height": 1.5,
+          "width": 43.8,
+          "height": 3.8,
           "inputs": {
             "attribute": {
               "device": "taranta://low-sat/meridianclock/1",
@@ -594,19 +614,19 @@
             "backgroundColor": "#ffffff",
             "size": 1,
             "font": "Helvetica",
-            "widgetCss": "background:#f7f8fa;border:1px solid #dde1e6;border-radius:4px;padding:2px 6px;"
+            "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 20.05,
-          "y": 9.55,
-          "id": "17",
+          "x": 50.1,
+          "y": 23.9,
+          "id": "18",
           "canvas": "0",
           "order": 4,
           "valid": 1
         },
         {
           "type": "ATTRIBUTE_DISPLAY",
-          "width": 17.9,
-          "height": 1.5,
+          "width": 43.8,
+          "height": 3.8,
           "inputs": {
             "attribute": {
               "device": "taranta://low-sat/meridianclock/1",
@@ -629,19 +649,19 @@
             "backgroundColor": "#ffffff",
             "size": 1,
             "font": "Helvetica",
-            "widgetCss": "background:#f7f8fa;border:1px solid #dde1e6;border-radius:4px;padding:2px 6px;"
+            "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 20.05,
-          "y": 11.05,
-          "id": "18",
+          "x": 50.1,
+          "y": 27.7,
+          "id": "19",
           "canvas": "0",
           "order": 5,
           "valid": 1
         },
         {
           "type": "ATTRIBUTE_DISPLAY",
-          "width": 17.9,
-          "height": 1.5,
+          "width": 43.8,
+          "height": 3.8,
           "inputs": {
             "attribute": {
               "device": "taranta://low-sat/meridianclock/1",
@@ -664,19 +684,19 @@
             "backgroundColor": "#ffffff",
             "size": 1,
             "font": "Helvetica",
-            "widgetCss": "background:#f7f8fa;border:1px solid #dde1e6;border-radius:4px;padding:2px 6px;"
+            "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 20.05,
-          "y": 12.55,
-          "id": "19",
+          "x": 50.1,
+          "y": 31.5,
+          "id": "20",
           "canvas": "0",
           "order": 6,
           "valid": 1
         },
         {
           "type": "ATTRIBUTE_DISPLAY",
-          "width": 17.9,
-          "height": 1.5,
+          "width": 43.8,
+          "height": 3.8,
           "inputs": {
             "attribute": {
               "device": "taranta://low-sat/meridianclock/1",
@@ -699,19 +719,19 @@
             "backgroundColor": "#ffffff",
             "size": 1,
             "font": "Helvetica",
-            "widgetCss": "background:#f7f8fa;border:1px solid #dde1e6;border-radius:4px;padding:2px 6px;"
+            "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 20.05,
-          "y": 14.05,
-          "id": "20",
+          "x": 50.1,
+          "y": 35.3,
+          "id": "21",
           "canvas": "0",
           "order": 7,
           "valid": 1
         },
         {
           "type": "ATTRIBUTE_DISPLAY",
-          "width": 17.9,
-          "height": 1.5,
+          "width": 43.8,
+          "height": 3.8,
           "inputs": {
             "attribute": {
               "device": "taranta://low-sat/meridianclock/1",
@@ -734,19 +754,19 @@
             "backgroundColor": "#ffffff",
             "size": 1,
             "font": "Helvetica",
-            "widgetCss": "background:#f7f8fa;border:1px solid #dde1e6;border-radius:4px;padding:2px 6px;"
+            "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 20.05,
-          "y": 15.55,
-          "id": "21",
+          "x": 50.1,
+          "y": 39.1,
+          "id": "22",
           "canvas": "0",
           "order": 8,
           "valid": 1
         },
         {
           "type": "ATTRIBUTE_DISPLAY",
-          "width": 17.9,
-          "height": 1.5,
+          "width": 43.8,
+          "height": 3.8,
           "inputs": {
             "attribute": {
               "device": "taranta://low-sat/meridianclock/1",
@@ -769,19 +789,19 @@
             "backgroundColor": "#ffffff",
             "size": 1,
             "font": "Helvetica",
-            "widgetCss": "background:#f7f8fa;border:1px solid #dde1e6;border-radius:4px;padding:2px 6px;"
+            "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 20.05,
-          "y": 17.05,
-          "id": "22",
+          "x": 50.1,
+          "y": 42.9,
+          "id": "23",
           "canvas": "0",
           "order": 9,
           "valid": 1
         },
         {
           "type": "ATTRIBUTE_DISPLAY",
-          "width": 17.9,
-          "height": 1.5,
+          "width": 43.8,
+          "height": 3.8,
           "inputs": {
             "attribute": {
               "device": "taranta://low-sat/meridianclock/1",
@@ -804,19 +824,19 @@
             "backgroundColor": "#ffffff",
             "size": 1,
             "font": "Helvetica",
-            "widgetCss": "background:#f7f8fa;border:1px solid #dde1e6;border-radius:4px;padding:2px 6px;"
+            "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 20.05,
-          "y": 18.55,
-          "id": "23",
+          "x": 50.1,
+          "y": 46.7,
+          "id": "24",
           "canvas": "0",
           "order": 10,
           "valid": 1
         },
         {
           "type": "ATTRIBUTE_DISPLAY",
-          "width": 17.9,
-          "height": 1.5,
+          "width": 43.8,
+          "height": 3.8,
           "inputs": {
             "attribute": {
               "device": "taranta://low-sat/meridianclock/1",
@@ -839,19 +859,19 @@
             "backgroundColor": "#ffffff",
             "size": 1,
             "font": "Helvetica",
-            "widgetCss": "background:#f7f8fa;border:1px solid #dde1e6;border-radius:4px;padding:2px 6px;"
+            "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 20.05,
-          "y": 20.05,
-          "id": "24",
+          "x": 50.1,
+          "y": 50.5,
+          "id": "25",
           "canvas": "0",
           "order": 11,
           "valid": 1
         },
         {
           "type": "ATTRIBUTE_DISPLAY",
-          "width": 17.9,
-          "height": 1.5,
+          "width": 43.8,
+          "height": 3.8,
           "inputs": {
             "attribute": {
               "device": "taranta://low-sat/meridianclock/1",
@@ -874,19 +894,19 @@
             "backgroundColor": "#ffffff",
             "size": 1,
             "font": "Helvetica",
-            "widgetCss": "background:#f7f8fa;border:1px solid #dde1e6;border-radius:4px;padding:2px 6px;"
+            "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 20.05,
-          "y": 21.55,
-          "id": "25",
+          "x": 50.1,
+          "y": 54.3,
+          "id": "26",
           "canvas": "0",
           "order": 12,
           "valid": 1
         },
         {
           "type": "ATTRIBUTE_DISPLAY",
-          "width": 17.9,
-          "height": 1.5,
+          "width": 43.8,
+          "height": 3.8,
           "inputs": {
             "attribute": {
               "device": "taranta://low-sat/meridianclock/1",
@@ -909,19 +929,19 @@
             "backgroundColor": "#ffffff",
             "size": 1,
             "font": "Helvetica",
-            "widgetCss": "background:#f7f8fa;border:1px solid #dde1e6;border-radius:4px;padding:2px 6px;"
+            "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 20.05,
-          "y": 23.05,
-          "id": "26",
+          "x": 50.1,
+          "y": 58.1,
+          "id": "27",
           "canvas": "0",
           "order": 13,
           "valid": 1
         },
         {
           "type": "ATTRIBUTE_DISPLAY",
-          "width": 17.9,
-          "height": 1.5,
+          "width": 43.8,
+          "height": 3.8,
           "inputs": {
             "attribute": {
               "device": "taranta://low-sat/meridianclock/1",
@@ -944,19 +964,19 @@
             "backgroundColor": "#ffffff",
             "size": 1,
             "font": "Helvetica",
-            "widgetCss": "background:#f7f8fa;border:1px solid #dde1e6;border-radius:4px;padding:2px 6px;"
+            "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 20.05,
-          "y": 24.55,
-          "id": "27",
+          "x": 50.1,
+          "y": 61.9,
+          "id": "28",
           "canvas": "0",
           "order": 14,
           "valid": 1
         },
         {
           "type": "ATTRIBUTE_DISPLAY",
-          "width": 17.9,
-          "height": 1.5,
+          "width": 43.8,
+          "height": 3.8,
           "inputs": {
             "attribute": {
               "device": "taranta://low-sat/meridianclock/1",
@@ -979,19 +999,19 @@
             "backgroundColor": "#ffffff",
             "size": 1,
             "font": "Helvetica",
-            "widgetCss": "background:#f7f8fa;border:1px solid #dde1e6;border-radius:4px;padding:2px 6px;"
+            "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 20.05,
-          "y": 26.05,
-          "id": "28",
+          "x": 50.1,
+          "y": 65.7,
+          "id": "29",
           "canvas": "0",
           "order": 15,
           "valid": 1
         },
         {
           "type": "ATTRIBUTE_DISPLAY",
-          "width": 17.9,
-          "height": 1.5,
+          "width": 43.8,
+          "height": 3.8,
           "inputs": {
             "attribute": {
               "device": "taranta://low-sat/meridianclock/1",
@@ -1014,19 +1034,19 @@
             "backgroundColor": "#ffffff",
             "size": 1,
             "font": "Helvetica",
-            "widgetCss": "background:#f7f8fa;border:1px solid #dde1e6;border-radius:4px;padding:2px 6px;"
+            "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 20.05,
-          "y": 27.55,
-          "id": "29",
+          "x": 50.1,
+          "y": 69.5,
+          "id": "30",
           "canvas": "0",
           "order": 16,
           "valid": 1
         },
         {
           "type": "ATTRIBUTE_DISPLAY",
-          "width": 17.9,
-          "height": 1.5,
+          "width": 43.8,
+          "height": 3.8,
           "inputs": {
             "attribute": {
               "device": "taranta://low-sat/meridianclock/1",
@@ -1049,19 +1069,19 @@
             "backgroundColor": "#ffffff",
             "size": 1,
             "font": "Helvetica",
-            "widgetCss": "background:#f7f8fa;border:1px solid #dde1e6;border-radius:4px;padding:2px 6px;"
+            "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 20.05,
-          "y": 29.05,
-          "id": "30",
+          "x": 50.1,
+          "y": 73.3,
+          "id": "31",
           "canvas": "0",
           "order": 17,
           "valid": 1
         },
         {
           "type": "ATTRIBUTE_DISPLAY",
-          "width": 17.9,
-          "height": 1.5,
+          "width": 43.8,
+          "height": 3.8,
           "inputs": {
             "attribute": {
               "device": "taranta://low-sat/meridianclock/1",
@@ -1084,19 +1104,19 @@
             "backgroundColor": "#ffffff",
             "size": 1,
             "font": "Helvetica",
-            "widgetCss": "background:#f7f8fa;border:1px solid #dde1e6;border-radius:4px;padding:2px 6px;"
+            "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 20.05,
-          "y": 30.55,
-          "id": "31",
+          "x": 50.1,
+          "y": 77.1,
+          "id": "32",
           "canvas": "0",
           "order": 18,
           "valid": 1
         },
         {
           "type": "ATTRIBUTE_DISPLAY",
-          "width": 17.9,
-          "height": 1.5,
+          "width": 43.8,
+          "height": 3.8,
           "inputs": {
             "attribute": {
               "device": "taranta://low-sat/meridianclock/1",
@@ -1119,19 +1139,19 @@
             "backgroundColor": "#ffffff",
             "size": 1,
             "font": "Helvetica",
-            "widgetCss": "background:#f7f8fa;border:1px solid #dde1e6;border-radius:4px;padding:2px 6px;"
+            "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 20.05,
-          "y": 32.05,
-          "id": "32",
+          "x": 50.1,
+          "y": 80.9,
+          "id": "33",
           "canvas": "0",
           "order": 19,
           "valid": 1
         },
         {
           "type": "ATTRIBUTE_PLOT",
-          "width": 17.9,
-          "height": 9.0,
+          "width": 43.8,
+          "height": 19.0,
           "inputs": {
             "timeWindow": 600,
             "attributes": [
@@ -1155,28 +1175,28 @@
             "textColor": "#000000",
             "backgroundColor": "#ffffff"
           },
-          "x": 20.05,
-          "y": 33.55,
-          "id": "33",
+          "x": 50.1,
+          "y": 84.7,
+          "id": "34",
           "canvas": "0",
           "order": 20,
           "valid": 1
         }
       ],
-      "x": 20,
-      "y": 2.5,
-      "id": "12",
+      "x": 50.0,
+      "y": 5.6,
+      "id": "13",
       "canvas": "0",
-      "order": 2,
+      "order": 3,
       "valid": 1
     },
     {
       "type": "BOX",
-      "width": 18,
-      "height": 30.1,
+      "width": 44.0,
+      "height": 76.6,
       "inputs": {
         "title": "GPS",
-        "bigWidget": 6,
+        "bigWidget": 5,
         "smallWidget": 1,
         "textColor": "#1a1a1a",
         "backgroundColor": "#ffffff",
@@ -1187,14 +1207,14 @@
         "fontFamily": "Helvetica",
         "layout": "vertical",
         "alignment": "Left",
-        "padding": 0,
-        "customCss": "font-weight:bold;"
+        "padding": 0.25,
+        "customCss": "font-weight: bold"
       },
       "innerWidgets": [
         {
           "type": "ATTRIBUTE_DISPLAY",
-          "width": 17.9,
-          "height": 1.5,
+          "width": 43.8,
+          "height": 3.8,
           "inputs": {
             "attribute": {
               "device": "taranta://low-sat/meridianclock/1",
@@ -1217,19 +1237,19 @@
             "backgroundColor": "#ffffff",
             "size": 1,
             "font": "Helvetica",
-            "widgetCss": "background:#f7f8fa;border:1px solid #dde1e6;border-radius:4px;padding:2px 6px;"
+            "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 39.05,
-          "y": 3.55,
-          "id": "35",
+          "x": 97.1,
+          "y": 8.7,
+          "id": "36",
           "canvas": "0",
           "order": 0,
           "valid": 1
         },
         {
           "type": "ATTRIBUTE_DISPLAY",
-          "width": 17.9,
-          "height": 1.5,
+          "width": 43.8,
+          "height": 3.8,
           "inputs": {
             "attribute": {
               "device": "taranta://low-sat/meridianclock/1",
@@ -1252,19 +1272,19 @@
             "backgroundColor": "#ffffff",
             "size": 1,
             "font": "Helvetica",
-            "widgetCss": "background:#f7f8fa;border:1px solid #dde1e6;border-radius:4px;padding:2px 6px;"
+            "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 39.05,
-          "y": 5.05,
-          "id": "36",
+          "x": 97.1,
+          "y": 12.5,
+          "id": "37",
           "canvas": "0",
           "order": 1,
           "valid": 1
         },
         {
           "type": "ATTRIBUTE_DISPLAY",
-          "width": 17.9,
-          "height": 1.5,
+          "width": 43.8,
+          "height": 3.8,
           "inputs": {
             "attribute": {
               "device": "taranta://low-sat/meridianclock/1",
@@ -1287,19 +1307,19 @@
             "backgroundColor": "#ffffff",
             "size": 1,
             "font": "Helvetica",
-            "widgetCss": "background:#f7f8fa;border:1px solid #dde1e6;border-radius:4px;padding:2px 6px;"
+            "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 39.05,
-          "y": 6.55,
-          "id": "37",
+          "x": 97.1,
+          "y": 16.3,
+          "id": "38",
           "canvas": "0",
           "order": 2,
           "valid": 1
         },
         {
           "type": "ATTRIBUTE_DISPLAY",
-          "width": 17.9,
-          "height": 1.5,
+          "width": 43.8,
+          "height": 3.8,
           "inputs": {
             "attribute": {
               "device": "taranta://low-sat/meridianclock/1",
@@ -1322,19 +1342,19 @@
             "backgroundColor": "#ffffff",
             "size": 1,
             "font": "Helvetica",
-            "widgetCss": "background:#f7f8fa;border:1px solid #dde1e6;border-radius:4px;padding:2px 6px;"
+            "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 39.05,
-          "y": 8.05,
-          "id": "38",
+          "x": 97.1,
+          "y": 20.1,
+          "id": "39",
           "canvas": "0",
           "order": 3,
           "valid": 1
         },
         {
           "type": "ATTRIBUTE_DISPLAY",
-          "width": 17.9,
-          "height": 1.5,
+          "width": 43.8,
+          "height": 3.8,
           "inputs": {
             "attribute": {
               "device": "taranta://low-sat/meridianclock/1",
@@ -1357,19 +1377,19 @@
             "backgroundColor": "#ffffff",
             "size": 1,
             "font": "Helvetica",
-            "widgetCss": "background:#f7f8fa;border:1px solid #dde1e6;border-radius:4px;padding:2px 6px;"
+            "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 39.05,
-          "y": 9.55,
-          "id": "39",
+          "x": 97.1,
+          "y": 23.9,
+          "id": "40",
           "canvas": "0",
           "order": 4,
           "valid": 1
         },
         {
           "type": "ATTRIBUTE_DISPLAY",
-          "width": 17.9,
-          "height": 1.5,
+          "width": 43.8,
+          "height": 3.8,
           "inputs": {
             "attribute": {
               "device": "taranta://low-sat/meridianclock/1",
@@ -1392,19 +1412,19 @@
             "backgroundColor": "#ffffff",
             "size": 1,
             "font": "Helvetica",
-            "widgetCss": "background:#f7f8fa;border:1px solid #dde1e6;border-radius:4px;padding:2px 6px;"
+            "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 39.05,
-          "y": 11.05,
-          "id": "40",
+          "x": 97.1,
+          "y": 27.7,
+          "id": "41",
           "canvas": "0",
           "order": 5,
           "valid": 1
         },
         {
           "type": "ATTRIBUTE_DISPLAY",
-          "width": 17.9,
-          "height": 1.5,
+          "width": 43.8,
+          "height": 3.8,
           "inputs": {
             "attribute": {
               "device": "taranta://low-sat/meridianclock/1",
@@ -1427,19 +1447,19 @@
             "backgroundColor": "#ffffff",
             "size": 1,
             "font": "Helvetica",
-            "widgetCss": "background:#f7f8fa;border:1px solid #dde1e6;border-radius:4px;padding:2px 6px;"
+            "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 39.05,
-          "y": 12.55,
-          "id": "41",
+          "x": 97.1,
+          "y": 31.5,
+          "id": "42",
           "canvas": "0",
           "order": 6,
           "valid": 1
         },
         {
           "type": "ATTRIBUTE_DISPLAY",
-          "width": 17.9,
-          "height": 1.5,
+          "width": 43.8,
+          "height": 3.8,
           "inputs": {
             "attribute": {
               "device": "taranta://low-sat/meridianclock/1",
@@ -1462,19 +1482,19 @@
             "backgroundColor": "#ffffff",
             "size": 1,
             "font": "Helvetica",
-            "widgetCss": "background:#f7f8fa;border:1px solid #dde1e6;border-radius:4px;padding:2px 6px;"
+            "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 39.05,
-          "y": 14.05,
-          "id": "42",
+          "x": 97.1,
+          "y": 35.3,
+          "id": "43",
           "canvas": "0",
           "order": 7,
           "valid": 1
         },
         {
           "type": "ATTRIBUTE_DISPLAY",
-          "width": 17.9,
-          "height": 1.5,
+          "width": 43.8,
+          "height": 3.8,
           "inputs": {
             "attribute": {
               "device": "taranta://low-sat/meridianclock/1",
@@ -1497,19 +1517,19 @@
             "backgroundColor": "#ffffff",
             "size": 1,
             "font": "Helvetica",
-            "widgetCss": "background:#f7f8fa;border:1px solid #dde1e6;border-radius:4px;padding:2px 6px;"
+            "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 39.05,
-          "y": 15.55,
-          "id": "43",
+          "x": 97.1,
+          "y": 39.1,
+          "id": "44",
           "canvas": "0",
           "order": 8,
           "valid": 1
         },
         {
           "type": "ATTRIBUTE_DISPLAY",
-          "width": 17.9,
-          "height": 1.5,
+          "width": 43.8,
+          "height": 3.8,
           "inputs": {
             "attribute": {
               "device": "taranta://low-sat/meridianclock/1",
@@ -1532,19 +1552,19 @@
             "backgroundColor": "#ffffff",
             "size": 1,
             "font": "Helvetica",
-            "widgetCss": "background:#f7f8fa;border:1px solid #dde1e6;border-radius:4px;padding:2px 6px;"
+            "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 39.05,
-          "y": 17.05,
-          "id": "44",
+          "x": 97.1,
+          "y": 42.9,
+          "id": "45",
           "canvas": "0",
           "order": 9,
           "valid": 1
         },
         {
           "type": "ATTRIBUTE_DISPLAY",
-          "width": 17.9,
-          "height": 1.5,
+          "width": 43.8,
+          "height": 3.8,
           "inputs": {
             "attribute": {
               "device": "taranta://low-sat/meridianclock/1",
@@ -1567,19 +1587,19 @@
             "backgroundColor": "#ffffff",
             "size": 1,
             "font": "Helvetica",
-            "widgetCss": "background:#f7f8fa;border:1px solid #dde1e6;border-radius:4px;padding:2px 6px;"
+            "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 39.05,
-          "y": 18.55,
-          "id": "45",
+          "x": 97.1,
+          "y": 46.7,
+          "id": "46",
           "canvas": "0",
           "order": 10,
           "valid": 1
         },
         {
           "type": "ATTRIBUTE_DISPLAY",
-          "width": 17.9,
-          "height": 1.5,
+          "width": 43.8,
+          "height": 3.8,
           "inputs": {
             "attribute": {
               "device": "taranta://low-sat/meridianclock/1",
@@ -1602,19 +1622,19 @@
             "backgroundColor": "#ffffff",
             "size": 1,
             "font": "Helvetica",
-            "widgetCss": "background:#f7f8fa;border:1px solid #dde1e6;border-radius:4px;padding:2px 6px;"
+            "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 39.05,
-          "y": 20.05,
-          "id": "46",
+          "x": 97.1,
+          "y": 50.5,
+          "id": "47",
           "canvas": "0",
           "order": 11,
           "valid": 1
         },
         {
           "type": "ATTRIBUTE_DISPLAY",
-          "width": 17.9,
-          "height": 1.5,
+          "width": 43.8,
+          "height": 3.8,
           "inputs": {
             "attribute": {
               "device": "taranta://low-sat/meridianclock/1",
@@ -1637,19 +1657,19 @@
             "backgroundColor": "#ffffff",
             "size": 1,
             "font": "Helvetica",
-            "widgetCss": "background:#f7f8fa;border:1px solid #dde1e6;border-radius:4px;padding:2px 6px;"
+            "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 39.05,
-          "y": 21.55,
-          "id": "47",
+          "x": 97.1,
+          "y": 54.3,
+          "id": "48",
           "canvas": "0",
           "order": 12,
           "valid": 1
         },
         {
           "type": "ATTRIBUTE_DISPLAY",
-          "width": 17.9,
-          "height": 1.5,
+          "width": 43.8,
+          "height": 3.8,
           "inputs": {
             "attribute": {
               "device": "taranta://low-sat/meridianclock/1",
@@ -1672,19 +1692,19 @@
             "backgroundColor": "#ffffff",
             "size": 1,
             "font": "Helvetica",
-            "widgetCss": "background:#f7f8fa;border:1px solid #dde1e6;border-radius:4px;padding:2px 6px;"
+            "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 39.05,
-          "y": 23.05,
-          "id": "48",
+          "x": 97.1,
+          "y": 58.1,
+          "id": "49",
           "canvas": "0",
           "order": 13,
           "valid": 1
         },
         {
           "type": "ATTRIBUTE_DISPLAY",
-          "width": 17.9,
-          "height": 1.5,
+          "width": 43.8,
+          "height": 3.8,
           "inputs": {
             "attribute": {
               "device": "taranta://low-sat/meridianclock/1",
@@ -1707,19 +1727,19 @@
             "backgroundColor": "#ffffff",
             "size": 1,
             "font": "Helvetica",
-            "widgetCss": "background:#f7f8fa;border:1px solid #dde1e6;border-radius:4px;padding:2px 6px;"
+            "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 39.05,
-          "y": 24.55,
-          "id": "49",
+          "x": 97.1,
+          "y": 61.9,
+          "id": "50",
           "canvas": "0",
           "order": 14,
           "valid": 1
         },
         {
           "type": "ATTRIBUTE_DISPLAY",
-          "width": 17.9,
-          "height": 1.5,
+          "width": 43.8,
+          "height": 3.8,
           "inputs": {
             "attribute": {
               "device": "taranta://low-sat/meridianclock/1",
@@ -1742,19 +1762,19 @@
             "backgroundColor": "#ffffff",
             "size": 1,
             "font": "Helvetica",
-            "widgetCss": "background:#f7f8fa;border:1px solid #dde1e6;border-radius:4px;padding:2px 6px;"
+            "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 39.05,
-          "y": 26.05,
-          "id": "50",
+          "x": 97.1,
+          "y": 65.7,
+          "id": "51",
           "canvas": "0",
           "order": 15,
           "valid": 1
         },
         {
           "type": "ATTRIBUTE_DISPLAY",
-          "width": 17.9,
-          "height": 1.5,
+          "width": 43.8,
+          "height": 3.8,
           "inputs": {
             "attribute": {
               "device": "taranta://low-sat/meridianclock/1",
@@ -1777,19 +1797,19 @@
             "backgroundColor": "#ffffff",
             "size": 1,
             "font": "Helvetica",
-            "widgetCss": "background:#f7f8fa;border:1px solid #dde1e6;border-radius:4px;padding:2px 6px;"
+            "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 39.05,
-          "y": 27.55,
-          "id": "51",
+          "x": 97.1,
+          "y": 69.5,
+          "id": "52",
           "canvas": "0",
           "order": 16,
           "valid": 1
         },
         {
           "type": "ATTRIBUTE_DISPLAY",
-          "width": 17.9,
-          "height": 1.5,
+          "width": 43.8,
+          "height": 3.8,
           "inputs": {
             "attribute": {
               "device": "taranta://low-sat/meridianclock/1",
@@ -1812,19 +1832,19 @@
             "backgroundColor": "#ffffff",
             "size": 1,
             "font": "Helvetica",
-            "widgetCss": "background:#f7f8fa;border:1px solid #dde1e6;border-radius:4px;padding:2px 6px;"
+            "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 39.05,
-          "y": 29.05,
-          "id": "52",
+          "x": 97.1,
+          "y": 73.3,
+          "id": "53",
           "canvas": "0",
           "order": 17,
           "valid": 1
         },
         {
           "type": "ATTRIBUTE_DISPLAY",
-          "width": 17.9,
-          "height": 1.5,
+          "width": 43.8,
+          "height": 3.8,
           "inputs": {
             "attribute": {
               "device": "taranta://low-sat/meridianclock/1",
@@ -1847,30 +1867,30 @@
             "backgroundColor": "#ffffff",
             "size": 1,
             "font": "Helvetica",
-            "widgetCss": "background:#f7f8fa;border:1px solid #dde1e6;border-radius:4px;padding:2px 6px;"
+            "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 39.05,
-          "y": 30.55,
-          "id": "53",
+          "x": 97.1,
+          "y": 77.1,
+          "id": "54",
           "canvas": "0",
           "order": 18,
           "valid": 1
         }
       ],
-      "x": 39,
-      "y": 2.5,
-      "id": "34",
+      "x": 97.0,
+      "y": 5.6,
+      "id": "35",
       "canvas": "0",
-      "order": 3,
+      "order": 4,
       "valid": 1
     },
     {
       "type": "BOX",
-      "width": 18,
-      "height": 3.1,
+      "width": 44.0,
+      "height": 8.2,
       "inputs": {
         "title": "Commands",
-        "bigWidget": 6,
+        "bigWidget": 5,
         "smallWidget": 1,
         "textColor": "#1a1a1a",
         "backgroundColor": "#ffffff",
@@ -1881,14 +1901,14 @@
         "fontFamily": "Helvetica",
         "layout": "vertical",
         "alignment": "Left",
-        "padding": 0,
-        "customCss": "font-weight:bold;"
+        "padding": 0.25,
+        "customCss": "font-weight: bold"
       },
       "innerWidgets": [
         {
           "type": "COMMAND",
-          "width": 17.9,
-          "height": 1.5,
+          "width": 43.8,
+          "height": 3.8,
           "inputs": {
             "title": "Get Version Info",
             "buttonText": "GetVersionInfo",
@@ -1914,21 +1934,21 @@
             "size": 1,
             "font": "Helvetica",
             "btnCss": "",
-            "widgetCss": ""
+            "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 58.05,
-          "y": 3.55,
-          "id": "55",
+          "x": 144.1,
+          "y": 8.7,
+          "id": "56",
           "canvas": "0",
           "order": 0,
           "valid": 1
         }
       ],
-      "x": 58,
-      "y": 2.5,
-      "id": "54",
+      "x": 144.0,
+      "y": 5.6,
+      "id": "55",
       "canvas": "0",
-      "order": 4,
+      "order": 5,
       "valid": 1
     }
   ],

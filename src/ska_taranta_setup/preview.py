@@ -13,7 +13,8 @@ import json
 from pathlib import Path
 from typing import Any
 
-TILE = 20  # px per grid unit (Taranta's MIN_WIDGET_SIZE)
+#: Default px per grid unit (Taranta's MIN_WIDGET_SIZE in the SKA image).
+DEFAULT_TILE = 10
 
 FILL = {
     "BOX": "#ffffff",
@@ -29,6 +30,7 @@ FILL = {
     "ATTRIBUTE_WRITER": "#f3e8fb",
     "COMMAND": "#fde8e8",
     "ATTRIBUTE_LOGGER": "#f0f0f0",
+    "DASHLINK": "#e3ecfa",
 }
 
 
@@ -50,6 +52,11 @@ def _caption(widget: dict[str, Any]) -> tuple[str, str]:
         return inputs.get("text", ""), ""
     if kind == "DEVICE_STATUS":
         return str(inputs.get("device", "")).split("://")[-1], "● State"
+    if kind == "DASHLINK":
+        return (
+            "",
+            f"[ {inputs.get('ButtonText', '')} ] → {inputs.get('DefaultDashboard')}",
+        )
     if kind == "COMMAND":
         return inputs.get("title", ""), f"[ {inputs.get('buttonText', '')} ]"
     if kind == "ATTRIBUTE_PLOT":
@@ -68,13 +75,13 @@ def _caption(widget: dict[str, Any]) -> tuple[str, str]:
     return name, hints.get(kind, kind)
 
 
-def dashboard_svg(dashboard: dict[str, Any]) -> str:
+def dashboard_svg(dashboard: dict[str, Any], tile: int = DEFAULT_TILE) -> str:
     """Render a dashboard as an SVG wireframe."""
     widgets = _flatten(dashboard.get("widget") or dashboard.get("widgets", []))
     if not widgets:
         return "<svg xmlns='http://www.w3.org/2000/svg' width='10' height='10'/>"
-    width = max(w["x"] + w["width"] for w in widgets) * TILE + TILE
-    height = max(w["y"] + w["height"] for w in widgets) * TILE + TILE
+    width = max(w["x"] + w["width"] for w in widgets) * tile + 20
+    height = max(w["y"] + w["height"] for w in widgets) * tile + 20
     parts = [
         f"<svg xmlns='http://www.w3.org/2000/svg' width='{width:.0f}' "
         f"height='{height:.0f}' font-family='Helvetica,Arial,sans-serif' "
@@ -82,8 +89,8 @@ def dashboard_svg(dashboard: dict[str, Any]) -> str:
         f"<rect width='{width:.0f}' height='{height:.0f}' fill='#eef1f5'/>",
     ]
     for widget in widgets:
-        x, y = widget["x"] * TILE, widget["y"] * TILE
-        w_px, h_px = widget["width"] * TILE, widget["height"] * TILE
+        x, y = widget["x"] * tile, widget["y"] * tile
+        w_px, h_px = widget["width"] * tile, widget["height"] * tile
         kind = widget["type"]
         stroke = "#b3bcc8" if kind == "BOX" else "#dde1e6"
         parts.append(
@@ -114,7 +121,7 @@ def dashboard_svg(dashboard: dict[str, Any]) -> str:
     return "\n".join(parts)
 
 
-def write_preview(files: list[Path], output: Path) -> Path:
+def write_preview(files: list[Path], output: Path, tile: int = DEFAULT_TILE) -> Path:
     """Write one HTML page with a wireframe of each dashboard."""
     sections = []
     for path in files:
@@ -122,7 +129,7 @@ def write_preview(files: list[Path], output: Path) -> Path:
         sections.append(
             f"<h2>{html.escape(dashboard.get('name', path.stem))}</h2>"
             f"<p class='file'>{html.escape(path.name)}</p>"
-            f"<div class='frame'>{dashboard_svg(dashboard)}</div>"
+            f"<div class='frame'>{dashboard_svg(dashboard, tile)}</div>"
         )
     page = f"""<!doctype html>
 <html lang="en"><head><meta charset="utf-8">
@@ -136,7 +143,7 @@ def write_preview(files: list[Path], output: Path) -> Path:
   .note {{ color: #6b7480; font-size: 13px; }}
 </style></head><body>
 <h1>Taranta dashboard preview</h1>
-<p class="note">Wireframes at Taranta's scale (20&nbsp;px grid). Values are
+<p class="note">Wireframes at Taranta's scale ({tile}&nbsp;px grid). Values are
 placeholders; hover a widget to see its type.</p>
 {"".join(sections)}
 </body></html>

@@ -7,6 +7,11 @@ Uses the same HTTP API as Taranta's own "import dashboard" button:
 * ``GET <base>/dashboards/user/dashboards`` lists the user's dashboards;
 * ``POST <base>/dashboards/`` creates a dashboard, or updates it if ``id`` is set.
 
+With ``global.use_aws: true`` (the usual minikube setup) Taranta proxies
+``/auth`` and ``/dashboards`` to the shared SKAO services, so uploads land in
+that account's library there, not in the cluster. Log in with ``--token``
+(your browser's ``taranta_jwt`` cookie) to upload to your own account.
+
 ``<base>`` is the Taranta URL without the trailing ``/taranta``, e.g.
 ``http://localhost:8080/ska-sat-lmc``. Dashboards are matched by name, so
 re-uploading replaces the previous version instead of making copies.
@@ -64,6 +69,30 @@ class TarantaClient:
             session.cookies.set("taranta_jwt", token)
         return cls(base=base, session=session, tango_db=tango_db)
 
+    @classmethod
+    def from_token(
+        cls, url: str, token: str, tango_db: str = "taranta"
+    ) -> TarantaClient:
+        """Use an existing ``taranta_jwt`` (e.g. copied from a browser session)."""
+        session = requests.Session()
+        session.cookies.set("taranta_jwt", token)
+        return cls(base=api_base(url), session=session, tango_db=tango_db)
+
+    def whoami(self) -> str:
+        """The user this client is authenticated as."""
+        resp = self.session.get(f"{self.base}/auth/user", timeout=30)
+        try:
+            user = resp.json() if resp.status_code == 200 else None
+        except ValueError:
+            user = None
+        if not user or not user.get("username"):
+            raise UploadError("not logged in (token missing, invalid or expired)")
+        return user["username"]
+
+    def dashboard_url(self, dashboard_id: str) -> str:
+        """Link that opens a dashboard in run mode."""
+        return f"{self.base}/{self.tango_db}/dashboard?id={dashboard_id}&mode=run"
+
     def list_dashboards(self) -> dict[str, str]:
         """Map dashboard names to ids."""
         resp = self.session.get(
@@ -92,17 +121,43 @@ class TarantaClient:
                 f"saving {dashboard['name']!r} failed "
                 f"({resp.status_code}): {resp.text[:200]}"
             )
-        return resp.json()
+        try:
+            result = resp.json()
+        except ValueError as exc:
+            # e.g. an HTML page from a proxy or the UI, not the dashboard API.
+            raise UploadError(
+                f"saving {dashboard['name']!r}: unexpected response from "
+                f"{self.base}/dashboards/: {resp.text[:200]}"
+            ) from exc
+        if not result.get("id"):
+            raise UploadError(f"saving {dashboard['name']!r}: no id returned: {result}")
+        return result
 
 
-def upload_files(client: TarantaClient, files: list[Path]) -> list[str]:
-    """Upload ``.wj`` files; return a line per file describing the outcome."""
+@dataclass
+class UploadResult:
+    """The outcome for one file."""
+
+    name: str
+    file: str
+    created: bool
+    url: str
+
+
+def upload_files(client: TarantaClient, files: list[Path]) -> list[UploadResult]:
+    """Upload ``.wj`` files, updating dashboards that already have the same name."""
     existing = client.list_dashboards()
     results = []
     for path in files:
         dashboard = json.loads(path.read_text())
         dashboard_id = existing.get(dashboard["name"], "")
         result = client.save(dashboard, dashboard_id)
-        action = "created" if result.get("created") else "updated"
-        results.append(f"{action}: {dashboard['name']} ({path.name})")
+        results.append(
+            UploadResult(
+                name=dashboard["name"],
+                file=path.name,
+                created=bool(result.get("created")),
+                url=client.dashboard_url(result["id"]),
+            )
+        )
     return results

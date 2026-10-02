@@ -44,6 +44,7 @@ from ska_taranta_setup.model import (
     prettify,
     split_words,
 )
+from ska_taranta_setup.options import GenerateOptions
 
 GOOD_LABELS = {
     "ok", "normal", "on", "online", "locked", "link_up", "up", "running", "good",
@@ -275,12 +276,57 @@ def _enum_choices(attr: AttributeInfo) -> list[tuple[str, str]]:
     ]
 
 
+def _forced(
+    section: Section, device: str, attr: AttributeInfo, text: str, kind: str
+) -> None:
+    """Place an attribute as the widget kind configured for it."""
+    if kind == "hide":
+        return
+    if kind == "led":
+        if attr.is_bool:
+            compare = "true"
+        elif attr.name.lower() == "healthstate":
+            compare = "0"
+        else:
+            compare = str(status_compare(attr) or 0)
+        section.widgets.append(w.led(device, attr, text, compare=compare))
+    elif kind == "dial":
+        bounds = dial_range(attr, quantity(attr) or "Load") or (0.0, 100.0)
+        section.dials.append(w.dial(device, attr, text, *bounds))
+    elif kind == "plot":
+        section.trends.setdefault(quantity(attr) or text, []).append((attr, text))
+    elif kind == "writer":
+        section.widgets.append(w.writer(device, attr, text))
+    elif kind == "dropdown":
+        section.widgets.append(
+            w.dropdown_writer(device, attr, text, _enum_choices(attr))
+        )
+    elif kind == "switch":
+        section.widgets.append(w.boolean_display(device, attr, text))
+    elif kind == "logger":
+        section.widgets.append(w.logger(device, attr, text))
+    elif kind == "spectrum":
+        section.widgets.append(w.spectrum(device, attr, text))
+    else:
+        section.widgets.append(w.attribute_display(device, attr, text))
+
+
 def place_attribute(
-    section: Section, device: str, attr: AttributeInfo, family: str | None = None
+    section: Section,
+    device: str,
+    attr: AttributeInfo,
+    family: str | None = None,
+    options: GenerateOptions | None = None,
 ) -> None:
     """Add the widget(s) for one attribute to a section."""
+    options = options or GenerateOptions()
     text = short_label(attr, family)
     name = attr.name.lower()
+
+    forced = options.widget_override(attr.name)
+    if forced is not None:
+        _forced(section, device, attr, text, forced)
+        return
 
     if name == "healthstate":
         section.widgets.append(w.led(device, attr, text, compare="0"))
@@ -320,12 +366,13 @@ def place_attribute(
             section.widgets.append(w.writer(device, attr, text))
             return
         kind = quantity(attr)
-        bounds = dial_range(attr, kind) if kind in DIAL_QUANTITIES else None
+        dialable = options.dials and kind in DIAL_QUANTITIES
+        bounds = dial_range(attr, kind) if dialable else None
         if bounds is not None:
             section.dials.append(w.dial(device, attr, text, *bounds))
         else:
             section.widgets.append(w.attribute_display(device, attr, text))
-        if kind is not None:
+        if kind is not None and options.plots:
             section.trends.setdefault(kind, []).append((attr, text))
         return
 
@@ -355,16 +402,28 @@ def _is_expert_command(cmd: CommandInfo) -> bool:
 # --------------------------------------------------------------------------
 
 
-def device_sections(device: str, interface: DeviceInterface) -> list[Section]:
+def device_sections(
+    device: str, interface: DeviceInterface, options: GenerateOptions | None = None
+) -> list[Section]:
     """Group a device's attributes and commands into dashboard sections."""
+    options = options or GenerateOptions()
     device_section = Section("Device", widgets=[w.device_status(device)])
     expert = Section("Expert")
-    attrs = [a for a in interface.attributes if a.name.lower() not in HIDDEN_ATTRIBUTES]
+    attrs = [
+        a
+        for a in interface.attributes
+        if a.name.lower() not in HIDDEN_ATTRIBUTES
+        and not options.attribute_excluded(a.name)
+        and (options.expert or not a.is_expert)
+    ]
+
+    def place(target: Section, attr: AttributeInfo, family: str | None = None) -> None:
+        place_attribute(target, device, attr, family, options)
 
     by_name = {a.name.lower(): a for a in attrs}
     for name in DEVICE_SECTION_ORDER:
         if name in by_name:
-            place_attribute(device_section, device, by_name.pop(name))
+            place(device_section, by_name.pop(name))
     remaining = [a for a in attrs if a.name.lower() in by_name]
 
     families: dict[str, list[AttributeInfo]] = {}
@@ -381,9 +440,7 @@ def device_sections(device: str, interface: DeviceInterface) -> list[Section]:
         if len(members) >= MIN_FAMILY_SIZE:
             section = Section(family_title(key))
             for attr in members:
-                place_attribute(
-                    expert if attr.is_expert else section, device, attr, key
-                )
+                place(expert if attr.is_expert else section, attr, key)
             family_sections.append(section)
             continue
         for attr in members:
@@ -397,15 +454,17 @@ def device_sections(device: str, interface: DeviceInterface) -> list[Section]:
                 target = measurements
             else:
                 target = information
-            place_attribute(target, device, attr)
+            place(target, attr)
 
     commands = Section("Commands")
     for cmd in interface.commands:
-        if cmd.name.lower() in HIDDEN_COMMANDS:
+        if cmd.name.lower() in HIDDEN_COMMANDS or options.command_excluded(cmd.name):
             continue
-        (expert if _is_expert_command(cmd) else commands).widgets.append(
-            command_widget(device, cmd)
-        )
+        if _is_expert_command(cmd):
+            if options.expert:
+                expert.widgets.append(command_widget(device, cmd))
+        else:
+            commands.widgets.append(command_widget(device, cmd))
 
     sections = [
         device_section,
@@ -420,21 +479,49 @@ def device_sections(device: str, interface: DeviceInterface) -> list[Section]:
     return [s for s in sections if not s.is_empty()]
 
 
-def overview_widgets(device: str, interface: DeviceInterface) -> list[dict[str, Any]]:
-    """The handful of widgets that summarise a device on the overview page."""
-    section = Section("")
-    section.widgets.append(w.device_status(device))
-    for name in ("healthstate", "adminmode", "controlmode", "obsstate"):
-        attr = interface.attribute(name)
-        if attr is None:
-            continue
-        if name == "healthstate":
-            place_attribute(section, device, attr)
-        else:
-            section.widgets.append(
-                w.attribute_display(device, attr, attr.display_label)
-            )
-    # A few headline status indicators, preferring top-level ones (not in a family).
+def _indicators(section: Section) -> int:
+    leds = sum(1 for x in section.widgets if x["type"] == "LED_DISPLAY")
+    return leds + len(section.dials)
+
+
+def summary_sections(sections: list[Section], count: int) -> list[Section]:
+    """
+    The sections to show for a device on a summary page.
+
+    The "Device" section, then up to ``count`` others, preferring the most
+    indicator-heavy (LEDs and dials). Repeated indexed blocks (``NET WR0`` ..
+    ``NET WR15``) are left to the device's own page.
+    """
+    head, rest = sections[0], sections[1:]
+    stems: dict[str, int] = {}
+    for s in rest:
+        stem = re.sub(r"\d+$", "", s.title)
+        stems[stem] = stems.get(stem, 0) + 1
+
+    def repeated(s: Section) -> bool:
+        return stems[re.sub(r"\d+$", "", s.title)] > 2
+
+    candidates = [
+        s
+        for s in rest
+        if s.title not in {"Commands", "Expert", "Information", "Settings"}
+        and not repeated(s)
+        and _indicators(s) > 0
+    ]
+    chosen = sorted(candidates, key=lambda s: -_indicators(s))[:count]
+    return [head, *(s for s in rest if s in chosen)]
+
+
+def headline_attributes(
+    interface: DeviceInterface, options: GenerateOptions | None = None
+) -> list[AttributeInfo]:
+    """Attributes summarising a device in status bars and overview tiles."""
+    options = options or GenerateOptions()
+    chosen = [
+        a
+        for name in options.status_attributes
+        if (a := interface.attribute(name)) is not None
+    ]
     family_sizes: dict[str, int] = {}
     for attr in interface.attributes:
         key = family_key(attr.name)
@@ -446,19 +533,57 @@ def overview_widgets(device: str, interface: DeviceInterface) -> list[dict[str, 
         and a.is_enum
         and not a.is_writable
         and a.name.lower() not in DEVICE_SECTION_ORDER
+        and not options.attribute_excluded(a.name)
         and status_compare(a) is not None
+        and a not in chosen
     ]
+    # Prefer top-level indicators (general_status) over ones inside a family.
     candidates.sort(key=lambda a: family_sizes[family_key(a.name)] >= MIN_FAMILY_SIZE)
-    for attr in candidates[:4]:
-        place_attribute(section, device, attr)
+    return chosen + candidates[: options.headline_status]
+
+
+def status_widgets(
+    device: str, interface: DeviceInterface, options: GenerateOptions | None = None
+) -> list[dict[str, Any]]:
+    """State plus headline LEDs, for a device's cell in a status bar."""
+    section = Section("")
+    section.widgets.append(w.device_status(device, show_name=False))
+    for attr in headline_attributes(interface, options):
+        place_attribute(section, device, attr, options=options)
     return section.widgets
 
 
-def trend_plots(section: Section, device: str) -> list[dict[str, Any]]:
+def overview_widgets(
+    device: str, interface: DeviceInterface, options: GenerateOptions | None = None
+) -> list[dict[str, Any]]:
+    """The handful of widgets that summarise a device on an overview tile."""
+    options = options or GenerateOptions()
+    section = Section("")
+    section.widgets.append(w.device_status(device))
+    for name in ("healthstate", "adminmode", "controlmode", "obsstate"):
+        attr = interface.attribute(name)
+        if attr is None or options.attribute_excluded(attr.name):
+            continue
+        if name == "healthstate":
+            place_attribute(section, device, attr, options=options)
+        else:
+            section.widgets.append(
+                w.attribute_display(device, attr, attr.display_label)
+            )
+    shown = {"healthstate", "adminmode", "controlmode", "obsstate"}
+    for attr in headline_attributes(interface, options):
+        if attr.name.lower() not in shown:
+            place_attribute(section, device, attr, options=options)
+    return section.widgets
+
+
+def trend_plots(
+    section: Section, device: str, max_plots: int = MAX_PLOTS_PER_SECTION
+) -> list[dict[str, Any]]:
     """
     Plots for a section's trend-worthy attributes, one per quantity.
 
-    At most ``MAX_PLOTS_PER_SECTION``; quantities with no dial come first,
+    At most ``max_plots``; quantities with no dial come first,
     since a dial already shows the current value.
     """
     dialled = {d["inputs"]["attribute"]["attribute"] for d in section.dials}
@@ -473,4 +598,4 @@ def trend_plots(section: Section, device: str) -> list[dict[str, Any]]:
             plots.append(
                 w.plot(device, [a for a, _ in chunk], [label for _, label in chunk])
             )
-    return plots[:MAX_PLOTS_PER_SECTION]
+    return plots[:max_plots]

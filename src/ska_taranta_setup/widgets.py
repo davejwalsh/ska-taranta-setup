@@ -7,8 +7,8 @@ from the widget's own defaults strictly need to be given, but Taranta stores
 the full set, so we do too: it keeps the generated files identical in shape
 to dashboards exported from the UI.
 
-Sizes and positions are in Taranta grid units (``MIN_WIDGET_SIZE`` pixels,
-20 by default).
+Sizes and positions are in Taranta grid units (``MIN_WIDGET_SIZE`` pixels:
+10 in the SKA Taranta image); see :class:`~ska_taranta_setup.dashboard.LayoutOptions`.
 """
 
 from __future__ import annotations
@@ -34,9 +34,20 @@ BIG_WIDGETS = {
 
 GREEN = "#3ac73a"
 RED = "#e0524f"
-FIELD_CSS = (
-    "background:#f7f8fa;border:1px solid #dde1e6;border-radius:4px;padding:2px 6px;"
-)
+
+
+def css(**declarations: str) -> str:
+    """
+    CSS for a widget's style inputs, e.g. ``css(font_weight="bold")``.
+
+    Taranta's parser takes one ``property: value`` per line (a one-line
+    ``a:1;b:2;`` is read as a single broken declaration and ignored).
+    """
+    return "\n".join(f"{k.replace('_', '-')}: {v}" for k, v in declarations.items())
+
+
+#: Applied to every row widget so labels and values don't touch the box edge.
+ROW_CSS = css(padding="0 10px", box_sizing="border-box")
 PLOT_COLOURS = ["#1f77b4", "#ff7f0e", "#2ca02c", "#d62728", "#9467bd", "#8c564b"]
 
 
@@ -74,7 +85,7 @@ def label(text: str, size: float = 1.0, background: str = "#ffffff") -> dict[str
             "automaticResize": "Disabled",
             "size": size,
             "linkTo": "",
-            "customCss": "",
+            "customCss": ROW_CSS,
         },
     )
 
@@ -86,6 +97,7 @@ def box(
     big_slot: int = 5,
     small_slot: int = 1,
     border: int = 1,
+    padding: float = 0,
 ) -> dict[str, Any]:
     """A BOX that arranges ``children`` itself (vertically or horizontally)."""
     result = widget(
@@ -103,22 +115,22 @@ def box(
             "fontFamily": "Helvetica",
             "layout": layout,
             "alignment": "Left",
-            "padding": 0,
-            "customCss": "font-weight:bold;" if title else "",
+            "padding": padding if title else 0,
+            "customCss": css(font_weight="bold") if title else "",
         },
     )
     result["innerWidgets"] = children
     return result
 
 
-def device_status(device: str) -> dict[str, Any]:
+def device_status(device: str, show_name: bool = True) -> dict[str, Any]:
     """Device State LED and name."""
     return widget(
         "DEVICE_STATUS",
         {
             "device": device,
             "state": {"device": None, "attribute": None},
-            "showDeviceName": True,
+            "showDeviceName": show_name,
             "showTangoDB": False,
             "showStateString": True,
             "alignValueRight": True,
@@ -128,7 +140,7 @@ def device_status(device: str) -> dict[str, Any]:
             "backgroundColor": "#ffffff",
             "textSize": 1,
             "linkTo": "",
-            "widgetCss": "",
+            "widgetCss": ROW_CSS,
         },
     )
 
@@ -155,7 +167,7 @@ def attribute_display(device: str, attr: AttributeInfo, text: str) -> dict[str, 
             "backgroundColor": "#ffffff",
             "size": 1,
             "font": "Helvetica",
-            "widgetCss": FIELD_CSS,
+            "widgetCss": ROW_CSS,
         },
     )
 
@@ -186,7 +198,7 @@ def led(
             "showAttribute": "Label",
             "alignTextCenter": False,
             "alignValueRight": True,
-            "customCss": "",
+            "customCss": ROW_CSS,
         },
     )
 
@@ -230,7 +242,7 @@ def dropdown_writer(
             "font": "Helvetica",
             "dropdownButtonCss": "",
             "submitButtonCss": "",
-            "customCss": "",
+            "customCss": ROW_CSS,
         },
     )
 
@@ -250,7 +262,7 @@ def writer(device: str, attr: AttributeInfo, text: str) -> dict[str, Any]:
             "backgroundColor": "#ffffff",
             "size": 1,
             "font": "Helvetica",
-            "widgetCss": "",
+            "widgetCss": ROW_CSS,
         },
     )
 
@@ -265,7 +277,7 @@ def boolean_display(device: str, attr: AttributeInfo, text: str) -> dict[str, An
             "showDevice": False,
             "showTangoDB": False,
             "alignSwitchRight": True,
-            "widgetCSS": "",
+            "widgetCSS": ROW_CSS,
             "OnCSS": "",
             "OffCSS": "",
         },
@@ -284,9 +296,9 @@ def logger(device: str, attr: AttributeInfo, text: str) -> dict[str, Any]:
             "showTangoDB": False,
             "showAttribute": "Label",
             "showTime": True,
-            "OuterDivCSS": FIELD_CSS,
+            "OuterDivCSS": ROW_CSS,
             "LastValueCSS": "",
-            "TableCSS": "font-size:11px;",
+            "TableCSS": css(font_size="11px"),
         },
     )
 
@@ -371,6 +383,22 @@ def command(device: str, cmd: CommandInfo, title: str) -> dict[str, Any]:
             "size": 1,
             "font": "Helvetica",
             "btnCss": "",
-            "widgetCss": "",
+            "widgetCss": ROW_CSS,
+        },
+    )
+
+
+def dashboard_link(dashboard_name: str, text: str) -> dict[str, Any]:
+    """A button opening another dashboard (looked up by name when clicked)."""
+    return widget(
+        "DASHLINK",
+        {
+            "DefaultDashboard": dashboard_name,
+            "HideDropdown": True,
+            "NewTab": False,
+            "ButtonText": text,
+            "DropDownCss": "",
+            "ButtonCss": css(width="100%", font_weight="bold"),
+            "CustomCss": css(padding="0 4px", box_sizing="border-box"),
         },
     )
