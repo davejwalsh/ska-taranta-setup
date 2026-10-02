@@ -1,0 +1,47 @@
+[project]
+name = "ska-taranta-setup"
+version = "0.1.0"
+description = "Add Taranta to an SKA Tango project and generate best-guess dashboards from its devices"
+authors = [ {name = "SKAO"} ]
+maintainers = [ { name = "Team Wombat" } ]
+license = "BSD-3-Clause"
+readme = "README.md"
+requires-python = ">=3.11,<4.0"
+
+dependencies = [
+    "click>=8.1.7",
+    "pyyaml>=6.0.1",
+    "ruamel.yaml>=0.18.0",
+    "tomlkit>=0.12.0",
+    "requests>=2.28.0",
+]
+
+[project.optional-dependencies]
+# Needed by `discover` to introspect device interfaces. Tango projects already
+# depend on pytango, so this is usually satisfied by the host project.
+tango = ["pytango>=9.5.0"]
+
+[project.scripts]
+ska-taranta = "ska_taranta_setup.cli:main"
+
+[[tool.uv.index]]
+name = "ska-nexus"
+url = "https://artefact.skao.int/repository/pypi-internal/simple"
+
+[[tool.uv.index]]
+name = "PyPI-public"
+url = "https://pypi.org/simple"
+
+[dependency-groups]
+dev = [
+  "pytest>=8.1.1",
+  "pytest-cov>=6.0.0",
+  "ruff>=0.6.0",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[build-system]
+requires = ["uv_build>=0.8.0,<0.13.0"]
+build-backend = "uv_build"
