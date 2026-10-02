@@ -79,7 +79,8 @@ def widget_for(**kwargs):
 def test_widget_choice(kwargs, expected):
     """Each kind of attribute gets the expected widget."""
     section = widget_for(**kwargs)
-    assert [w["type"] for w in section.widgets] == [expected]
+    # Writable enums are a value display then the dropdown; check the last.
+    assert [w["type"] for w in section.widgets][-1:] == [expected]
 
 
 def test_bounded_temperature_gets_dial_and_trend():
@@ -220,3 +221,30 @@ def test_real_interfaces_produce_sections(sat_lmc_snapshot):
         sections = device_sections(DEV, interface)
         assert sections[0].title == "Device"
         assert sections[0].widgets[0]["type"] == "DEVICE_STATUS"
+
+
+def test_enum_setter_shows_value_and_has_room_for_its_menu():
+    """
+    Writable enums: a display, then a dropdown with room for its menu.
+
+    The dropdown doesn't show the current value, and Taranta clips its menu
+    to the widget, so it comes after a display and reserves a row per item.
+    """
+    section = widget_for(
+        name="controlMode",
+        dtype="DevEnum",
+        writable="READ_WRITE",
+        enum_labels=[
+            "NO_MONITOR_NO_CONTROL",
+            "MONITOR_NO_CONTROL",
+            "MONITOR_AND_CONTROL",
+        ],
+    )
+    display, setter = section.widgets
+    assert display["type"] == "ATTRIBUTE_DISPLAY"
+    assert setter["inputs"]["writeValues"] == [
+        {"title": "No Monitor No Control", "value": "0"},
+        {"title": "Monitor No Control", "value": "1"},
+        {"title": "Monitor And Control", "value": "2"},
+    ]
+    assert setter["_menu_rows"] == 3

@@ -100,3 +100,17 @@ def test_css_is_one_declaration_per_line(tmp_path, sat_lmc_snapshot):
                     for line in value.split("\n"):
                         assert line.count(":") == 1, (widget["type"], key, value)
                         assert ";" not in line, (widget["type"], key, value)
+
+
+def test_box_children_have_fixed_heights(tmp_path, sat_lmc_snapshot):
+    """Every vertical-box child has a fixed height, so dropdown menus fit."""
+    devices = [d for d in sat_lmc_snapshot.devices if d.interface]
+    for path in write_dashboards("S", devices, sat_lmc_snapshot, tmp_path, "t"):
+        for widget in _all(json.loads(path.read_text())["widget"]):
+            assert "_menu_rows" not in widget  # layout hint, never saved
+            if widget["type"] == "BOX" and widget["inputs"]["layout"] == "vertical":
+                for child in widget["innerWidgets"]:
+                    assert child["percentage"] == -1
+                    if child["type"] == "ATTRIBUTE WRITER DROPDOWN":
+                        rows = len(child["inputs"]["writeValues"])
+                        assert child["height"] >= 3.8 + rows * 3.0

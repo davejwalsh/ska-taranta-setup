@@ -13,6 +13,7 @@ Sizes and positions are in Taranta grid units (``MIN_WIDGET_SIZE`` pixels:
 
 from __future__ import annotations
 
+import json
 from typing import Any
 
 from ska_taranta_setup.model import AttributeInfo, CommandInfo
@@ -221,16 +222,26 @@ def dial(
     )
 
 
+#: Layout hint (stripped before saving): extra rows of height a widget needs
+#: below it, e.g. for a dropdown's menu. Taranta clips anything that overflows a
+#: widget (its wrapper is ``overflow: auto``), so the menu has to fit inside.
+MENU_ROWS = "_menu_rows"
+
+
 def dropdown_writer(
     device: str, attr: AttributeInfo, text: str, values: list[tuple[str, str]]
 ) -> dict[str, Any]:
-    """Choose-and-set for enums (adminMode, controlMode, ...)."""
-    return widget(
+    """
+    Choose-and-set for enums, tall enough for its menu to open inside it.
+
+    It doesn't show the attribute's current value; pair it with a display.
+    """
+    result = widget(
         "ATTRIBUTE WRITER DROPDOWN",
         {
             "attribute": attribute_ref(device, attr, text),
             "submitButtonTitle": "Set",
-            "dropdownTitle": text,
+            "dropdownTitle": "Choose…",
             "writeValues": [{"title": t, "value": v} for t, v in values],
             "writeValuesSpectrum": {"device": None, "attribute": None, "label": ""},
             "showDevice": False,
@@ -245,6 +256,8 @@ def dropdown_writer(
             "customCss": ROW_CSS,
         },
     )
+    result[MENU_ROWS] = len(values)
+    return result
 
 
 def writer(device: str, attr: AttributeInfo, text: str) -> dict[str, Any]:
@@ -393,7 +406,9 @@ def dashboard_link(dashboard_name: str, text: str) -> dict[str, Any]:
     return widget(
         "DASHLINK",
         {
-            "DefaultDashboard": dashboard_name,
+            # Taranta stores the target as JSON; it finds the dashboard by name,
+            # falling back to the id. `ska-taranta upload` fills the id in.
+            "DefaultDashboard": json.dumps({"name": dashboard_name, "id": ""}),
             "HideDropdown": True,
             "NewTab": False,
             "ButtonText": text,

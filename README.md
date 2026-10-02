@@ -282,5 +282,9 @@ used to test generation end to end.
   `a:1;b:2;` CSS is silently ignored. Generated dashboards follow this; keep it
   in mind when hand-editing.
 * Very long string values (e.g. `buildState`) wrap and can overlap the next row.
+* Taranta clips anything that overflows a widget, dropdown menus included, so
+  each writable enum (adminMode, controlMode, …) is a value display plus a
+  dropdown tall enough for its menu to open inside. That's the blank space
+  under each dropdown.
 * Dashboard variables (one dashboard switchable between devices of a class)
   aren't generated yet: you get one dashboard per device.

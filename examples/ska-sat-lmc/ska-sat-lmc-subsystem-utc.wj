@@ -36,7 +36,7 @@
       "width": 17.0,
       "height": 4.1,
       "inputs": {
-        "DefaultDashboard": "ska-sat-lmc - Overview",
+        "DefaultDashboard": "{\"name\": \"ska-sat-lmc - Overview\", \"id\": \"\"}",
         "HideDropdown": true,
         "NewTab": false,
         "ButtonText": "Overview",
@@ -96,6 +96,7 @@
           },
           "x": 3.1,
           "y": 10.2,
+          "percentage": -1,
           "id": "4",
           "canvas": "0",
           "order": 0,
@@ -127,6 +128,7 @@
           },
           "x": 3.1,
           "y": 14.0,
+          "percentage": -1,
           "id": "5",
           "canvas": "0",
           "order": 1,
@@ -150,6 +152,7 @@
           },
           "x": 3.1,
           "y": 17.8,
+          "percentage": -1,
           "id": "6",
           "canvas": "0",
           "order": 2,
@@ -173,6 +176,7 @@
           },
           "x": 3.1,
           "y": 21.6,
+          "percentage": -1,
           "id": "7",
           "canvas": "0",
           "order": 3,
@@ -196,6 +200,7 @@
           },
           "x": 3.1,
           "y": 25.4,
+          "percentage": -1,
           "id": "8",
           "canvas": "0",
           "order": 4,
@@ -254,6 +259,7 @@
           },
           "x": 34.18,
           "y": 10.2,
+          "percentage": -1,
           "id": "10",
           "canvas": "0",
           "order": 0,
@@ -285,6 +291,7 @@
           },
           "x": 34.18,
           "y": 14.0,
+          "percentage": -1,
           "id": "11",
           "canvas": "0",
           "order": 1,
@@ -316,6 +323,7 @@
           },
           "x": 34.18,
           "y": 17.8,
+          "percentage": -1,
           "id": "12",
           "canvas": "0",
           "order": 2,
@@ -347,6 +355,7 @@
           },
           "x": 34.18,
           "y": 21.6,
+          "percentage": -1,
           "id": "13",
           "canvas": "0",
           "order": 3,
@@ -378,6 +387,7 @@
           },
           "x": 34.18,
           "y": 25.4,
+          "percentage": -1,
           "id": "14",
           "canvas": "0",
           "order": 4,
@@ -436,6 +446,7 @@
           },
           "x": 65.27,
           "y": 10.2,
+          "percentage": -1,
           "id": "16",
           "canvas": "0",
           "order": 0,
@@ -467,6 +478,7 @@
           },
           "x": 65.27,
           "y": 14.0,
+          "percentage": -1,
           "id": "17",
           "canvas": "0",
           "order": 1,
@@ -498,6 +510,7 @@
           },
           "x": 65.27,
           "y": 17.8,
+          "percentage": -1,
           "id": "18",
           "canvas": "0",
           "order": 2,
@@ -529,6 +542,7 @@
           },
           "x": 65.27,
           "y": 21.6,
+          "percentage": -1,
           "id": "19",
           "canvas": "0",
           "order": 3,
@@ -560,6 +574,7 @@
           },
           "x": 65.27,
           "y": 25.4,
+          "percentage": -1,
           "id": "20",
           "canvas": "0",
           "order": 4,
@@ -601,7 +616,7 @@
       "width": 17.0,
       "height": 4.1,
       "inputs": {
-        "DefaultDashboard": "ska-sat-lmc - low-sat/utc/ci",
+        "DefaultDashboard": "{\"name\": \"ska-sat-lmc - low-sat/utc/ci\", \"id\": \"\"}",
         "HideDropdown": true,
         "NewTab": false,
         "ButtonText": "Details",
@@ -619,7 +634,7 @@
     {
       "type": "BOX",
       "width": 44.0,
-      "height": 23.4,
+      "height": 50.2,
       "inputs": {
         "title": "Device",
         "bigWidget": 5,
@@ -661,6 +676,7 @@
           },
           "x": 3.1,
           "y": 42.2,
+          "percentage": -1,
           "id": "24",
           "canvas": "0",
           "order": 0,
@@ -692,6 +708,7 @@
           },
           "x": 3.1,
           "y": 46.0,
+          "percentage": -1,
           "id": "25",
           "canvas": "0",
           "order": 1,
@@ -727,13 +744,14 @@
           },
           "x": 3.1,
           "y": 49.8,
+          "percentage": -1,
           "id": "26",
           "canvas": "0",
           "order": 2,
           "valid": 1
         },
         {
-          "type": "ATTRIBUTE WRITER DROPDOWN",
+          "type": "ATTRIBUTE_DISPLAY",
           "width": 43.8,
           "height": 3.8,
           "inputs": {
@@ -742,8 +760,44 @@
               "attribute": "adminmode",
               "label": "Admin Mode"
             },
+            "precision": 3,
+            "format": "",
+            "showUnit": true,
+            "showDevice": false,
+            "jsonCollapsed": true,
+            "showTangoDB": false,
+            "showAttribute": "Label",
+            "alignTextCenter": false,
+            "alignValueRight": true,
+            "scientificNotation": false,
+            "showEnumLabels": true,
+            "showAttrQuality": false,
+            "textColor": "#1a1a1a",
+            "backgroundColor": "#ffffff",
+            "size": 1,
+            "font": "Helvetica",
+            "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
+          },
+          "x": 3.1,
+          "y": 53.6,
+          "percentage": -1,
+          "id": "27",
+          "canvas": "0",
+          "order": 3,
+          "valid": 1
+        },
+        {
+          "type": "ATTRIBUTE WRITER DROPDOWN",
+          "width": 43.8,
+          "height": 11.8,
+          "inputs": {
+            "attribute": {
+              "device": "taranta://low-sat/utc/ci",
+              "attribute": "adminmode",
+              "label": "Admin Mode"
+            },
             "submitButtonTitle": "Set",
-            "dropdownTitle": "Admin Mode",
+            "dropdownTitle": "Choose…",
             "writeValues": [
               {
                 "title": "Online",
@@ -761,7 +815,7 @@
             },
             "showDevice": false,
             "showTangoDB": false,
-            "showAttribute": "Label",
+            "showAttribute": "None",
             "textColor": "#1a1a1a",
             "backgroundColor": "#ffffff",
             "size": 1,
@@ -771,14 +825,15 @@
             "customCss": "padding: 0 10px\nbox-sizing: border-box"
           },
           "x": 3.1,
-          "y": 53.6,
-          "id": "27",
+          "y": 57.4,
+          "percentage": -1,
+          "id": "28",
           "canvas": "0",
-          "order": 3,
+          "order": 4,
           "valid": 1
         },
         {
-          "type": "ATTRIBUTE WRITER DROPDOWN",
+          "type": "ATTRIBUTE_DISPLAY",
           "width": 43.8,
           "height": 3.8,
           "inputs": {
@@ -787,8 +842,44 @@
               "attribute": "controlmode",
               "label": "Control Mode"
             },
+            "precision": 3,
+            "format": "",
+            "showUnit": true,
+            "showDevice": false,
+            "jsonCollapsed": true,
+            "showTangoDB": false,
+            "showAttribute": "Label",
+            "alignTextCenter": false,
+            "alignValueRight": true,
+            "scientificNotation": false,
+            "showEnumLabels": true,
+            "showAttrQuality": false,
+            "textColor": "#1a1a1a",
+            "backgroundColor": "#ffffff",
+            "size": 1,
+            "font": "Helvetica",
+            "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
+          },
+          "x": 3.1,
+          "y": 69.2,
+          "percentage": -1,
+          "id": "29",
+          "canvas": "0",
+          "order": 5,
+          "valid": 1
+        },
+        {
+          "type": "ATTRIBUTE WRITER DROPDOWN",
+          "width": 43.8,
+          "height": 15.0,
+          "inputs": {
+            "attribute": {
+              "device": "taranta://low-sat/utc/ci",
+              "attribute": "controlmode",
+              "label": "Control Mode"
+            },
             "submitButtonTitle": "Set",
-            "dropdownTitle": "Control Mode",
+            "dropdownTitle": "Choose…",
             "writeValues": [
               {
                 "title": "No Monitor No Control",
@@ -810,7 +901,7 @@
             },
             "showDevice": false,
             "showTangoDB": false,
-            "showAttribute": "Label",
+            "showAttribute": "None",
             "textColor": "#1a1a1a",
             "backgroundColor": "#ffffff",
             "size": 1,
@@ -820,10 +911,11 @@
             "customCss": "padding: 0 10px\nbox-sizing: border-box"
           },
           "x": 3.1,
-          "y": 57.4,
-          "id": "28",
+          "y": 73.0,
+          "percentage": -1,
+          "id": "30",
           "canvas": "0",
-          "order": 4,
+          "order": 6,
           "valid": 1
         }
       ],
@@ -851,8 +943,8 @@
         "customCss": "padding: 0 12px\nbox-sizing: border-box"
       },
       "x": 3.0,
-      "y": 65.5,
-      "id": "29",
+      "y": 92.3,
+      "id": "31",
       "canvas": "0",
       "order": 8,
       "valid": 1
@@ -862,7 +954,7 @@
       "width": 17.0,
       "height": 4.1,
       "inputs": {
-        "DefaultDashboard": "ska-sat-lmc - low-sat/endnode/ci-1",
+        "DefaultDashboard": "{\"name\": \"ska-sat-lmc - low-sat/endnode/ci-1\", \"id\": \"\"}",
         "HideDropdown": true,
         "NewTab": false,
         "ButtonText": "Details",
@@ -871,8 +963,8 @@
         "CustomCss": "padding: 0 4px\nbox-sizing: border-box"
       },
       "x": 171.0,
-      "y": 65.5,
-      "id": "30",
+      "y": 92.3,
+      "id": "32",
       "canvas": "0",
       "order": 9,
       "valid": 1
@@ -880,7 +972,7 @@
     {
       "type": "BOX",
       "width": 44.0,
-      "height": 23.4,
+      "height": 50.2,
       "inputs": {
         "title": "Device",
         "bigWidget": 5,
@@ -921,8 +1013,9 @@
             "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
           "x": 3.1,
-          "y": 74.2,
-          "id": "32",
+          "y": 101.0,
+          "percentage": -1,
+          "id": "34",
           "canvas": "0",
           "order": 0,
           "valid": 1
@@ -952,8 +1045,9 @@
             "customCss": "padding: 0 10px\nbox-sizing: border-box"
           },
           "x": 3.1,
-          "y": 78.0,
-          "id": "33",
+          "y": 104.8,
+          "percentage": -1,
+          "id": "35",
           "canvas": "0",
           "order": 1,
           "valid": 1
@@ -987,14 +1081,15 @@
             "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
           "x": 3.1,
-          "y": 81.8,
-          "id": "34",
+          "y": 108.6,
+          "percentage": -1,
+          "id": "36",
           "canvas": "0",
           "order": 2,
           "valid": 1
         },
         {
-          "type": "ATTRIBUTE WRITER DROPDOWN",
+          "type": "ATTRIBUTE_DISPLAY",
           "width": 43.8,
           "height": 3.8,
           "inputs": {
@@ -1003,8 +1098,44 @@
               "attribute": "adminmode",
               "label": "Admin Mode"
             },
+            "precision": 3,
+            "format": "",
+            "showUnit": true,
+            "showDevice": false,
+            "jsonCollapsed": true,
+            "showTangoDB": false,
+            "showAttribute": "Label",
+            "alignTextCenter": false,
+            "alignValueRight": true,
+            "scientificNotation": false,
+            "showEnumLabels": true,
+            "showAttrQuality": false,
+            "textColor": "#1a1a1a",
+            "backgroundColor": "#ffffff",
+            "size": 1,
+            "font": "Helvetica",
+            "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
+          },
+          "x": 3.1,
+          "y": 112.4,
+          "percentage": -1,
+          "id": "37",
+          "canvas": "0",
+          "order": 3,
+          "valid": 1
+        },
+        {
+          "type": "ATTRIBUTE WRITER DROPDOWN",
+          "width": 43.8,
+          "height": 11.8,
+          "inputs": {
+            "attribute": {
+              "device": "taranta://low-sat/endnode/ci-1",
+              "attribute": "adminmode",
+              "label": "Admin Mode"
+            },
             "submitButtonTitle": "Set",
-            "dropdownTitle": "Admin Mode",
+            "dropdownTitle": "Choose…",
             "writeValues": [
               {
                 "title": "Online",
@@ -1022,7 +1153,7 @@
             },
             "showDevice": false,
             "showTangoDB": false,
-            "showAttribute": "Label",
+            "showAttribute": "None",
             "textColor": "#1a1a1a",
             "backgroundColor": "#ffffff",
             "size": 1,
@@ -1032,14 +1163,15 @@
             "customCss": "padding: 0 10px\nbox-sizing: border-box"
           },
           "x": 3.1,
-          "y": 85.6,
-          "id": "35",
+          "y": 116.2,
+          "percentage": -1,
+          "id": "38",
           "canvas": "0",
-          "order": 3,
+          "order": 4,
           "valid": 1
         },
         {
-          "type": "ATTRIBUTE WRITER DROPDOWN",
+          "type": "ATTRIBUTE_DISPLAY",
           "width": 43.8,
           "height": 3.8,
           "inputs": {
@@ -1048,8 +1180,44 @@
               "attribute": "controlmode",
               "label": "Control Mode"
             },
+            "precision": 3,
+            "format": "",
+            "showUnit": true,
+            "showDevice": false,
+            "jsonCollapsed": true,
+            "showTangoDB": false,
+            "showAttribute": "Label",
+            "alignTextCenter": false,
+            "alignValueRight": true,
+            "scientificNotation": false,
+            "showEnumLabels": true,
+            "showAttrQuality": false,
+            "textColor": "#1a1a1a",
+            "backgroundColor": "#ffffff",
+            "size": 1,
+            "font": "Helvetica",
+            "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
+          },
+          "x": 3.1,
+          "y": 128.0,
+          "percentage": -1,
+          "id": "39",
+          "canvas": "0",
+          "order": 5,
+          "valid": 1
+        },
+        {
+          "type": "ATTRIBUTE WRITER DROPDOWN",
+          "width": 43.8,
+          "height": 15.0,
+          "inputs": {
+            "attribute": {
+              "device": "taranta://low-sat/endnode/ci-1",
+              "attribute": "controlmode",
+              "label": "Control Mode"
+            },
             "submitButtonTitle": "Set",
-            "dropdownTitle": "Control Mode",
+            "dropdownTitle": "Choose…",
             "writeValues": [
               {
                 "title": "No Monitor No Control",
@@ -1071,7 +1239,7 @@
             },
             "showDevice": false,
             "showTangoDB": false,
-            "showAttribute": "Label",
+            "showAttribute": "None",
             "textColor": "#1a1a1a",
             "backgroundColor": "#ffffff",
             "size": 1,
@@ -1081,16 +1249,17 @@
             "customCss": "padding: 0 10px\nbox-sizing: border-box"
           },
           "x": 3.1,
-          "y": 89.4,
-          "id": "36",
+          "y": 131.8,
+          "percentage": -1,
+          "id": "40",
           "canvas": "0",
-          "order": 4,
+          "order": 6,
           "valid": 1
         }
       ],
       "x": 3.0,
-      "y": 71.1,
-      "id": "31",
+      "y": 97.89999999999999,
+      "id": "33",
       "canvas": "0",
       "order": 10,
       "valid": 1
@@ -1141,8 +1310,9 @@
             "customCss": "padding: 0 10px\nbox-sizing: border-box"
           },
           "x": 50.1,
-          "y": 74.2,
-          "id": "38",
+          "y": 101.0,
+          "percentage": -1,
+          "id": "42",
           "canvas": "0",
           "order": 0,
           "valid": 1
@@ -1172,8 +1342,9 @@
             "customCss": "padding: 0 10px\nbox-sizing: border-box"
           },
           "x": 50.1,
-          "y": 78.0,
-          "id": "39",
+          "y": 104.8,
+          "percentage": -1,
+          "id": "43",
           "canvas": "0",
           "order": 1,
           "valid": 1
@@ -1203,8 +1374,9 @@
             "customCss": "padding: 0 10px\nbox-sizing: border-box"
           },
           "x": 50.1,
-          "y": 81.8,
-          "id": "40",
+          "y": 108.6,
+          "percentage": -1,
+          "id": "44",
           "canvas": "0",
           "order": 2,
           "valid": 1
@@ -1234,8 +1406,9 @@
             "customCss": "padding: 0 10px\nbox-sizing: border-box"
           },
           "x": 50.1,
-          "y": 85.6,
-          "id": "41",
+          "y": 112.4,
+          "percentage": -1,
+          "id": "45",
           "canvas": "0",
           "order": 3,
           "valid": 1
@@ -1265,16 +1438,17 @@
             "customCss": "padding: 0 10px\nbox-sizing: border-box"
           },
           "x": 50.1,
-          "y": 89.4,
-          "id": "42",
+          "y": 116.2,
+          "percentage": -1,
+          "id": "46",
           "canvas": "0",
           "order": 4,
           "valid": 1
         }
       ],
       "x": 50.0,
-      "y": 71.1,
-      "id": "37",
+      "y": 97.89999999999999,
+      "id": "41",
       "canvas": "0",
       "order": 11,
       "valid": 1
@@ -1325,8 +1499,9 @@
             "customCss": "padding: 0 10px\nbox-sizing: border-box"
           },
           "x": 97.1,
-          "y": 74.2,
-          "id": "44",
+          "y": 101.0,
+          "percentage": -1,
+          "id": "48",
           "canvas": "0",
           "order": 0,
           "valid": 1
@@ -1360,8 +1535,9 @@
             "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
           "x": 97.1,
-          "y": 78.0,
-          "id": "45",
+          "y": 104.8,
+          "percentage": -1,
+          "id": "49",
           "canvas": "0",
           "order": 1,
           "valid": 1
@@ -1395,8 +1571,9 @@
             "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
           "x": 97.1,
-          "y": 81.8,
-          "id": "46",
+          "y": 108.6,
+          "percentage": -1,
+          "id": "50",
           "canvas": "0",
           "order": 2,
           "valid": 1
@@ -1430,8 +1607,9 @@
             "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
           "x": 97.1,
-          "y": 85.6,
-          "id": "47",
+          "y": 112.4,
+          "percentage": -1,
+          "id": "51",
           "canvas": "0",
           "order": 3,
           "valid": 1
@@ -1465,8 +1643,9 @@
             "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
           "x": 97.1,
-          "y": 89.4,
-          "id": "48",
+          "y": 116.2,
+          "percentage": -1,
+          "id": "52",
           "canvas": "0",
           "order": 4,
           "valid": 1
@@ -1500,8 +1679,9 @@
             "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
           "x": 97.1,
-          "y": 93.2,
-          "id": "49",
+          "y": 120.0,
+          "percentage": -1,
+          "id": "53",
           "canvas": "0",
           "order": 5,
           "valid": 1
@@ -1535,8 +1715,9 @@
             "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
           "x": 97.1,
-          "y": 97.0,
-          "id": "50",
+          "y": 123.8,
+          "percentage": -1,
+          "id": "54",
           "canvas": "0",
           "order": 6,
           "valid": 1
@@ -1570,8 +1751,9 @@
             "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
           "x": 97.1,
-          "y": 100.8,
-          "id": "51",
+          "y": 127.6,
+          "percentage": -1,
+          "id": "55",
           "canvas": "0",
           "order": 7,
           "valid": 1
@@ -1605,8 +1787,9 @@
             "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
           "x": 97.1,
-          "y": 104.6,
-          "id": "52",
+          "y": 131.4,
+          "percentage": -1,
+          "id": "56",
           "canvas": "0",
           "order": 8,
           "valid": 1
@@ -1640,8 +1823,9 @@
             "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
           "x": 97.1,
-          "y": 108.4,
-          "id": "53",
+          "y": 135.2,
+          "percentage": -1,
+          "id": "57",
           "canvas": "0",
           "order": 9,
           "valid": 1
@@ -1675,8 +1859,9 @@
             "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
           "x": 97.1,
-          "y": 112.2,
-          "id": "54",
+          "y": 139.0,
+          "percentage": -1,
+          "id": "58",
           "canvas": "0",
           "order": 10,
           "valid": 1
@@ -1706,8 +1891,9 @@
             "customCss": "padding: 0 10px\nbox-sizing: border-box"
           },
           "x": 97.1,
-          "y": 116.0,
-          "id": "55",
+          "y": 142.8,
+          "percentage": -1,
+          "id": "59",
           "canvas": "0",
           "order": 11,
           "valid": 1
@@ -1741,8 +1927,9 @@
             "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
           "x": 97.1,
-          "y": 119.8,
-          "id": "56",
+          "y": 146.6,
+          "percentage": -1,
+          "id": "60",
           "canvas": "0",
           "order": 12,
           "valid": 1
@@ -1776,8 +1963,9 @@
             "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
           "x": 97.1,
-          "y": 123.6,
-          "id": "57",
+          "y": 150.4,
+          "percentage": -1,
+          "id": "61",
           "canvas": "0",
           "order": 13,
           "valid": 1
@@ -1811,8 +1999,9 @@
             "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
           "x": 97.1,
-          "y": 127.4,
-          "id": "58",
+          "y": 154.2,
+          "percentage": -1,
+          "id": "62",
           "canvas": "0",
           "order": 14,
           "valid": 1
@@ -1856,8 +2045,8 @@
                 "widgetCss": ""
               },
               "x": 97.1,
-              "y": 131.2,
-              "id": "60",
+              "y": 158.0,
+              "id": "64",
               "canvas": "0",
               "order": 0,
               "valid": 1
@@ -1880,8 +2069,8 @@
                 "widgetCss": ""
               },
               "x": 111.7,
-              "y": 131.2,
-              "id": "61",
+              "y": 158.0,
+              "id": "65",
               "canvas": "0",
               "order": 1,
               "valid": 1
@@ -1904,16 +2093,17 @@
                 "widgetCss": ""
               },
               "x": 126.3,
-              "y": 131.2,
-              "id": "62",
+              "y": 158.0,
+              "id": "66",
               "canvas": "0",
               "order": 2,
               "valid": 1
             }
           ],
           "x": 97.1,
-          "y": 131.2,
-          "id": "59",
+          "y": 158.0,
+          "percentage": -1,
+          "id": "63",
           "canvas": "0",
           "order": 15,
           "valid": 1
@@ -1946,8 +2136,9 @@
             "backgroundColor": "#ffffff"
           },
           "x": 97.1,
-          "y": 150.2,
-          "id": "63",
+          "y": 177.0,
+          "percentage": -1,
+          "id": "67",
           "canvas": "0",
           "order": 16,
           "valid": 1
@@ -1990,16 +2181,17 @@
             "backgroundColor": "#ffffff"
           },
           "x": 97.1,
-          "y": 169.2,
-          "id": "64",
+          "y": 196.0,
+          "percentage": -1,
+          "id": "68",
           "canvas": "0",
           "order": 17,
           "valid": 1
         }
       ],
       "x": 97.0,
-      "y": 71.1,
-      "id": "43",
+      "y": 97.89999999999999,
+      "id": "47",
       "canvas": "0",
       "order": 12,
       "valid": 1
@@ -2054,8 +2246,9 @@
             "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
           "x": 144.1,
-          "y": 74.2,
-          "id": "66",
+          "y": 101.0,
+          "percentage": -1,
+          "id": "70",
           "canvas": "0",
           "order": 0,
           "valid": 1
@@ -2089,8 +2282,9 @@
             "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
           "x": 144.1,
-          "y": 78.0,
-          "id": "67",
+          "y": 104.8,
+          "percentage": -1,
+          "id": "71",
           "canvas": "0",
           "order": 1,
           "valid": 1
@@ -2124,8 +2318,9 @@
             "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
           "x": 144.1,
-          "y": 81.8,
-          "id": "68",
+          "y": 108.6,
+          "percentage": -1,
+          "id": "72",
           "canvas": "0",
           "order": 2,
           "valid": 1
@@ -2159,8 +2354,9 @@
             "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
           "x": 144.1,
-          "y": 85.6,
-          "id": "69",
+          "y": 112.4,
+          "percentage": -1,
+          "id": "73",
           "canvas": "0",
           "order": 3,
           "valid": 1
@@ -2194,8 +2390,9 @@
             "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
           "x": 144.1,
-          "y": 89.4,
-          "id": "70",
+          "y": 116.2,
+          "percentage": -1,
+          "id": "74",
           "canvas": "0",
           "order": 4,
           "valid": 1
@@ -2229,8 +2426,9 @@
             "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
           "x": 144.1,
-          "y": 93.2,
-          "id": "71",
+          "y": 120.0,
+          "percentage": -1,
+          "id": "75",
           "canvas": "0",
           "order": 5,
           "valid": 1
@@ -2274,8 +2472,8 @@
                 "widgetCss": ""
               },
               "x": 144.1,
-              "y": 97.0,
-              "id": "73",
+              "y": 123.8,
+              "id": "77",
               "canvas": "0",
               "order": 0,
               "valid": 1
@@ -2298,8 +2496,8 @@
                 "widgetCss": ""
               },
               "x": 158.7,
-              "y": 97.0,
-              "id": "74",
+              "y": 123.8,
+              "id": "78",
               "canvas": "0",
               "order": 1,
               "valid": 1
@@ -2322,16 +2520,17 @@
                 "widgetCss": ""
               },
               "x": 173.3,
-              "y": 97.0,
-              "id": "75",
+              "y": 123.8,
+              "id": "79",
               "canvas": "0",
               "order": 2,
               "valid": 1
             }
           ],
           "x": 144.1,
-          "y": 97.0,
-          "id": "72",
+          "y": 123.8,
+          "percentage": -1,
+          "id": "76",
           "canvas": "0",
           "order": 6,
           "valid": 1
@@ -2384,8 +2583,9 @@
             "backgroundColor": "#ffffff"
           },
           "x": 144.1,
-          "y": 116.0,
-          "id": "76",
+          "y": 142.8,
+          "percentage": -1,
+          "id": "80",
           "canvas": "0",
           "order": 7,
           "valid": 1
@@ -2428,16 +2628,17 @@
             "backgroundColor": "#ffffff"
           },
           "x": 144.1,
-          "y": 135.0,
-          "id": "77",
+          "y": 161.8,
+          "percentage": -1,
+          "id": "81",
           "canvas": "0",
           "order": 8,
           "valid": 1
         }
       ],
       "x": 144.0,
-      "y": 71.1,
-      "id": "65",
+      "y": 97.89999999999999,
+      "id": "69",
       "canvas": "0",
       "order": 13,
       "valid": 1
@@ -2459,8 +2660,8 @@
         "customCss": "padding: 0 12px\nbox-sizing: border-box"
       },
       "x": 3.0,
-      "y": 192.5,
-      "id": "78",
+      "y": 219.3,
+      "id": "82",
       "canvas": "0",
       "order": 14,
       "valid": 1
@@ -2470,7 +2671,7 @@
       "width": 17.0,
       "height": 4.1,
       "inputs": {
-        "DefaultDashboard": "ska-sat-lmc - low-sat/grandmaster/1",
+        "DefaultDashboard": "{\"name\": \"ska-sat-lmc - low-sat/grandmaster/1\", \"id\": \"\"}",
         "HideDropdown": true,
         "NewTab": false,
         "ButtonText": "Details",
@@ -2479,8 +2680,8 @@
         "CustomCss": "padding: 0 4px\nbox-sizing: border-box"
       },
       "x": 171.0,
-      "y": 192.5,
-      "id": "79",
+      "y": 219.3,
+      "id": "83",
       "canvas": "0",
       "order": 15,
       "valid": 1
@@ -2488,7 +2689,7 @@
     {
       "type": "BOX",
       "width": 44.0,
-      "height": 23.4,
+      "height": 50.2,
       "inputs": {
         "title": "Device",
         "bigWidget": 5,
@@ -2529,8 +2730,9 @@
             "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
           "x": 3.1,
-          "y": 201.2,
-          "id": "81",
+          "y": 228.0,
+          "percentage": -1,
+          "id": "85",
           "canvas": "0",
           "order": 0,
           "valid": 1
@@ -2560,8 +2762,9 @@
             "customCss": "padding: 0 10px\nbox-sizing: border-box"
           },
           "x": 3.1,
-          "y": 205.0,
-          "id": "82",
+          "y": 231.8,
+          "percentage": -1,
+          "id": "86",
           "canvas": "0",
           "order": 1,
           "valid": 1
@@ -2595,14 +2798,15 @@
             "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
           "x": 3.1,
-          "y": 208.8,
-          "id": "83",
+          "y": 235.6,
+          "percentage": -1,
+          "id": "87",
           "canvas": "0",
           "order": 2,
           "valid": 1
         },
         {
-          "type": "ATTRIBUTE WRITER DROPDOWN",
+          "type": "ATTRIBUTE_DISPLAY",
           "width": 43.8,
           "height": 3.8,
           "inputs": {
@@ -2611,8 +2815,44 @@
               "attribute": "adminmode",
               "label": "Admin Mode"
             },
+            "precision": 3,
+            "format": "",
+            "showUnit": true,
+            "showDevice": false,
+            "jsonCollapsed": true,
+            "showTangoDB": false,
+            "showAttribute": "Label",
+            "alignTextCenter": false,
+            "alignValueRight": true,
+            "scientificNotation": false,
+            "showEnumLabels": true,
+            "showAttrQuality": false,
+            "textColor": "#1a1a1a",
+            "backgroundColor": "#ffffff",
+            "size": 1,
+            "font": "Helvetica",
+            "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
+          },
+          "x": 3.1,
+          "y": 239.4,
+          "percentage": -1,
+          "id": "88",
+          "canvas": "0",
+          "order": 3,
+          "valid": 1
+        },
+        {
+          "type": "ATTRIBUTE WRITER DROPDOWN",
+          "width": 43.8,
+          "height": 11.8,
+          "inputs": {
+            "attribute": {
+              "device": "taranta://low-sat/grandmaster/1",
+              "attribute": "adminmode",
+              "label": "Admin Mode"
+            },
             "submitButtonTitle": "Set",
-            "dropdownTitle": "Admin Mode",
+            "dropdownTitle": "Choose…",
             "writeValues": [
               {
                 "title": "Online",
@@ -2630,7 +2870,7 @@
             },
             "showDevice": false,
             "showTangoDB": false,
-            "showAttribute": "Label",
+            "showAttribute": "None",
             "textColor": "#1a1a1a",
             "backgroundColor": "#ffffff",
             "size": 1,
@@ -2640,14 +2880,15 @@
             "customCss": "padding: 0 10px\nbox-sizing: border-box"
           },
           "x": 3.1,
-          "y": 212.6,
-          "id": "84",
+          "y": 243.2,
+          "percentage": -1,
+          "id": "89",
           "canvas": "0",
-          "order": 3,
+          "order": 4,
           "valid": 1
         },
         {
-          "type": "ATTRIBUTE WRITER DROPDOWN",
+          "type": "ATTRIBUTE_DISPLAY",
           "width": 43.8,
           "height": 3.8,
           "inputs": {
@@ -2656,8 +2897,44 @@
               "attribute": "controlmode",
               "label": "Control Mode"
             },
+            "precision": 3,
+            "format": "",
+            "showUnit": true,
+            "showDevice": false,
+            "jsonCollapsed": true,
+            "showTangoDB": false,
+            "showAttribute": "Label",
+            "alignTextCenter": false,
+            "alignValueRight": true,
+            "scientificNotation": false,
+            "showEnumLabels": true,
+            "showAttrQuality": false,
+            "textColor": "#1a1a1a",
+            "backgroundColor": "#ffffff",
+            "size": 1,
+            "font": "Helvetica",
+            "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
+          },
+          "x": 3.1,
+          "y": 255.0,
+          "percentage": -1,
+          "id": "90",
+          "canvas": "0",
+          "order": 5,
+          "valid": 1
+        },
+        {
+          "type": "ATTRIBUTE WRITER DROPDOWN",
+          "width": 43.8,
+          "height": 15.0,
+          "inputs": {
+            "attribute": {
+              "device": "taranta://low-sat/grandmaster/1",
+              "attribute": "controlmode",
+              "label": "Control Mode"
+            },
             "submitButtonTitle": "Set",
-            "dropdownTitle": "Control Mode",
+            "dropdownTitle": "Choose…",
             "writeValues": [
               {
                 "title": "No Monitor No Control",
@@ -2679,7 +2956,7 @@
             },
             "showDevice": false,
             "showTangoDB": false,
-            "showAttribute": "Label",
+            "showAttribute": "None",
             "textColor": "#1a1a1a",
             "backgroundColor": "#ffffff",
             "size": 1,
@@ -2689,16 +2966,17 @@
             "customCss": "padding: 0 10px\nbox-sizing: border-box"
           },
           "x": 3.1,
-          "y": 216.4,
-          "id": "85",
+          "y": 258.8,
+          "percentage": -1,
+          "id": "91",
           "canvas": "0",
-          "order": 4,
+          "order": 6,
           "valid": 1
         }
       ],
       "x": 3.0,
-      "y": 198.1,
-      "id": "80",
+      "y": 224.9,
+      "id": "84",
       "canvas": "0",
       "order": 16,
       "valid": 1
@@ -2749,8 +3027,9 @@
             "customCss": "padding: 0 10px\nbox-sizing: border-box"
           },
           "x": 50.1,
-          "y": 201.2,
-          "id": "87",
+          "y": 228.0,
+          "percentage": -1,
+          "id": "93",
           "canvas": "0",
           "order": 0,
           "valid": 1
@@ -2780,8 +3059,9 @@
             "customCss": "padding: 0 10px\nbox-sizing: border-box"
           },
           "x": 50.1,
-          "y": 205.0,
-          "id": "88",
+          "y": 231.8,
+          "percentage": -1,
+          "id": "94",
           "canvas": "0",
           "order": 1,
           "valid": 1
@@ -2811,8 +3091,9 @@
             "customCss": "padding: 0 10px\nbox-sizing: border-box"
           },
           "x": 50.1,
-          "y": 208.8,
-          "id": "89",
+          "y": 235.6,
+          "percentage": -1,
+          "id": "95",
           "canvas": "0",
           "order": 2,
           "valid": 1
@@ -2842,8 +3123,9 @@
             "customCss": "padding: 0 10px\nbox-sizing: border-box"
           },
           "x": 50.1,
-          "y": 212.6,
-          "id": "90",
+          "y": 239.4,
+          "percentage": -1,
+          "id": "96",
           "canvas": "0",
           "order": 3,
           "valid": 1
@@ -2873,8 +3155,9 @@
             "customCss": "padding: 0 10px\nbox-sizing: border-box"
           },
           "x": 50.1,
-          "y": 216.4,
-          "id": "91",
+          "y": 243.2,
+          "percentage": -1,
+          "id": "97",
           "canvas": "0",
           "order": 4,
           "valid": 1
@@ -2904,8 +3187,9 @@
             "customCss": "padding: 0 10px\nbox-sizing: border-box"
           },
           "x": 50.1,
-          "y": 220.2,
-          "id": "92",
+          "y": 247.0,
+          "percentage": -1,
+          "id": "98",
           "canvas": "0",
           "order": 5,
           "valid": 1
@@ -2935,8 +3219,9 @@
             "customCss": "padding: 0 10px\nbox-sizing: border-box"
           },
           "x": 50.1,
-          "y": 224.0,
-          "id": "93",
+          "y": 250.8,
+          "percentage": -1,
+          "id": "99",
           "canvas": "0",
           "order": 6,
           "valid": 1
@@ -2966,8 +3251,9 @@
             "customCss": "padding: 0 10px\nbox-sizing: border-box"
           },
           "x": 50.1,
-          "y": 227.8,
-          "id": "94",
+          "y": 254.6,
+          "percentage": -1,
+          "id": "100",
           "canvas": "0",
           "order": 7,
           "valid": 1
@@ -2997,16 +3283,17 @@
             "customCss": "padding: 0 10px\nbox-sizing: border-box"
           },
           "x": 50.1,
-          "y": 231.6,
-          "id": "95",
+          "y": 258.4,
+          "percentage": -1,
+          "id": "101",
           "canvas": "0",
           "order": 8,
           "valid": 1
         }
       ],
       "x": 50.0,
-      "y": 198.1,
-      "id": "86",
+      "y": 224.9,
+      "id": "92",
       "canvas": "0",
       "order": 17,
       "valid": 1
@@ -3057,8 +3344,9 @@
             "customCss": "padding: 0 10px\nbox-sizing: border-box"
           },
           "x": 97.1,
-          "y": 201.2,
-          "id": "97",
+          "y": 228.0,
+          "percentage": -1,
+          "id": "103",
           "canvas": "0",
           "order": 0,
           "valid": 1
@@ -3092,8 +3380,9 @@
             "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
           "x": 97.1,
-          "y": 205.0,
-          "id": "98",
+          "y": 231.8,
+          "percentage": -1,
+          "id": "104",
           "canvas": "0",
           "order": 1,
           "valid": 1
@@ -3127,8 +3416,9 @@
             "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
           "x": 97.1,
-          "y": 208.8,
-          "id": "99",
+          "y": 235.6,
+          "percentage": -1,
+          "id": "105",
           "canvas": "0",
           "order": 2,
           "valid": 1
@@ -3162,8 +3452,9 @@
             "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
           "x": 97.1,
-          "y": 212.6,
-          "id": "100",
+          "y": 239.4,
+          "percentage": -1,
+          "id": "106",
           "canvas": "0",
           "order": 3,
           "valid": 1
@@ -3197,8 +3488,9 @@
             "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
           "x": 97.1,
-          "y": 216.4,
-          "id": "101",
+          "y": 243.2,
+          "percentage": -1,
+          "id": "107",
           "canvas": "0",
           "order": 4,
           "valid": 1
@@ -3242,16 +3534,17 @@
                 "widgetCss": ""
               },
               "x": 97.1,
-              "y": 220.2,
-              "id": "103",
+              "y": 247.0,
+              "id": "109",
               "canvas": "0",
               "order": 0,
               "valid": 1
             }
           ],
           "x": 97.1,
-          "y": 220.2,
-          "id": "102",
+          "y": 247.0,
+          "percentage": -1,
+          "id": "108",
           "canvas": "0",
           "order": 5,
           "valid": 1
@@ -3294,8 +3587,9 @@
             "backgroundColor": "#ffffff"
           },
           "x": 97.1,
-          "y": 239.2,
-          "id": "104",
+          "y": 266.0,
+          "percentage": -1,
+          "id": "110",
           "canvas": "0",
           "order": 6,
           "valid": 1
@@ -3338,16 +3632,17 @@
             "backgroundColor": "#ffffff"
           },
           "x": 97.1,
-          "y": 258.2,
-          "id": "105",
+          "y": 285.0,
+          "percentage": -1,
+          "id": "111",
           "canvas": "0",
           "order": 7,
           "valid": 1
         }
       ],
       "x": 97.0,
-      "y": 198.1,
-      "id": "96",
+      "y": 224.9,
+      "id": "102",
       "canvas": "0",
       "order": 18,
       "valid": 1
@@ -3402,8 +3697,9 @@
             "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
           "x": 144.1,
-          "y": 201.2,
-          "id": "107",
+          "y": 228.0,
+          "percentage": -1,
+          "id": "113",
           "canvas": "0",
           "order": 0,
           "valid": 1
@@ -3437,8 +3733,9 @@
             "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
           "x": 144.1,
-          "y": 205.0,
-          "id": "108",
+          "y": 231.8,
+          "percentage": -1,
+          "id": "114",
           "canvas": "0",
           "order": 1,
           "valid": 1
@@ -3472,8 +3769,9 @@
             "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
           "x": 144.1,
-          "y": 208.8,
-          "id": "109",
+          "y": 235.6,
+          "percentage": -1,
+          "id": "115",
           "canvas": "0",
           "order": 2,
           "valid": 1
@@ -3517,8 +3815,8 @@
                 "widgetCss": ""
               },
               "x": 144.1,
-              "y": 212.6,
-              "id": "111",
+              "y": 239.4,
+              "id": "117",
               "canvas": "0",
               "order": 0,
               "valid": 1
@@ -3541,8 +3839,8 @@
                 "widgetCss": ""
               },
               "x": 158.7,
-              "y": 212.6,
-              "id": "112",
+              "y": 239.4,
+              "id": "118",
               "canvas": "0",
               "order": 1,
               "valid": 1
@@ -3565,16 +3863,17 @@
                 "widgetCss": ""
               },
               "x": 173.3,
-              "y": 212.6,
-              "id": "113",
+              "y": 239.4,
+              "id": "119",
               "canvas": "0",
               "order": 2,
               "valid": 1
             }
           ],
           "x": 144.1,
-          "y": 212.6,
-          "id": "110",
+          "y": 239.4,
+          "percentage": -1,
+          "id": "116",
           "canvas": "0",
           "order": 3,
           "valid": 1
@@ -3617,8 +3916,9 @@
             "backgroundColor": "#ffffff"
           },
           "x": 144.1,
-          "y": 231.6,
-          "id": "114",
+          "y": 258.4,
+          "percentage": -1,
+          "id": "120",
           "canvas": "0",
           "order": 4,
           "valid": 1
@@ -3651,16 +3951,17 @@
             "backgroundColor": "#ffffff"
           },
           "x": 144.1,
-          "y": 250.6,
-          "id": "115",
+          "y": 277.4,
+          "percentage": -1,
+          "id": "121",
           "canvas": "0",
           "order": 5,
           "valid": 1
         }
       ],
       "x": 144.0,
-      "y": 198.1,
-      "id": "106",
+      "y": 224.9,
+      "id": "112",
       "canvas": "0",
       "order": 19,
       "valid": 1

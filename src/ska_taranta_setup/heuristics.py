@@ -276,6 +276,13 @@ def _enum_choices(attr: AttributeInfo) -> list[tuple[str, str]]:
     ]
 
 
+def _enum_setter(device: str, attr: AttributeInfo, text: str) -> list[dict[str, Any]]:
+    """Current value (the dropdown doesn't show it), then a dropdown to change it."""
+    setter = w.dropdown_writer(device, attr, text, _enum_choices(attr))
+    setter["inputs"]["showAttribute"] = "None"
+    return [w.attribute_display(device, attr, text), setter]
+
+
 def _forced(
     section: Section, device: str, attr: AttributeInfo, text: str, kind: str
 ) -> None:
@@ -298,9 +305,7 @@ def _forced(
     elif kind == "writer":
         section.widgets.append(w.writer(device, attr, text))
     elif kind == "dropdown":
-        section.widgets.append(
-            w.dropdown_writer(device, attr, text, _enum_choices(attr))
-        )
+        section.widgets.extend(_enum_setter(device, attr, text))
     elif kind == "switch":
         section.widgets.append(w.boolean_display(device, attr, text))
     elif kind == "logger":
@@ -337,9 +342,7 @@ def place_attribute(
 
     if attr.is_enum and attr.is_scalar:
         if attr.is_writable:
-            section.widgets.append(
-                w.dropdown_writer(device, attr, text, _enum_choices(attr))
-            )
+            section.widgets.extend(_enum_setter(device, attr, text))
             return
         good = status_compare(attr)
         if good is not None:

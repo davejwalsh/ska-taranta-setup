@@ -25,7 +25,7 @@ def _devices(snapshot):
 
 def _links(path):
     return [
-        x["inputs"]["DefaultDashboard"]
+        json.loads(x["inputs"]["DefaultDashboard"])["name"]
         for x in _all(json.loads(path.read_text())["widget"])
         if x["type"] == "DASHLINK"
     ]
@@ -251,3 +251,14 @@ def test_cli_device_pages_toggle(tmp_path):
     ]
     result = runner.invoke(main, ["-C", str(tmp_path), "generate"])
     assert len(list((tmp_path / "dashboards").glob("*.wj"))) == 7
+
+
+def test_link_target_is_json(tmp_path, sat_lmc_snapshot):
+    """DASHLINK parses its target as JSON {name, id}; a bare name does nothing."""
+    write_dashboards("S", _devices(sat_lmc_snapshot), sat_lmc_snapshot, tmp_path, "t")
+    for path in tmp_path.glob("*.wj"):
+        for x in _all(json.loads(path.read_text())["widget"]):
+            if x["type"] == "DASHLINK":
+                target = json.loads(x["inputs"]["DefaultDashboard"])
+                assert set(target) == {"name", "id"}
+                assert x["inputs"]["HideDropdown"] is True

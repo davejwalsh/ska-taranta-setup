@@ -144,14 +144,48 @@ class UploadResult:
     url: str
 
 
+def _link_targets(widgets: list[dict[str, Any]]):
+    """Yield the inputs of every DASHLINK widget, at any depth."""
+    for widget in widgets:
+        if widget.get("type") == "DASHLINK":
+            yield widget["inputs"]
+        yield from _link_targets(widget.get("innerWidgets", []))
+
+
+def resolve_links(dashboard: dict[str, Any], ids: dict[str, str]) -> bool:
+    """Fill dashboard ids into DASHLINK targets; return whether any changed."""
+    changed = False
+    for inputs in _link_targets(
+        dashboard.get("widget") or dashboard.get("widgets", [])
+    ):
+        try:
+            target = json.loads(inputs["DefaultDashboard"])
+        except (KeyError, TypeError, ValueError):
+            continue
+        dashboard_id = ids.get(target.get("name", ""))
+        if dashboard_id and target.get("id") != dashboard_id:
+            target["id"] = dashboard_id
+            inputs["DefaultDashboard"] = json.dumps(target)
+            changed = True
+    return changed
+
+
 def upload_files(client: TarantaClient, files: list[Path]) -> list[UploadResult]:
-    """Upload ``.wj`` files, updating dashboards that already have the same name."""
+    """
+    Upload ``.wj`` files, updating dashboards that already have the same name.
+
+    Then fill the saved dashboards' ids into the links between them (a second
+    save of the dashboards with links), so links survive renames in Taranta.
+    """
     existing = client.list_dashboards()
     results = []
+    saved: list[tuple[dict[str, Any], str]] = []
     for path in files:
         dashboard = json.loads(path.read_text())
         dashboard_id = existing.get(dashboard["name"], "")
         result = client.save(dashboard, dashboard_id)
+        existing[dashboard["name"]] = result["id"]
+        saved.append((dashboard, result["id"]))
         results.append(
             UploadResult(
                 name=dashboard["name"],
@@ -160,4 +194,7 @@ def upload_files(client: TarantaClient, files: list[Path]) -> list[UploadResult]
                 url=client.dashboard_url(result["id"]),
             )
         )
+    for dashboard, dashboard_id in saved:
+        if resolve_links(dashboard, existing):
+            client.save(dashboard, dashboard_id)
     return results

@@ -66,6 +66,24 @@ def test_upload_creates_and_updates(tmp_path):
     assert bodies["New"]["tangoDB"] == "taranta"
 
 
+def test_upload_fills_link_ids(tmp_path):
+    """After saving, links between the uploaded dashboards get the real ids."""
+    link = {
+        "type": "DASHLINK",
+        "inputs": {"DefaultDashboard": json.dumps({"name": "Old", "id": ""})},
+    }
+    (tmp_path / "a.wj").write_text(
+        json.dumps({"name": "New", "widget": [{"type": "BOX", "innerWidgets": [link]}]})
+    )
+    session = FakeSession()
+    client = TarantaClient(base="http://h/ns", session=session)
+    upload_files(client, [tmp_path / "a.wj"])
+    _, second = session.posts  # saved, then re-saved with the link resolved
+    assert second[1]["id"] == "new"
+    target = second[1]["widgets"][0]["innerWidgets"][0]["inputs"]["DefaultDashboard"]
+    assert json.loads(target) == {"name": "Old", "id": "abc"}
+
+
 def test_html_response_is_an_error():
     """A proxy or the UI answering instead of the API must not pass silently."""
 

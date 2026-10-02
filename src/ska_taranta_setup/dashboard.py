@@ -61,6 +61,9 @@ class LayoutOptions:
     dials_per_row: int = 3
     #: Width of a navigation button.
     link_px: float = 170
+    #: Height of one item in a dropdown's menu, and the menu's own padding.
+    menu_item_px: float = 32
+    menu_padding_px: float = 16
 
     def units(self, px: float) -> float:
         """Pixels to grid units."""
@@ -113,8 +116,16 @@ class LayoutOptions:
         return 1 / self.tile_size
 
 
-def _slots(widget: dict[str, Any], opts: LayoutOptions) -> int:
-    return opts.big_slots if widget["type"] in w.BIG_WIDGETS else 1
+#: Taranta's "custom height" marker for a BOX child (shared/utils/canvas.js).
+CUSTOM_HEIGHT = -1
+
+
+def _height(widget: dict[str, Any], opts: LayoutOptions) -> float:
+    """A widget's height in a vertical box, in units."""
+    slots = opts.big_slots if widget["type"] in w.BIG_WIDGETS else 1
+    rows = widget.get(w.MENU_ROWS, 0)
+    menu = rows * opts.menu_item_px + (opts.menu_padding_px if rows else 0)
+    return round(slots * opts.row_height + opts.units(menu), 2)
 
 
 def _dial_rows(section: Section, opts: LayoutOptions) -> list[dict[str, Any]]:
@@ -143,10 +154,11 @@ def section_box(
     box = w.box(
         section.title, children, big_slot=opts.big_slots, padding=opts.title_padding
     )
-    slots = sum(_slots(child, opts) for child in children)
     title = opts.title_height if section.title else 0
     box["width"] = opts.section_width
-    box["height"] = round(title + slots * opts.row_height + opts.margin, 2)
+    box["height"] = round(
+        title + sum(_height(child, opts) for child in children) + opts.margin, 2
+    )
     return box
 
 
@@ -162,7 +174,10 @@ def _position_children(box: dict[str, Any], opts: LayoutOptions) -> None:
             child["x"] = round(box["x"] + border, 2)
             child["y"] = round(y, 2)
             child["width"] = round(box["width"] - 2 * border, 2)
-            child["height"] = round(_slots(child, opts) * opts.row_height, 2)
+            child["height"] = _height(child, opts)
+            # Fix each child's height, rather than letting Taranta share the
+            # box's height out equally, so dropdowns can be taller than rows.
+            child["percentage"] = CUSTOM_HEIGHT
             y += child["height"]
             _position_children(child, opts)
     else:
@@ -203,6 +218,7 @@ def _finalise(widgets_: list[dict[str, Any]]) -> list[dict[str, Any]]:
         widget["canvas"] = "0"
         widget["order"] = order
         widget["valid"] = 1
+        widget.pop(w.MENU_ROWS, None)
         for i, child in enumerate(widget.get("innerWidgets", [])):
             visit(child, i)
         return widget

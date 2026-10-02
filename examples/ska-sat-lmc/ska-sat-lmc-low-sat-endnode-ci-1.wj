@@ -36,7 +36,7 @@
       "width": 17.0,
       "height": 4.1,
       "inputs": {
-        "DefaultDashboard": "ska-sat-lmc - Overview",
+        "DefaultDashboard": "{\"name\": \"ska-sat-lmc - Overview\", \"id\": \"\"}",
         "HideDropdown": true,
         "NewTab": false,
         "ButtonText": "Overview",
@@ -56,7 +56,7 @@
       "width": 17.0,
       "height": 4.1,
       "inputs": {
-        "DefaultDashboard": "ska-sat-lmc - UTC",
+        "DefaultDashboard": "{\"name\": \"ska-sat-lmc - UTC\", \"id\": \"\"}",
         "HideDropdown": true,
         "NewTab": false,
         "ButtonText": "UTC",
@@ -74,7 +74,7 @@
     {
       "type": "BOX",
       "width": 44.0,
-      "height": 53.8,
+      "height": 105.2,
       "inputs": {
         "title": "Device",
         "bigWidget": 5,
@@ -116,6 +116,7 @@
           },
           "x": 3.1,
           "y": 8.7,
+          "percentage": -1,
           "id": "5",
           "canvas": "0",
           "order": 0,
@@ -147,6 +148,7 @@
           },
           "x": 3.1,
           "y": 12.5,
+          "percentage": -1,
           "id": "6",
           "canvas": "0",
           "order": 1,
@@ -182,13 +184,14 @@
           },
           "x": 3.1,
           "y": 16.3,
+          "percentage": -1,
           "id": "7",
           "canvas": "0",
           "order": 2,
           "valid": 1
         },
         {
-          "type": "ATTRIBUTE WRITER DROPDOWN",
+          "type": "ATTRIBUTE_DISPLAY",
           "width": 43.8,
           "height": 3.8,
           "inputs": {
@@ -197,8 +200,44 @@
               "attribute": "adminmode",
               "label": "Admin Mode"
             },
+            "precision": 3,
+            "format": "",
+            "showUnit": true,
+            "showDevice": false,
+            "jsonCollapsed": true,
+            "showTangoDB": false,
+            "showAttribute": "Label",
+            "alignTextCenter": false,
+            "alignValueRight": true,
+            "scientificNotation": false,
+            "showEnumLabels": true,
+            "showAttrQuality": false,
+            "textColor": "#1a1a1a",
+            "backgroundColor": "#ffffff",
+            "size": 1,
+            "font": "Helvetica",
+            "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
+          },
+          "x": 3.1,
+          "y": 20.1,
+          "percentage": -1,
+          "id": "8",
+          "canvas": "0",
+          "order": 3,
+          "valid": 1
+        },
+        {
+          "type": "ATTRIBUTE WRITER DROPDOWN",
+          "width": 43.8,
+          "height": 11.8,
+          "inputs": {
+            "attribute": {
+              "device": "taranta://low-sat/endnode/ci-1",
+              "attribute": "adminmode",
+              "label": "Admin Mode"
+            },
             "submitButtonTitle": "Set",
-            "dropdownTitle": "Admin Mode",
+            "dropdownTitle": "Choose…",
             "writeValues": [
               {
                 "title": "Online",
@@ -216,7 +255,7 @@
             },
             "showDevice": false,
             "showTangoDB": false,
-            "showAttribute": "Label",
+            "showAttribute": "None",
             "textColor": "#1a1a1a",
             "backgroundColor": "#ffffff",
             "size": 1,
@@ -226,14 +265,15 @@
             "customCss": "padding: 0 10px\nbox-sizing: border-box"
           },
           "x": 3.1,
-          "y": 20.1,
-          "id": "8",
+          "y": 23.9,
+          "percentage": -1,
+          "id": "9",
           "canvas": "0",
-          "order": 3,
+          "order": 4,
           "valid": 1
         },
         {
-          "type": "ATTRIBUTE WRITER DROPDOWN",
+          "type": "ATTRIBUTE_DISPLAY",
           "width": 43.8,
           "height": 3.8,
           "inputs": {
@@ -242,8 +282,44 @@
               "attribute": "controlmode",
               "label": "Control Mode"
             },
+            "precision": 3,
+            "format": "",
+            "showUnit": true,
+            "showDevice": false,
+            "jsonCollapsed": true,
+            "showTangoDB": false,
+            "showAttribute": "Label",
+            "alignTextCenter": false,
+            "alignValueRight": true,
+            "scientificNotation": false,
+            "showEnumLabels": true,
+            "showAttrQuality": false,
+            "textColor": "#1a1a1a",
+            "backgroundColor": "#ffffff",
+            "size": 1,
+            "font": "Helvetica",
+            "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
+          },
+          "x": 3.1,
+          "y": 35.7,
+          "percentage": -1,
+          "id": "10",
+          "canvas": "0",
+          "order": 5,
+          "valid": 1
+        },
+        {
+          "type": "ATTRIBUTE WRITER DROPDOWN",
+          "width": 43.8,
+          "height": 15.0,
+          "inputs": {
+            "attribute": {
+              "device": "taranta://low-sat/endnode/ci-1",
+              "attribute": "controlmode",
+              "label": "Control Mode"
+            },
             "submitButtonTitle": "Set",
-            "dropdownTitle": "Control Mode",
+            "dropdownTitle": "Choose…",
             "writeValues": [
               {
                 "title": "No Monitor No Control",
@@ -265,7 +341,7 @@
             },
             "showDevice": false,
             "showTangoDB": false,
-            "showAttribute": "Label",
+            "showAttribute": "None",
             "textColor": "#1a1a1a",
             "backgroundColor": "#ffffff",
             "size": 1,
@@ -275,10 +351,11 @@
             "customCss": "padding: 0 10px\nbox-sizing: border-box"
           },
           "x": 3.1,
-          "y": 23.9,
-          "id": "9",
+          "y": 39.5,
+          "percentage": -1,
+          "id": "11",
           "canvas": "0",
-          "order": 4,
+          "order": 6,
           "valid": 1
         },
         {
@@ -302,10 +379,11 @@
             "TableCSS": "font-size: 11px"
           },
           "x": 3.1,
-          "y": 27.7,
-          "id": "10",
+          "y": 54.5,
+          "percentage": -1,
+          "id": "12",
           "canvas": "0",
-          "order": 5,
+          "order": 7,
           "valid": 1
         },
         {
@@ -337,10 +415,11 @@
             "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
           "x": 3.1,
-          "y": 46.7,
-          "id": "11",
+          "y": 73.5,
+          "percentage": -1,
+          "id": "13",
           "canvas": "0",
-          "order": 6,
+          "order": 8,
           "valid": 1
         },
         {
@@ -372,14 +451,15 @@
             "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
           "x": 3.1,
-          "y": 50.5,
-          "id": "12",
+          "y": 77.3,
+          "percentage": -1,
+          "id": "14",
           "canvas": "0",
-          "order": 7,
+          "order": 9,
           "valid": 1
         },
         {
-          "type": "ATTRIBUTE WRITER DROPDOWN",
+          "type": "ATTRIBUTE_DISPLAY",
           "width": 43.8,
           "height": 3.8,
           "inputs": {
@@ -388,8 +468,44 @@
               "attribute": "logginglevel",
               "label": "Logging Level"
             },
+            "precision": 3,
+            "format": "",
+            "showUnit": true,
+            "showDevice": false,
+            "jsonCollapsed": true,
+            "showTangoDB": false,
+            "showAttribute": "Label",
+            "alignTextCenter": false,
+            "alignValueRight": true,
+            "scientificNotation": false,
+            "showEnumLabels": true,
+            "showAttrQuality": false,
+            "textColor": "#1a1a1a",
+            "backgroundColor": "#ffffff",
+            "size": 1,
+            "font": "Helvetica",
+            "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
+          },
+          "x": 3.1,
+          "y": 81.1,
+          "percentage": -1,
+          "id": "15",
+          "canvas": "0",
+          "order": 10,
+          "valid": 1
+        },
+        {
+          "type": "ATTRIBUTE WRITER DROPDOWN",
+          "width": 43.8,
+          "height": 24.6,
+          "inputs": {
+            "attribute": {
+              "device": "taranta://low-sat/endnode/ci-1",
+              "attribute": "logginglevel",
+              "label": "Logging Level"
+            },
             "submitButtonTitle": "Set",
-            "dropdownTitle": "Logging Level",
+            "dropdownTitle": "Choose…",
             "writeValues": [
               {
                 "title": "Off",
@@ -423,7 +539,7 @@
             },
             "showDevice": false,
             "showTangoDB": false,
-            "showAttribute": "Label",
+            "showAttribute": "None",
             "textColor": "#1a1a1a",
             "backgroundColor": "#ffffff",
             "size": 1,
@@ -433,10 +549,11 @@
             "customCss": "padding: 0 10px\nbox-sizing: border-box"
           },
           "x": 3.1,
-          "y": 54.3,
-          "id": "13",
+          "y": 84.9,
+          "percentage": -1,
+          "id": "16",
           "canvas": "0",
-          "order": 8,
+          "order": 11,
           "valid": 1
         }
       ],
@@ -494,7 +611,8 @@
           },
           "x": 50.1,
           "y": 8.7,
-          "id": "15",
+          "percentage": -1,
+          "id": "18",
           "canvas": "0",
           "order": 0,
           "valid": 1
@@ -525,7 +643,8 @@
           },
           "x": 50.1,
           "y": 12.5,
-          "id": "16",
+          "percentage": -1,
+          "id": "19",
           "canvas": "0",
           "order": 1,
           "valid": 1
@@ -556,7 +675,8 @@
           },
           "x": 50.1,
           "y": 16.3,
-          "id": "17",
+          "percentage": -1,
+          "id": "20",
           "canvas": "0",
           "order": 2,
           "valid": 1
@@ -587,7 +707,8 @@
           },
           "x": 50.1,
           "y": 20.1,
-          "id": "18",
+          "percentage": -1,
+          "id": "21",
           "canvas": "0",
           "order": 3,
           "valid": 1
@@ -618,7 +739,8 @@
           },
           "x": 50.1,
           "y": 23.9,
-          "id": "19",
+          "percentage": -1,
+          "id": "22",
           "canvas": "0",
           "order": 4,
           "valid": 1
@@ -626,7 +748,7 @@
       ],
       "x": 50.0,
       "y": 5.6,
-      "id": "14",
+      "id": "17",
       "canvas": "0",
       "order": 4,
       "valid": 1
@@ -678,7 +800,8 @@
           },
           "x": 97.1,
           "y": 8.7,
-          "id": "21",
+          "percentage": -1,
+          "id": "24",
           "canvas": "0",
           "order": 0,
           "valid": 1
@@ -713,7 +836,8 @@
           },
           "x": 97.1,
           "y": 12.5,
-          "id": "22",
+          "percentage": -1,
+          "id": "25",
           "canvas": "0",
           "order": 1,
           "valid": 1
@@ -748,7 +872,8 @@
           },
           "x": 97.1,
           "y": 16.3,
-          "id": "23",
+          "percentage": -1,
+          "id": "26",
           "canvas": "0",
           "order": 2,
           "valid": 1
@@ -783,7 +908,8 @@
           },
           "x": 97.1,
           "y": 20.1,
-          "id": "24",
+          "percentage": -1,
+          "id": "27",
           "canvas": "0",
           "order": 3,
           "valid": 1
@@ -818,7 +944,8 @@
           },
           "x": 97.1,
           "y": 23.9,
-          "id": "25",
+          "percentage": -1,
+          "id": "28",
           "canvas": "0",
           "order": 4,
           "valid": 1
@@ -853,7 +980,8 @@
           },
           "x": 97.1,
           "y": 27.7,
-          "id": "26",
+          "percentage": -1,
+          "id": "29",
           "canvas": "0",
           "order": 5,
           "valid": 1
@@ -888,7 +1016,8 @@
           },
           "x": 97.1,
           "y": 31.5,
-          "id": "27",
+          "percentage": -1,
+          "id": "30",
           "canvas": "0",
           "order": 6,
           "valid": 1
@@ -923,7 +1052,8 @@
           },
           "x": 97.1,
           "y": 35.3,
-          "id": "28",
+          "percentage": -1,
+          "id": "31",
           "canvas": "0",
           "order": 7,
           "valid": 1
@@ -958,7 +1088,8 @@
           },
           "x": 97.1,
           "y": 39.1,
-          "id": "29",
+          "percentage": -1,
+          "id": "32",
           "canvas": "0",
           "order": 8,
           "valid": 1
@@ -993,7 +1124,8 @@
           },
           "x": 97.1,
           "y": 42.9,
-          "id": "30",
+          "percentage": -1,
+          "id": "33",
           "canvas": "0",
           "order": 9,
           "valid": 1
@@ -1028,7 +1160,8 @@
           },
           "x": 97.1,
           "y": 46.7,
-          "id": "31",
+          "percentage": -1,
+          "id": "34",
           "canvas": "0",
           "order": 10,
           "valid": 1
@@ -1059,7 +1192,8 @@
           },
           "x": 97.1,
           "y": 50.5,
-          "id": "32",
+          "percentage": -1,
+          "id": "35",
           "canvas": "0",
           "order": 11,
           "valid": 1
@@ -1094,7 +1228,8 @@
           },
           "x": 97.1,
           "y": 54.3,
-          "id": "33",
+          "percentage": -1,
+          "id": "36",
           "canvas": "0",
           "order": 12,
           "valid": 1
@@ -1129,7 +1264,8 @@
           },
           "x": 97.1,
           "y": 58.1,
-          "id": "34",
+          "percentage": -1,
+          "id": "37",
           "canvas": "0",
           "order": 13,
           "valid": 1
@@ -1164,7 +1300,8 @@
           },
           "x": 97.1,
           "y": 61.9,
-          "id": "35",
+          "percentage": -1,
+          "id": "38",
           "canvas": "0",
           "order": 14,
           "valid": 1
@@ -1209,7 +1346,7 @@
               },
               "x": 97.1,
               "y": 65.7,
-              "id": "37",
+              "id": "40",
               "canvas": "0",
               "order": 0,
               "valid": 1
@@ -1233,7 +1370,7 @@
               },
               "x": 111.7,
               "y": 65.7,
-              "id": "38",
+              "id": "41",
               "canvas": "0",
               "order": 1,
               "valid": 1
@@ -1257,7 +1394,7 @@
               },
               "x": 126.3,
               "y": 65.7,
-              "id": "39",
+              "id": "42",
               "canvas": "0",
               "order": 2,
               "valid": 1
@@ -1265,7 +1402,8 @@
           ],
           "x": 97.1,
           "y": 65.7,
-          "id": "36",
+          "percentage": -1,
+          "id": "39",
           "canvas": "0",
           "order": 15,
           "valid": 1
@@ -1299,7 +1437,8 @@
           },
           "x": 97.1,
           "y": 84.7,
-          "id": "40",
+          "percentage": -1,
+          "id": "43",
           "canvas": "0",
           "order": 16,
           "valid": 1
@@ -1343,7 +1482,8 @@
           },
           "x": 97.1,
           "y": 103.7,
-          "id": "41",
+          "percentage": -1,
+          "id": "44",
           "canvas": "0",
           "order": 17,
           "valid": 1
@@ -1351,7 +1491,7 @@
       ],
       "x": 97.0,
       "y": 5.6,
-      "id": "20",
+      "id": "23",
       "canvas": "0",
       "order": 5,
       "valid": 1
@@ -1403,7 +1543,8 @@
           },
           "x": 144.1,
           "y": 8.7,
-          "id": "43",
+          "percentage": -1,
+          "id": "46",
           "canvas": "0",
           "order": 0,
           "valid": 1
@@ -1438,7 +1579,8 @@
           },
           "x": 144.1,
           "y": 12.5,
-          "id": "44",
+          "percentage": -1,
+          "id": "47",
           "canvas": "0",
           "order": 1,
           "valid": 1
@@ -1473,7 +1615,8 @@
           },
           "x": 144.1,
           "y": 16.3,
-          "id": "45",
+          "percentage": -1,
+          "id": "48",
           "canvas": "0",
           "order": 2,
           "valid": 1
@@ -1508,7 +1651,8 @@
           },
           "x": 144.1,
           "y": 20.1,
-          "id": "46",
+          "percentage": -1,
+          "id": "49",
           "canvas": "0",
           "order": 3,
           "valid": 1
@@ -1543,7 +1687,8 @@
           },
           "x": 144.1,
           "y": 23.9,
-          "id": "47",
+          "percentage": -1,
+          "id": "50",
           "canvas": "0",
           "order": 4,
           "valid": 1
@@ -1588,7 +1733,7 @@
               },
               "x": 144.1,
               "y": 27.7,
-              "id": "49",
+              "id": "52",
               "canvas": "0",
               "order": 0,
               "valid": 1
@@ -1596,7 +1741,8 @@
           ],
           "x": 144.1,
           "y": 27.7,
-          "id": "48",
+          "percentage": -1,
+          "id": "51",
           "canvas": "0",
           "order": 5,
           "valid": 1
@@ -1640,7 +1786,8 @@
           },
           "x": 144.1,
           "y": 46.7,
-          "id": "50",
+          "percentage": -1,
+          "id": "53",
           "canvas": "0",
           "order": 6,
           "valid": 1
@@ -1684,7 +1831,8 @@
           },
           "x": 144.1,
           "y": 65.7,
-          "id": "51",
+          "percentage": -1,
+          "id": "54",
           "canvas": "0",
           "order": 7,
           "valid": 1
@@ -1692,7 +1840,7 @@
       ],
       "x": 144.0,
       "y": 5.6,
-      "id": "42",
+      "id": "45",
       "canvas": "0",
       "order": 6,
       "valid": 1
@@ -1744,7 +1892,8 @@
           },
           "x": 50.1,
           "y": 35.1,
-          "id": "53",
+          "percentage": -1,
+          "id": "56",
           "canvas": "0",
           "order": 0,
           "valid": 1
@@ -1779,7 +1928,8 @@
           },
           "x": 50.1,
           "y": 38.9,
-          "id": "54",
+          "percentage": -1,
+          "id": "57",
           "canvas": "0",
           "order": 1,
           "valid": 1
@@ -1814,7 +1964,8 @@
           },
           "x": 50.1,
           "y": 42.7,
-          "id": "55",
+          "percentage": -1,
+          "id": "58",
           "canvas": "0",
           "order": 2,
           "valid": 1
@@ -1849,7 +2000,8 @@
           },
           "x": 50.1,
           "y": 46.5,
-          "id": "56",
+          "percentage": -1,
+          "id": "59",
           "canvas": "0",
           "order": 3,
           "valid": 1
@@ -1884,7 +2036,8 @@
           },
           "x": 50.1,
           "y": 50.3,
-          "id": "57",
+          "percentage": -1,
+          "id": "60",
           "canvas": "0",
           "order": 4,
           "valid": 1
@@ -1929,7 +2082,7 @@
               },
               "x": 50.1,
               "y": 54.1,
-              "id": "59",
+              "id": "62",
               "canvas": "0",
               "order": 0,
               "valid": 1
@@ -1937,7 +2090,8 @@
           ],
           "x": 50.1,
           "y": 54.1,
-          "id": "58",
+          "percentage": -1,
+          "id": "61",
           "canvas": "0",
           "order": 5,
           "valid": 1
@@ -1981,7 +2135,8 @@
           },
           "x": 50.1,
           "y": 73.1,
-          "id": "60",
+          "percentage": -1,
+          "id": "63",
           "canvas": "0",
           "order": 6,
           "valid": 1
@@ -2025,7 +2180,8 @@
           },
           "x": 50.1,
           "y": 92.1,
-          "id": "61",
+          "percentage": -1,
+          "id": "64",
           "canvas": "0",
           "order": 7,
           "valid": 1
@@ -2033,7 +2189,7 @@
       ],
       "x": 50.0,
       "y": 32.0,
-      "id": "52",
+      "id": "55",
       "canvas": "0",
       "order": 7,
       "valid": 1
@@ -2083,9 +2239,10 @@
             "alignValueRight": true,
             "customCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 3.1,
-          "y": 65.5,
-          "id": "63",
+          "x": 144.1,
+          "y": 92.1,
+          "percentage": -1,
+          "id": "66",
           "canvas": "0",
           "order": 0,
           "valid": 1
@@ -2118,9 +2275,10 @@
             "font": "Helvetica",
             "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 3.1,
-          "y": 69.3,
-          "id": "64",
+          "x": 144.1,
+          "y": 95.9,
+          "percentage": -1,
+          "id": "67",
           "canvas": "0",
           "order": 1,
           "valid": 1
@@ -2153,9 +2311,10 @@
             "font": "Helvetica",
             "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 3.1,
-          "y": 73.1,
-          "id": "65",
+          "x": 144.1,
+          "y": 99.7,
+          "percentage": -1,
+          "id": "68",
           "canvas": "0",
           "order": 2,
           "valid": 1
@@ -2188,9 +2347,10 @@
             "font": "Helvetica",
             "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 3.1,
-          "y": 76.9,
-          "id": "66",
+          "x": 144.1,
+          "y": 103.5,
+          "percentage": -1,
+          "id": "69",
           "canvas": "0",
           "order": 3,
           "valid": 1
@@ -2223,9 +2383,10 @@
             "font": "Helvetica",
             "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 3.1,
-          "y": 80.7,
-          "id": "67",
+          "x": 144.1,
+          "y": 107.3,
+          "percentage": -1,
+          "id": "70",
           "canvas": "0",
           "order": 4,
           "valid": 1
@@ -2258,9 +2419,10 @@
             "font": "Helvetica",
             "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 3.1,
-          "y": 84.5,
-          "id": "68",
+          "x": 144.1,
+          "y": 111.1,
+          "percentage": -1,
+          "id": "71",
           "canvas": "0",
           "order": 5,
           "valid": 1
@@ -2293,9 +2455,10 @@
             "font": "Helvetica",
             "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 3.1,
-          "y": 88.3,
-          "id": "69",
+          "x": 144.1,
+          "y": 114.9,
+          "percentage": -1,
+          "id": "72",
           "canvas": "0",
           "order": 6,
           "valid": 1
@@ -2328,9 +2491,10 @@
             "font": "Helvetica",
             "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 3.1,
-          "y": 92.1,
-          "id": "70",
+          "x": 144.1,
+          "y": 118.7,
+          "percentage": -1,
+          "id": "73",
           "canvas": "0",
           "order": 7,
           "valid": 1
@@ -2363,17 +2527,18 @@
             "font": "Helvetica",
             "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 3.1,
-          "y": 95.9,
-          "id": "71",
+          "x": 144.1,
+          "y": 122.5,
+          "percentage": -1,
+          "id": "74",
           "canvas": "0",
           "order": 8,
           "valid": 1
         }
       ],
-      "x": 3.0,
-      "y": 62.4,
-      "id": "62",
+      "x": 144.0,
+      "y": 89.0,
+      "id": "65",
       "canvas": "0",
       "order": 8,
       "valid": 1
@@ -2427,9 +2592,10 @@
             "font": "Helvetica",
             "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 144.1,
-          "y": 92.1,
-          "id": "73",
+          "x": 3.1,
+          "y": 116.9,
+          "percentage": -1,
+          "id": "76",
           "canvas": "0",
           "order": 0,
           "valid": 1
@@ -2462,9 +2628,10 @@
             "font": "Helvetica",
             "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 144.1,
-          "y": 95.9,
-          "id": "74",
+          "x": 3.1,
+          "y": 120.7,
+          "percentage": -1,
+          "id": "77",
           "canvas": "0",
           "order": 1,
           "valid": 1
@@ -2497,9 +2664,10 @@
             "font": "Helvetica",
             "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 144.1,
-          "y": 99.7,
-          "id": "75",
+          "x": 3.1,
+          "y": 124.5,
+          "percentage": -1,
+          "id": "78",
           "canvas": "0",
           "order": 2,
           "valid": 1
@@ -2528,9 +2696,10 @@
             "alignValueRight": true,
             "customCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 144.1,
-          "y": 103.5,
-          "id": "76",
+          "x": 3.1,
+          "y": 128.3,
+          "percentage": -1,
+          "id": "79",
           "canvas": "0",
           "order": 3,
           "valid": 1
@@ -2563,9 +2732,10 @@
             "font": "Helvetica",
             "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 144.1,
-          "y": 107.3,
-          "id": "77",
+          "x": 3.1,
+          "y": 132.1,
+          "percentage": -1,
+          "id": "80",
           "canvas": "0",
           "order": 4,
           "valid": 1
@@ -2598,9 +2768,10 @@
             "font": "Helvetica",
             "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 144.1,
-          "y": 111.1,
-          "id": "78",
+          "x": 3.1,
+          "y": 135.9,
+          "percentage": -1,
+          "id": "81",
           "canvas": "0",
           "order": 5,
           "valid": 1
@@ -2633,9 +2804,10 @@
             "font": "Helvetica",
             "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 144.1,
-          "y": 114.9,
-          "id": "79",
+          "x": 3.1,
+          "y": 139.7,
+          "percentage": -1,
+          "id": "82",
           "canvas": "0",
           "order": 6,
           "valid": 1
@@ -2668,9 +2840,10 @@
             "font": "Helvetica",
             "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 144.1,
-          "y": 118.7,
-          "id": "80",
+          "x": 3.1,
+          "y": 143.5,
+          "percentage": -1,
+          "id": "83",
           "canvas": "0",
           "order": 7,
           "valid": 1
@@ -2703,9 +2876,10 @@
             "font": "Helvetica",
             "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 144.1,
-          "y": 122.5,
-          "id": "81",
+          "x": 3.1,
+          "y": 147.3,
+          "percentage": -1,
+          "id": "84",
           "canvas": "0",
           "order": 8,
           "valid": 1
@@ -2738,17 +2912,18 @@
             "font": "Helvetica",
             "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 144.1,
-          "y": 126.3,
-          "id": "82",
+          "x": 3.1,
+          "y": 151.1,
+          "percentage": -1,
+          "id": "85",
           "canvas": "0",
           "order": 9,
           "valid": 1
         }
       ],
-      "x": 144.0,
-      "y": 89.0,
-      "id": "72",
+      "x": 3.0,
+      "y": 113.8,
+      "id": "75",
       "canvas": "0",
       "order": 9,
       "valid": 1
@@ -2802,9 +2977,10 @@
             "font": "Helvetica",
             "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 3.1,
-          "y": 107.1,
-          "id": "84",
+          "x": 50.1,
+          "y": 118.5,
+          "percentage": -1,
+          "id": "87",
           "canvas": "0",
           "order": 0,
           "valid": 1
@@ -2837,9 +3013,10 @@
             "font": "Helvetica",
             "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 3.1,
-          "y": 110.9,
-          "id": "85",
+          "x": 50.1,
+          "y": 122.3,
+          "percentage": -1,
+          "id": "88",
           "canvas": "0",
           "order": 1,
           "valid": 1
@@ -2872,9 +3049,10 @@
             "font": "Helvetica",
             "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 3.1,
-          "y": 114.7,
-          "id": "86",
+          "x": 50.1,
+          "y": 126.1,
+          "percentage": -1,
+          "id": "89",
           "canvas": "0",
           "order": 2,
           "valid": 1
@@ -2903,9 +3081,10 @@
             "alignValueRight": true,
             "customCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 3.1,
-          "y": 118.5,
-          "id": "87",
+          "x": 50.1,
+          "y": 129.9,
+          "percentage": -1,
+          "id": "90",
           "canvas": "0",
           "order": 3,
           "valid": 1
@@ -2938,9 +3117,10 @@
             "font": "Helvetica",
             "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 3.1,
-          "y": 122.3,
-          "id": "88",
+          "x": 50.1,
+          "y": 133.7,
+          "percentage": -1,
+          "id": "91",
           "canvas": "0",
           "order": 4,
           "valid": 1
@@ -2973,9 +3153,10 @@
             "font": "Helvetica",
             "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 3.1,
-          "y": 126.1,
-          "id": "89",
+          "x": 50.1,
+          "y": 137.5,
+          "percentage": -1,
+          "id": "92",
           "canvas": "0",
           "order": 5,
           "valid": 1
@@ -3008,9 +3189,10 @@
             "font": "Helvetica",
             "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 3.1,
-          "y": 129.9,
-          "id": "90",
+          "x": 50.1,
+          "y": 141.3,
+          "percentage": -1,
+          "id": "93",
           "canvas": "0",
           "order": 6,
           "valid": 1
@@ -3043,9 +3225,10 @@
             "font": "Helvetica",
             "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 3.1,
-          "y": 133.7,
-          "id": "91",
+          "x": 50.1,
+          "y": 145.1,
+          "percentage": -1,
+          "id": "94",
           "canvas": "0",
           "order": 7,
           "valid": 1
@@ -3078,9 +3261,10 @@
             "font": "Helvetica",
             "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 3.1,
-          "y": 137.5,
-          "id": "92",
+          "x": 50.1,
+          "y": 148.9,
+          "percentage": -1,
+          "id": "95",
           "canvas": "0",
           "order": 8,
           "valid": 1
@@ -3113,17 +3297,18 @@
             "font": "Helvetica",
             "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 3.1,
-          "y": 141.3,
-          "id": "93",
+          "x": 50.1,
+          "y": 152.7,
+          "percentage": -1,
+          "id": "96",
           "canvas": "0",
           "order": 9,
           "valid": 1
         }
       ],
-      "x": 3.0,
-      "y": 104.0,
-      "id": "83",
+      "x": 50.0,
+      "y": 115.4,
+      "id": "86",
       "canvas": "0",
       "order": 10,
       "valid": 1
@@ -3177,9 +3362,10 @@
             "font": "Helvetica",
             "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 50.1,
-          "y": 118.5,
-          "id": "95",
+          "x": 97.1,
+          "y": 130.1,
+          "percentage": -1,
+          "id": "98",
           "canvas": "0",
           "order": 0,
           "valid": 1
@@ -3208,9 +3394,10 @@
             "alignValueRight": true,
             "customCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 50.1,
-          "y": 122.3,
-          "id": "96",
+          "x": 97.1,
+          "y": 133.9,
+          "percentage": -1,
+          "id": "99",
           "canvas": "0",
           "order": 1,
           "valid": 1
@@ -3243,9 +3430,10 @@
             "font": "Helvetica",
             "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 50.1,
-          "y": 126.1,
-          "id": "97",
+          "x": 97.1,
+          "y": 137.7,
+          "percentage": -1,
+          "id": "100",
           "canvas": "0",
           "order": 2,
           "valid": 1
@@ -3277,17 +3465,18 @@
             "textColor": "#000000",
             "backgroundColor": "#ffffff"
           },
-          "x": 50.1,
-          "y": 129.9,
-          "id": "98",
+          "x": 97.1,
+          "y": 141.5,
+          "percentage": -1,
+          "id": "101",
           "canvas": "0",
           "order": 3,
           "valid": 1
         }
       ],
-      "x": 50.0,
-      "y": 115.4,
-      "id": "94",
+      "x": 97.0,
+      "y": 127.0,
+      "id": "97",
       "canvas": "0",
       "order": 11,
       "valid": 1
@@ -3341,9 +3530,10 @@
             "font": "Helvetica",
             "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 97.1,
-          "y": 130.1,
-          "id": "100",
+          "x": 144.1,
+          "y": 133.7,
+          "percentage": -1,
+          "id": "103",
           "canvas": "0",
           "order": 0,
           "valid": 1
@@ -3376,9 +3566,10 @@
             "font": "Helvetica",
             "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 97.1,
-          "y": 133.9,
-          "id": "101",
+          "x": 144.1,
+          "y": 137.5,
+          "percentage": -1,
+          "id": "104",
           "canvas": "0",
           "order": 1,
           "valid": 1
@@ -3411,9 +3602,10 @@
             "font": "Helvetica",
             "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 97.1,
-          "y": 137.7,
-          "id": "102",
+          "x": 144.1,
+          "y": 141.3,
+          "percentage": -1,
+          "id": "105",
           "canvas": "0",
           "order": 2,
           "valid": 1
@@ -3446,9 +3638,10 @@
             "font": "Helvetica",
             "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 97.1,
-          "y": 141.5,
-          "id": "103",
+          "x": 144.1,
+          "y": 145.1,
+          "percentage": -1,
+          "id": "106",
           "canvas": "0",
           "order": 3,
           "valid": 1
@@ -3481,9 +3674,10 @@
             "font": "Helvetica",
             "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 97.1,
-          "y": 145.3,
-          "id": "104",
+          "x": 144.1,
+          "y": 148.9,
+          "percentage": -1,
+          "id": "107",
           "canvas": "0",
           "order": 4,
           "valid": 1
@@ -3516,9 +3710,10 @@
             "font": "Helvetica",
             "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 97.1,
-          "y": 149.1,
-          "id": "105",
+          "x": 144.1,
+          "y": 152.7,
+          "percentage": -1,
+          "id": "108",
           "canvas": "0",
           "order": 5,
           "valid": 1
@@ -3561,9 +3756,9 @@
                 "showTangoDB": false,
                 "widgetCss": ""
               },
-              "x": 97.1,
-              "y": 152.9,
-              "id": "107",
+              "x": 144.1,
+              "y": 156.5,
+              "id": "110",
               "canvas": "0",
               "order": 0,
               "valid": 1
@@ -3585,9 +3780,9 @@
                 "showTangoDB": false,
                 "widgetCss": ""
               },
-              "x": 111.7,
-              "y": 152.9,
-              "id": "108",
+              "x": 158.7,
+              "y": 156.5,
+              "id": "111",
               "canvas": "0",
               "order": 1,
               "valid": 1
@@ -3609,17 +3804,18 @@
                 "showTangoDB": false,
                 "widgetCss": ""
               },
-              "x": 126.3,
-              "y": 152.9,
-              "id": "109",
+              "x": 173.3,
+              "y": 156.5,
+              "id": "112",
               "canvas": "0",
               "order": 2,
               "valid": 1
             }
           ],
-          "x": 97.1,
-          "y": 152.9,
-          "id": "106",
+          "x": 144.1,
+          "y": 156.5,
+          "percentage": -1,
+          "id": "109",
           "canvas": "0",
           "order": 6,
           "valid": 1
@@ -3671,9 +3867,10 @@
             "textColor": "#000000",
             "backgroundColor": "#ffffff"
           },
-          "x": 97.1,
-          "y": 171.9,
-          "id": "110",
+          "x": 144.1,
+          "y": 175.5,
+          "percentage": -1,
+          "id": "113",
           "canvas": "0",
           "order": 7,
           "valid": 1
@@ -3715,17 +3912,18 @@
             "textColor": "#000000",
             "backgroundColor": "#ffffff"
           },
-          "x": 97.1,
-          "y": 190.9,
-          "id": "111",
+          "x": 144.1,
+          "y": 194.5,
+          "percentage": -1,
+          "id": "114",
           "canvas": "0",
           "order": 8,
           "valid": 1
         }
       ],
-      "x": 97.0,
-      "y": 127.0,
-      "id": "99",
+      "x": 144.0,
+      "y": 130.6,
+      "id": "102",
       "canvas": "0",
       "order": 12,
       "valid": 1
@@ -3779,9 +3977,10 @@
             "font": "Helvetica",
             "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 144.1,
-          "y": 137.5,
-          "id": "113",
+          "x": 3.1,
+          "y": 162.3,
+          "percentage": -1,
+          "id": "116",
           "canvas": "0",
           "order": 0,
           "valid": 1
@@ -3814,9 +4013,10 @@
             "font": "Helvetica",
             "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 144.1,
-          "y": 141.3,
-          "id": "114",
+          "x": 3.1,
+          "y": 166.1,
+          "percentage": -1,
+          "id": "117",
           "canvas": "0",
           "order": 1,
           "valid": 1
@@ -3849,9 +4049,10 @@
             "font": "Helvetica",
             "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 144.1,
-          "y": 145.1,
-          "id": "115",
+          "x": 3.1,
+          "y": 169.9,
+          "percentage": -1,
+          "id": "118",
           "canvas": "0",
           "order": 2,
           "valid": 1
@@ -3884,9 +4085,10 @@
             "font": "Helvetica",
             "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 144.1,
-          "y": 148.9,
-          "id": "116",
+          "x": 3.1,
+          "y": 173.7,
+          "percentage": -1,
+          "id": "119",
           "canvas": "0",
           "order": 3,
           "valid": 1
@@ -3919,9 +4121,10 @@
             "font": "Helvetica",
             "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 144.1,
-          "y": 152.7,
-          "id": "117",
+          "x": 3.1,
+          "y": 177.5,
+          "percentage": -1,
+          "id": "120",
           "canvas": "0",
           "order": 4,
           "valid": 1
@@ -3954,17 +4157,18 @@
             "font": "Helvetica",
             "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 144.1,
-          "y": 156.5,
-          "id": "118",
+          "x": 3.1,
+          "y": 181.3,
+          "percentage": -1,
+          "id": "121",
           "canvas": "0",
           "order": 5,
           "valid": 1
         }
       ],
-      "x": 144.0,
-      "y": 134.4,
-      "id": "112",
+      "x": 3.0,
+      "y": 159.2,
+      "id": "115",
       "canvas": "0",
       "order": 13,
       "valid": 1
@@ -3972,7 +4176,7 @@
     {
       "type": "BOX",
       "width": 44.0,
-      "height": 8.2,
+      "height": 71.2,
       "inputs": {
         "title": "Settings",
         "bigWidget": 5,
@@ -3991,7 +4195,7 @@
       },
       "innerWidgets": [
         {
-          "type": "ATTRIBUTE WRITER DROPDOWN",
+          "type": "ATTRIBUTE_DISPLAY",
           "width": 43.8,
           "height": 3.8,
           "inputs": {
@@ -4000,8 +4204,44 @@
               "attribute": "wr_command",
               "label": "WR Command"
             },
+            "precision": 3,
+            "format": "",
+            "showUnit": true,
+            "showDevice": false,
+            "jsonCollapsed": true,
+            "showTangoDB": false,
+            "showAttribute": "Label",
+            "alignTextCenter": false,
+            "alignValueRight": true,
+            "scientificNotation": false,
+            "showEnumLabels": true,
+            "showAttrQuality": false,
+            "textColor": "#1a1a1a",
+            "backgroundColor": "#ffffff",
+            "size": 1,
+            "font": "Helvetica",
+            "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
+          },
+          "x": 50.1,
+          "y": 163.9,
+          "percentage": -1,
+          "id": "123",
+          "canvas": "0",
+          "order": 0,
+          "valid": 1
+        },
+        {
+          "type": "ATTRIBUTE WRITER DROPDOWN",
+          "width": 43.8,
+          "height": 63.0,
+          "inputs": {
+            "attribute": {
+              "device": "taranta://low-sat/endnode/ci-1",
+              "attribute": "wr_command",
+              "label": "WR Command"
+            },
             "submitButtonTitle": "Set",
-            "dropdownTitle": "WR Command",
+            "dropdownTitle": "Choose…",
             "writeValues": [
               {
                 "title": "reboot",
@@ -4083,7 +4323,7 @@
             },
             "showDevice": false,
             "showTangoDB": false,
-            "showAttribute": "Label",
+            "showAttribute": "None",
             "textColor": "#1a1a1a",
             "backgroundColor": "#ffffff",
             "size": 1,
@@ -4092,17 +4332,18 @@
             "submitButtonCss": "",
             "customCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 3.1,
-          "y": 152.5,
-          "id": "120",
+          "x": 50.1,
+          "y": 167.7,
+          "percentage": -1,
+          "id": "124",
           "canvas": "0",
-          "order": 0,
+          "order": 1,
           "valid": 1
         }
       ],
-      "x": 3.0,
-      "y": 149.4,
-      "id": "119",
+      "x": 50.0,
+      "y": 160.8,
+      "id": "122",
       "canvas": "0",
       "order": 14,
       "valid": 1
@@ -4159,17 +4400,18 @@
             "btnCss": "",
             "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 50.1,
-          "y": 156.3,
-          "id": "122",
+          "x": 97.1,
+          "y": 167.9,
+          "percentage": -1,
+          "id": "126",
           "canvas": "0",
           "order": 0,
           "valid": 1
         }
       ],
-      "x": 50.0,
-      "y": 153.2,
-      "id": "121",
+      "x": 97.0,
+      "y": 164.8,
+      "id": "125",
       "canvas": "0",
       "order": 15,
       "valid": 1
