@@ -112,5 +112,6 @@ def test_box_children_have_fixed_heights(tmp_path, sat_lmc_snapshot):
                 for child in widget["innerWidgets"]:
                     assert child["percentage"] == -1
                     if child["type"] == "ATTRIBUTE WRITER DROPDOWN":
-                        rows = len(child["inputs"]["writeValues"])
+                        # Room for the menu, up to 5 items (longer ones scroll).
+                        rows = min(len(child["inputs"]["writeValues"]), 5)
                         assert child["height"] >= 3.8 + rows * 3.0

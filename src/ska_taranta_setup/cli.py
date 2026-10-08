@@ -295,6 +295,73 @@ def setup(ctx: click.Context, live: bool, no_helm_update: bool) -> None:
 
 
 # --------------------------------------------------------------------------
+# attributes
+# --------------------------------------------------------------------------
+
+
+@main.command()
+@click.option(
+    "--device",
+    "-d",
+    "devices",
+    multiple=True,
+    help="Only these devices (regex on TRL, or exact class name). Repeatable.",
+)
+@click.option("--hidden", is_flag=True, help="List only the attributes left out.")
+@click.pass_context
+def attributes(ctx: click.Context, devices: tuple[str, ...], hidden: bool) -> None:
+    """
+    List every attribute and where it goes on the dashboards.
+
+    For each device class: each attribute's section and widget(s), and for
+    the ones left out, why. Use it to choose what to remove with
+    `exclude_attributes_by_class` (or `exclude_attributes` for every class).
+    """
+    from ska_taranta_setup.heuristics import attribute_plan
+
+    config = _config(ctx)
+    if not config.snapshot_path.is_file():
+        raise click.ClickException(
+            f"{_rel(config, config.snapshot_path)} not found; run "
+            "`ska-taranta discover` first."
+        )
+    snapshot = Snapshot.load(config.snapshot_path)
+    by_interface: dict[str, list[DeviceInstance]] = {}
+    for device in _select(snapshot.devices, devices):
+        if device.interface and not config.is_excluded(device.class_name, device.trl):
+            by_interface.setdefault(device.interface, []).append(device)
+    for key, members in by_interface.items():
+        interface = snapshot.interfaces[key]
+        plans = attribute_plan(interface, config.generate)
+        shown = sum(1 for p in plans if not p.hidden)
+        click.secho(
+            f"\n{interface.class_name}  ({', '.join(d.trl for d in members)})",
+            bold=True,
+        )
+        click.echo(f"  {shown} of {len(plans)} attributes shown")
+        width = max(len(p.name) for p in plans) + 2
+        section = None
+        for plan in sorted((p for p in plans if not p.hidden), key=lambda p: p.order):
+            if hidden:
+                break
+            if plan.section != section:
+                section = plan.section
+                click.secho(f"  {section}", fg="cyan")
+            click.echo(f"    {plan.name:<{width}}{' + '.join(plan.widgets)}")
+        left_out = [p for p in plans if p.hidden]
+        if left_out:
+            click.secho("  Left out", fg="yellow")
+            for plan in left_out:
+                click.echo(f"    {plan.name:<{width}}{plan.hidden}")
+    click.echo(
+        "\nTo leave attributes out, add regexes (any case) to pyproject.toml:\n\n"
+        "  [tool.ska-taranta-setup.generate.exclude_attributes_by_class]\n"
+        '  SatWhiteRabbit = ["net_wr1[0-5]_.*", "hdd.*"]\n\n'
+        "then run `ska-taranta generate`."
+    )
+
+
+# --------------------------------------------------------------------------
 # preview
 # --------------------------------------------------------------------------
 

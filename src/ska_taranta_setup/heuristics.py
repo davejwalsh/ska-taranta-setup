@@ -132,6 +132,9 @@ class Section:
 
     title: str
     widgets: list[dict[str, Any]] = field(default_factory=list)
+    #: Colour theme: device, status, family, measurements, information,
+    #: settings, commands, expert (see ``widgets.THEMES``).
+    kind: str = "family"
     #: Numeric attributes worth a trend plot, keyed by quantity.
     trends: dict[str, list[tuple[AttributeInfo, str]]] = field(default_factory=dict)
     #: Dials, laid out in rows rather than one per line.
@@ -410,13 +413,14 @@ def device_sections(
 ) -> list[Section]:
     """Group a device's attributes and commands into dashboard sections."""
     options = options or GenerateOptions()
-    device_section = Section("Device", widgets=[w.device_status(device)])
-    expert = Section("Expert")
+    device_section = Section("Device", widgets=[w.device_status(device)], kind="device")
+    expert = Section("Expert", kind="expert")
+    class_name = interface.class_name
     attrs = [
         a
         for a in interface.attributes
         if a.name.lower() not in HIDDEN_ATTRIBUTES
-        and not options.attribute_excluded(a.name)
+        and not options.attribute_excluded(a.name, class_name)
         and (options.expert or not a.is_expert)
     ]
 
@@ -433,11 +437,11 @@ def device_sections(
     for attr in remaining:
         families.setdefault(family_key(attr.name), []).append(attr)
 
-    status = Section("Status")
+    status = Section("Status", kind="status")
     family_sections: list[Section] = []
-    measurements = Section("Measurements")
-    information = Section("Information")
-    settings = Section("Settings")
+    measurements = Section("Measurements", kind="measurements")
+    information = Section("Information", kind="information")
+    settings = Section("Settings", kind="settings")
 
     for key, members in families.items():
         if len(members) >= MIN_FAMILY_SIZE:
@@ -459,9 +463,11 @@ def device_sections(
                 target = information
             place(target, attr)
 
-    commands = Section("Commands")
+    commands = Section("Commands", kind="commands")
     for cmd in interface.commands:
-        if cmd.name.lower() in HIDDEN_COMMANDS or options.command_excluded(cmd.name):
+        if cmd.name.lower() in HIDDEN_COMMANDS or options.command_excluded(
+            cmd.name, class_name
+        ):
             continue
         if _is_expert_command(cmd):
             if options.expert:
@@ -487,6 +493,15 @@ def _indicators(section: Section) -> int:
     return leds + len(section.dials)
 
 
+def repeated_blocks(sections: list[Section]) -> set[str]:
+    """Titles of sections that are one of 3+ indexed copies (Net WR0..WR15)."""
+    stems: dict[str, int] = {}
+    for s in sections:
+        stem = re.sub(r"\d+$", "", s.title)
+        stems[stem] = stems.get(stem, 0) + 1
+    return {s.title for s in sections if stems[re.sub(r"\d+$", "", s.title)] > 2}
+
+
 def summary_sections(sections: list[Section], count: int) -> list[Section]:
     """
     The sections to show for a device on a summary page.
@@ -496,19 +511,12 @@ def summary_sections(sections: list[Section], count: int) -> list[Section]:
     ``NET WR15``) are left to the device's own page.
     """
     head, rest = sections[0], sections[1:]
-    stems: dict[str, int] = {}
-    for s in rest:
-        stem = re.sub(r"\d+$", "", s.title)
-        stems[stem] = stems.get(stem, 0) + 1
-
-    def repeated(s: Section) -> bool:
-        return stems[re.sub(r"\d+$", "", s.title)] > 2
-
+    repeated = repeated_blocks(rest)
     candidates = [
         s
         for s in rest
         if s.title not in {"Commands", "Expert", "Information", "Settings"}
-        and not repeated(s)
+        and s.title not in repeated
         and _indicators(s) > 0
     ]
     chosen = sorted(candidates, key=lambda s: -_indicators(s))[:count]
@@ -536,7 +544,7 @@ def headline_attributes(
         and a.is_enum
         and not a.is_writable
         and a.name.lower() not in DEVICE_SECTION_ORDER
-        and not options.attribute_excluded(a.name)
+        and not options.attribute_excluded(a.name, interface.class_name)
         and status_compare(a) is not None
         and a not in chosen
     ]
@@ -565,7 +573,7 @@ def overview_widgets(
     section.widgets.append(w.device_status(device))
     for name in ("healthstate", "adminmode", "controlmode", "obsstate"):
         attr = interface.attribute(name)
-        if attr is None or options.attribute_excluded(attr.name):
+        if attr is None or options.attribute_excluded(attr.name, interface.class_name):
             continue
         if name == "healthstate":
             place_attribute(section, device, attr, options=options)
@@ -582,23 +590,93 @@ def overview_widgets(
 
 def trend_plots(
     section: Section, device: str, max_plots: int = MAX_PLOTS_PER_SECTION
-) -> list[dict[str, Any]]:
+) -> list[tuple[str, dict[str, Any]]]:
     """
     Plots for a section's trend-worthy attributes, one per quantity.
 
-    At most ``max_plots``; quantities with no dial come first,
-    since a dial already shows the current value.
+    Returns ``(quantity, plot)`` pairs, at most ``max_plots``; quantities with
+    no dial come first, since a dial already shows the current value.
     """
     dialled = {d["inputs"]["attribute"]["attribute"] for d in section.dials}
 
-    def on_dials(series: list[tuple[AttributeInfo, str]]) -> bool:
-        return all(a.name.lower() in dialled for a, _ in series)
+    def on_dials(item: tuple[str, list[tuple[AttributeInfo, str]]]) -> bool:
+        return all(a.name.lower() in dialled for a, _ in item[1])
 
     plots = []
-    for series in sorted(section.trends.values(), key=on_dials):
+    for kind, series in sorted(section.trends.items(), key=on_dials):
         for start in range(0, len(series), MAX_LINES_PER_PLOT):
             chunk = series[start : start + MAX_LINES_PER_PLOT]
-            plots.append(
-                w.plot(device, [a for a, _ in chunk], [label for _, label in chunk])
-            )
+            plot = w.plot(device, [a for a, _ in chunk], [label for _, label in chunk])
+            plots.append((kind, plot))
     return plots[:max_plots]
+
+
+@dataclass
+class AttributePlan:
+    """Where one attribute ends up on a device's dashboard, or why it doesn't."""
+
+    name: str
+    section: str = ""
+    widgets: list[str] = field(default_factory=list)
+    hidden: str = ""  # reason, if not shown
+    order: int = 0  # position of its section on the page
+
+
+WIDGET_NAMES = {
+    "ATTRIBUTE_DISPLAY": "value",
+    "LED_DISPLAY": "LED",
+    "ATTRIBUTE WRITER DROPDOWN": "dropdown",
+    "ATTRIBUTE_WRITER": "writer",
+    "BOOLEAN_DISPLAY": "switch",
+    "ATTRIBUTE_LOGGER": "log",
+    "ATTRIBUTE_DIAL": "dial",
+    "SPECTRUM": "spectrum",
+}
+
+
+def attribute_plan(
+    interface: DeviceInterface, options: GenerateOptions | None = None
+) -> list[AttributePlan]:
+    """Every attribute of an interface: its section and widgets, or why hidden."""
+    options = options or GenerateOptions()
+    sections = device_sections("d", interface, options)
+    plans: dict[str, AttributePlan] = {
+        a.name.lower(): AttributePlan(a.name) for a in interface.attributes
+    }
+
+    def note(name: str, section: Section, kind: str) -> None:
+        plan = plans.get(name)
+        if plan is None:
+            return
+        if not plan.section:
+            plan.section, plan.order = section.title, sections.index(section)
+        if kind not in plan.widgets:
+            plan.widgets.append(kind)
+
+    for section in sections:
+        for x in [*section.widgets, *section.dials]:
+            ref = x["inputs"].get("attribute")
+            if isinstance(ref, dict) and ref.get("attribute"):
+                note(ref["attribute"], section, WIDGET_NAMES.get(x["type"], x["type"]))
+        for series in section.trends.values():
+            for attr, _ in series:
+                note(attr.name.lower(), section, "plot")
+    for key, plan in plans.items():
+        if plan.widgets:
+            continue
+        attr = interface.attribute(key)
+        if key == "state":
+            plan.hidden = "built in (shown by the device status widget)"
+        elif key in HIDDEN_ATTRIBUTES:
+            plan.hidden = "built in (not useful on a dashboard)"
+        elif options.attribute_excluded(plan.name):
+            plan.hidden = "exclude_attributes"
+        elif options.attribute_excluded(plan.name, interface.class_name):
+            plan.hidden = f'exclude_attributes_by_class["{interface.class_name}"]'
+        elif attr is not None and attr.is_expert and not options.expert:
+            plan.hidden = "expert = false"
+        elif options.widget_override(plan.name) == "hide":
+            plan.hidden = "widgets: hide"
+        else:
+            plan.hidden = "not shown"
+    return list(plans.values())

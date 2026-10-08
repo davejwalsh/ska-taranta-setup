@@ -71,8 +71,9 @@ class GenerateOptions:
     #: Extra status LEDs per device in status bars and overview tiles, picked
     #: automatically (e.g. ``general_status``).
     headline_status: int = 3
-    #: Devices per row of a status bar.
-    status_bar_columns: int = 6
+    #: Devices per row of a status bar (0: two per grid column, so the cells
+    #: line up with the sections below).
+    status_bar_columns: int = 0
     #: Show expert-level attributes and commands (in an "Expert" section).
     expert: bool = True
     #: Add trend plots for physical quantities.
@@ -83,6 +84,10 @@ class GenerateOptions:
     #: Attributes / commands to leave out (case-insensitive regexes on name).
     exclude_attributes: list[str] = field(default_factory=list)
     exclude_commands: list[str] = field(default_factory=list)
+    #: The same, per device class: ``{SatWhiteRabbit = ["net_wr1[0-5]_.*"]}``.
+    #: Run ``ska-taranta attributes`` to see every attribute and where it goes.
+    exclude_attributes_by_class: dict[str, list[str]] = field(default_factory=dict)
+    exclude_commands_by_class: dict[str, list[str]] = field(default_factory=dict)
     #: Force a widget kind for attributes: ``{"regex" = "kind"}``. Kinds:
     #: led, display, dial, plot, writer, dropdown, switch, logger, spectrum, hide.
     widgets: dict[str, str] = field(default_factory=dict)
@@ -113,17 +118,21 @@ class GenerateOptions:
                 return kind
         return None
 
-    def attribute_excluded(self, attribute: str) -> bool:
-        """Whether an attribute is left out."""
-        return any(
-            re.fullmatch(p, attribute, re.IGNORECASE) for p in self.exclude_attributes
-        )
+    def attribute_excluded(self, attribute: str, class_name: str = "") -> bool:
+        """Whether an attribute is left out (globally or for this class)."""
+        patterns = [
+            *self.exclude_attributes,
+            *self.exclude_attributes_by_class.get(class_name, []),
+        ]
+        return any(re.fullmatch(p, attribute, re.IGNORECASE) for p in patterns)
 
-    def command_excluded(self, command: str) -> bool:
-        """Whether a command is left out."""
-        return any(
-            re.fullmatch(p, command, re.IGNORECASE) for p in self.exclude_commands
-        )
+    def command_excluded(self, command: str, class_name: str = "") -> bool:
+        """Whether a command is left out (globally or for this class)."""
+        patterns = [
+            *self.exclude_commands,
+            *self.exclude_commands_by_class.get(class_name, []),
+        ]
+        return any(re.fullmatch(p, command, re.IGNORECASE) for p in patterns)
 
 
 @dataclass

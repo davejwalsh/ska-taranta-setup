@@ -211,9 +211,10 @@ def test_plots_capped_and_dial_free_first():
     plots = trend_plots(section, DEV)
     assert len(plots) == 2
     plotted = {
-        a["attribute"]["attribute"] for p in plots for a in p["inputs"]["attributes"]
+        a["attribute"]["attribute"] for _, p in plots for a in p["inputs"]["attributes"]
     }
     assert "a_temp" not in plotted
+    assert {kind for kind, _ in plots} <= {"Voltage", "Power", "Timing"}
 
 
 def test_real_interfaces_produce_sections(sat_lmc_snapshot):

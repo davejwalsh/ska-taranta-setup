@@ -47,11 +47,39 @@ def css(**declarations: str) -> str:
     return "\n".join(f"{k.replace('_', '-')}: {v}" for k, v in declarations.items())
 
 
-#: Applied to every row widget so labels and values don't touch the box edge.
-ROW_CSS = css(padding="0 10px", box_sizing="border-box")
+#: Fonts: headings in a modern sans-serif, values in Taranta's Helvetica.
+HEADING_FONT = '"Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif'
+
+#: Section colour themes: (accent for the heading strip and frame, tint for
+#: the section's background).
+THEMES: dict[str, tuple[str, str]] = {
+    "device": ("#2f5d8a", "#f1f5fa"),
+    "status": ("#2e7d4f", "#f0f7f2"),
+    "family": ("#4a5a6a", "#f4f6f8"),
+    "measurements": ("#6a4c93", "#f6f2fa"),
+    "information": ("#6b7280", "#f6f7f8"),
+    "settings": ("#b7791f", "#fcf6ec"),
+    "commands": ("#c2410c", "#fdf3ee"),
+    "expert": ("#374151", "#f2f3f5"),
+    "trends": ("#1f6f8b", "#f0f7fa"),
+    "subsystem": ("#2f5d8a", "#f1f5fa"),
+    "cell": ("#4a5a6a", "#f7f9fb"),
+}
+PAGE_TITLE = ("#1f3a5f", "#ffffff")  # background, text
+BAND_TITLE = ("#dde6f0", "#1f3a5f")
+
+#: Applied to every row widget: padding so labels and values don't touch the
+#: box edge, and a faint rule between rows so they read as a table.
+ROW_CSS = css(
+    padding="0 10px",
+    box_sizing="border-box",
+    border_bottom="1px solid rgba(20, 40, 70, 0.08)",
+)
 #: Value displays also clip, so an unexpectedly long value can't spill over
 #: the row below.
-DISPLAY_CSS = css(padding="0 10px", box_sizing="border-box", overflow="hidden")
+DISPLAY_CSS = ROW_CSS + "\n" + css(overflow="hidden")
+#: Rows sit on their section's tinted background.
+CLEAR = "transparent"
 PLOT_COLOURS = ["#1f77b4", "#ff7f0e", "#2ca02c", "#d62728", "#9467bd", "#8c564b"]
 
 
@@ -75,13 +103,19 @@ def widget(
     }
 
 
-def label(text: str, size: float = 1.0, background: str = "#ffffff") -> dict[str, Any]:
+def label(
+    text: str,
+    size: float = 1.0,
+    background: str = "#ffffff",
+    colour: str = "#1a1a1a",
+    style: str = "",
+) -> dict[str, Any]:
     """A static text label."""
     return widget(
         "LABEL",
         {
             "text": text,
-            "textColor": "#1a1a1a",
+            "textColor": colour,
             "backgroundColor": background,
             "borderWidth": 0,
             "borderColor": "#000000",
@@ -89,12 +123,53 @@ def label(text: str, size: float = 1.0, background: str = "#ffffff") -> dict[str
             "automaticResize": "Disabled",
             "size": size,
             "linkTo": "",
-            "customCss": ROW_CSS,
+            "customCss": style,
         },
     )
 
 
 FRAME_COLOUR = "#c3cad4"
+
+
+def heading(text: str, kind: str = "family") -> dict[str, Any]:
+    """A section's heading strip: its name on the section's accent colour."""
+    accent, _ = THEMES.get(kind, THEMES["family"])
+    return label(
+        text,
+        size=1.05,
+        background=accent,
+        colour="#ffffff",
+        style=css(
+            font_family=HEADING_FONT,
+            font_weight="600",
+            letter_spacing="0.02em",
+            padding="0 10px",
+            box_sizing="border-box",
+            border_radius="4px",
+            display="flex",
+            align_items="center",
+        ),
+    )
+
+
+def title_bar(text: str, size: float, colours: tuple[str, str]) -> dict[str, Any]:
+    """A page or band title."""
+    background, colour = colours
+    return label(
+        text,
+        size=size,
+        background=background,
+        colour=colour,
+        style=css(
+            font_family=HEADING_FONT,
+            font_weight="600",
+            padding="0 16px",
+            box_sizing="border-box",
+            border_radius="6px",
+            display="flex",
+            align_items="center",
+        ),
+    )
 
 
 def box(
@@ -106,20 +181,27 @@ def box(
     inset: int = 8,
     padding: float = 0,
     frame: bool = True,
+    kind: str = "family",
 ) -> dict[str, Any]:
     """
     A BOX that arranges ``children`` itself (vertically or horizontally).
 
     Taranta places a box's children at the inside of its border and stretches
-    them to fill it, so the border is the only way to pad them. ``inset`` px
-    of white border does that, and an outline draws the visible 1px frame at
-    the outer edge.
+    them to fill it, so the border is the only way to pad them: ``inset`` px of
+    border in the box's own tint, with an outline drawing the visible frame
+    in the theme's accent colour.
     """
-    declarations = {}
+    accent, tint = THEMES.get(kind, THEMES["family"])
+    declarations: dict[str, str] = {}
     if frame:
-        declarations.update(outline=f"1px solid {FRAME_COLOUR}", outline_offset="-1px")
+        declarations.update(
+            outline=f"2px solid {accent}33",
+            outline_offset="-2px",
+            border_radius="8px",
+        )
     if title:
-        declarations["font_weight"] = "bold"
+        declarations.update(font_weight="bold", font_family=HEADING_FONT)
+    background = tint if frame else CLEAR
     result = widget(
         "BOX",
         {
@@ -127,8 +209,8 @@ def box(
             "bigWidget": big_slot,
             "smallWidget": small_slot,
             "textColor": "#1a1a1a",
-            "backgroundColor": "#ffffff",
-            "borderColor": "#ffffff",
+            "backgroundColor": background,
+            "borderColor": background,
             "borderWidth": inset,
             "borderStyle": "solid",
             "textSize": 1,
@@ -157,7 +239,7 @@ def device_status(device: str, show_name: bool = True) -> dict[str, Any]:
             "showStateLED": True,
             "LEDSize": 1,
             "textColor": "#000000",
-            "backgroundColor": "#ffffff",
+            "backgroundColor": CLEAR,
             "textSize": 1,
             "linkTo": "",
             "widgetCss": ROW_CSS,
@@ -184,7 +266,7 @@ def attribute_display(device: str, attr: AttributeInfo, text: str) -> dict[str, 
             "showEnumLabels": True,
             "showAttrQuality": False,
             "textColor": "#1a1a1a",
-            "backgroundColor": "#ffffff",
+            "backgroundColor": CLEAR,
             "size": 1,
             "font": "Helvetica",
             "widgetCss": DISPLAY_CSS,
@@ -274,7 +356,7 @@ def dropdown_writer(
             "showTangoDB": False,
             "showAttribute": "Label",
             "textColor": "#1a1a1a",
-            "backgroundColor": "#ffffff",
+            "backgroundColor": CLEAR,
             "size": 1,
             "font": "Helvetica",
             "dropdownButtonCss": "",
@@ -298,7 +380,7 @@ def writer(device: str, attr: AttributeInfo, text: str) -> dict[str, Any]:
             "showAttribute": "Label",
             "alignValueRight": True,
             "textColor": "#1a1a1a",
-            "backgroundColor": "#ffffff",
+            "backgroundColor": CLEAR,
             "size": 1,
             "font": "Helvetica",
             "widgetCss": ROW_CSS,
@@ -329,7 +411,7 @@ def logger(device: str, attr: AttributeInfo, text: str) -> dict[str, Any]:
         "ATTRIBUTE_LOGGER",
         {
             "attribute": attribute_ref(device, attr, text),
-            "linesDisplayed": 4,
+            "linesDisplayed": 3,
             "showLastValue": False,
             "showDevice": False,
             "showTangoDB": False,
@@ -423,7 +505,7 @@ def command(device: str, cmd: CommandInfo, label: str) -> dict[str, Any]:
             "alignButtonRight": True,
             "placeholder": "intype",
             "textColor": "#000000",
-            "backgroundColor": "#ffffff",
+            "backgroundColor": CLEAR,
             "size": 1,
             "font": "Helvetica",
             "btnCss": "",
@@ -447,7 +529,16 @@ def dashboard_link(dashboard_name: str, text: str) -> dict[str, Any]:
             "NewTab": False,
             "ButtonText": text,
             "DropDownCss": "",
-            "ButtonCss": css(width="100%", font_weight="bold"),
+            "ButtonCss": css(
+                width="100%",
+                height="100%",
+                font_weight="600",
+                font_family=HEADING_FONT,
+                color="#1f3a5f",
+                background="#ffffff",
+                border="2px solid #1f3a5f",
+                border_radius="6px",
+            ),
             "CustomCss": css(padding="0 4px", box_sizing="border-box"),
         },
     )

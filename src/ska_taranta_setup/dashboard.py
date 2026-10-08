@@ -1,12 +1,14 @@
 """
 Lay out sections and assemble Taranta dashboard (``.wj``) files.
 
-Each :class:`~ska_taranta_setup.heuristics.Section` becomes a vertical BOX.
-Taranta itself arranges a BOX's children (each "small" widget gets
-``smallWidget`` slots of height, each "big" one ``bigWidget`` slots), so we
-only need to size the BOX; child coordinates are filled in to match, which is
-what Taranta's editor would store. Boxes are then packed into columns,
-shortest column first.
+Every page sits on one grid, centred on the screen: ``columns`` columns of
+``section_width_px``. Sections are themed BOXes (a coloured heading strip
+on a tinted background) placed left to right in rows; the boxes in a row are
+stretched to the same height so their tops and bottoms line up.
+
+Taranta arranges a BOX's children itself, so we size each BOX and give each
+child a fixed height (its custom-height marker); child coordinates are filled
+in to match, as Taranta's editor would store them.
 """
 
 from __future__ import annotations
@@ -23,6 +25,7 @@ from ska_taranta_setup.heuristics import (
     Section,
     device_sections,
     overview_widgets,
+    repeated_blocks,
     status_widgets,
     summary_sections,
     trend_plots,
@@ -51,21 +54,31 @@ class LayoutOptions:
     tile_size: int = 10
     columns: int = 4
     section_width_px: float = 440
-    gap_px: float = 30
+    gap_px: float = 24
     row_px: float = 38
-    big_slots: int = 5
-    margin_px: float = 14
+    #: Rows for "big" widgets kept inside sections (the health-info logger).
+    big_slots: int = 3
+    margin_px: float = 10
     header_px: float = 56
-    #: BOX title padding, in units; Taranta adds it above and below the title.
+    #: Kept for compatibility; titles are heading strips now.
     title_padding: float = 0.25
     dials_per_row: int = 3
+    #: Height of a row of dials.
+    dial_px: float = 170
+    #: Height of a section's heading strip.
+    heading_px: float = 32
+    #: Trend plots: height, and how many grid columns each one spans.
+    plot_px: float = 320
+    plot_span: int = 2
     #: Width of a navigation button.
     link_px: float = 170
     #: Height of one item in a dropdown's menu, and the menu's own padding.
     menu_item_px: float = 32
     menu_padding_px: float = 16
+    #: Most menu items to reserve room for; longer menus scroll.
+    menu_max_items: int = 5
     #: Padding inside each box, between its frame and its contents.
-    inset_px: int = 8
+    inset_px: int = 10
     #: Space between a title bar and what's below it.
     header_gap_px: float = 20
     #: Screen width the page is centred on.
@@ -77,7 +90,7 @@ class LayoutOptions:
 
     @property
     def section_width(self) -> float:
-        """Section width in units."""
+        """Section (grid column) width in units."""
         return self.units(self.section_width_px)
 
     @property
@@ -87,7 +100,7 @@ class LayoutOptions:
 
     @property
     def row_height(self) -> float:
-        """Height of one small-widget slot in units."""
+        """Height of one row in units."""
         return self.units(self.row_px)
 
     @property
@@ -101,22 +114,6 @@ class LayoutOptions:
         return self.units(self.header_px)
 
     @property
-    def title_height(self) -> float:
-        """Height Taranta gives a BOX title (text size 1), in units."""
-        size = 1 + 2 * self.title_padding
-        return size * 2 if self.tile_size < 15 else size
-
-    @property
-    def page_width(self) -> float:
-        """Width of a full row of sections, in units."""
-        return round(self.columns * (self.section_width + self.gap) - self.gap, 2)
-
-    @property
-    def link_width(self) -> float:
-        """Width of a navigation button, in units."""
-        return self.units(self.link_px)
-
-    @property
     def inset(self) -> float:
         """Padding inside each box, in units."""
         return self.units(self.inset_px)
@@ -127,66 +124,138 @@ class LayoutOptions:
         return self.units(self.header_gap_px)
 
     @property
+    def page_width(self) -> float:
+        """Width of a full row of sections, in units."""
+        return round(self.columns * (self.section_width + self.gap) - self.gap, 2)
+
+    @property
     def left(self) -> float:
         """Left edge of the page, centring it on the screen."""
         spare = self.units(self.screen_width_px) - self.page_width
         return round(max(self.gap, spare / 2), 2)
 
-    def box_height(self, content: float, titled: bool) -> float:
+    @property
+    def link_width(self) -> float:
+        """Width of a navigation button, in units."""
+        return self.units(self.link_px)
+
+    def column_x(self, column: float) -> float:
+        """Left edge of a grid column (fractions allowed), in units."""
+        return round(self.left + column * (self.section_width + self.gap), 2)
+
+    def span_width(self, span: int) -> float:
+        """Width of a box spanning ``span`` grid columns, in units."""
+        return round(span * self.section_width + (span - 1) * self.gap, 2)
+
+    def box_height(self, content: float) -> float:
         """A box's height for ``content`` units of children, in units."""
-        title = self.title_height if titled else 0
-        return round(title + content + self.margin + 2 * self.inset, 2)
+        return round(content + self.margin + 2 * self.inset, 2)
 
 
 #: Taranta's "custom height" marker for a BOX child (shared/utils/canvas.js).
 CUSTOM_HEIGHT = -1
+#: Layout hint (stripped before saving): a widget's height in pixels.
+PX = "_px"
 
 
 def _height(widget: dict[str, Any], opts: LayoutOptions) -> float:
     """A widget's height in a vertical box, in units."""
-    big = widget["type"] in w.BIG_WIDGETS
-    slots = opts.big_slots if big else widget.get(w.ROWS, 1)
-    rows = widget.get(w.MENU_ROWS, 0)
+    if PX in widget:
+        return opts.units(widget[PX])
+    if widget["type"] in w.BIG_WIDGETS:
+        return round(opts.big_slots * opts.row_height, 2)
+    rows = min(widget.get(w.MENU_ROWS, 0), opts.menu_max_items)
     menu = rows * opts.menu_item_px + (opts.menu_padding_px if rows else 0)
-    return round(slots * opts.row_height + opts.units(menu), 2)
+    return round(widget.get(w.ROWS, 1) * opts.row_height + opts.units(menu), 2)
+
+
+def _heading(text: str, kind: str, opts: LayoutOptions) -> dict[str, Any]:
+    strip = w.heading(text, kind)
+    strip[PX] = opts.heading_px
+    return strip
 
 
 def _dial_rows(section: Section, opts: LayoutOptions) -> list[dict[str, Any]]:
     rows = []
     for start in range(0, len(section.dials), opts.dials_per_row):
-        rows.append(
-            w.box(
-                "",
-                section.dials[start : start + opts.dials_per_row],
-                layout="horizontal",
-                inset=0,
-                frame=False,
-            )
+        row = w.box(
+            "",
+            section.dials[start : start + opts.dials_per_row],
+            layout="horizontal",
+            inset=0,
+            frame=False,
         )
+        row[PX] = opts.dial_px
+        rows.append(row)
     return rows
 
 
-def section_box(
-    section: Section, device: str, opts: LayoutOptions, max_plots: int = 2
+def themed_box(
+    title: str, kind: str, children: list[dict[str, Any]], opts: LayoutOptions
 ) -> dict[str, Any]:
-    """Render a section as a sized BOX widget (not yet positioned)."""
-    children = [
-        *section.widgets,
-        *_dial_rows(section, opts),
-        *trend_plots(section, device, max_plots),
-    ]
-    box = w.box(
-        section.title,
-        children,
-        big_slot=opts.big_slots,
-        padding=opts.title_padding,
-        inset=opts.inset_px,
-    )
+    """A section box: heading strip, then ``children``; sized, not positioned."""
+    contents = ([_heading(title, kind, opts)] if title else []) + children
+    box = w.box("", contents, big_slot=opts.big_slots, inset=opts.inset_px, kind=kind)
     box["width"] = opts.section_width
-    box["height"] = opts.box_height(
-        sum(_height(child, opts) for child in children), bool(section.title)
-    )
+    box["height"] = opts.box_height(sum(_height(c, opts) for c in contents))
     return box
+
+
+def section_box(section: Section, opts: LayoutOptions) -> dict[str, Any]:
+    """A section's values, LEDs, controls and dials (its plots go to Trends)."""
+    return themed_box(
+        section.title,
+        section.kind,
+        [*section.widgets, *_dial_rows(section, opts)],
+        opts,
+    )
+
+
+def trend_boxes(
+    sections: list[Section], device: str, opts: LayoutOptions, max_plots: int
+) -> list[dict[str, Any]]:
+    """
+    A wide box per trend plot, titled by section and quantity.
+
+    Repeated blocks (ports, channels: ``Net WR0`` .. ``Net WR15``) are left
+    out; their dials and values are in their sections, and a plot each would
+    swamp the page.
+    """
+    boxes = []
+    repeated = repeated_blocks(sections)
+    for section in [s for s in sections if s.title not in repeated]:
+        for quantity, plot in trend_plots(section, device, max_plots):
+            plot[PX] = opts.plot_px
+            box = themed_box(f"{section.title} · {quantity}", "trends", [plot], opts)
+            box["width"] = opts.span_width(opts.plot_span)
+            boxes.append(box)
+    return boxes
+
+
+#: Section kinds pinned to the start and end of a page; the rest are ordered by
+#: height so that the sections sharing a row are of similar height.
+HEAD_KINDS = ("device", "status")
+TAIL_KINDS = ("settings", "commands", "expert")
+
+
+def arrange(sections: list[Section], opts: LayoutOptions) -> list[dict[str, Any]]:
+    """
+    Section boxes in grid order.
+
+    Rows are stretched to their tallest box, so mixing a tall section with
+    short ones leaves empty space. Device and Status lead, Settings, Commands
+    and Expert close, and everything between goes tallest first; the tallest
+    of those share the first row with Device, which is usually tall too.
+    """
+    boxes = [(s, section_box(s, opts)) for s in sections]
+    head = [b for s, b in boxes if s.kind in HEAD_KINDS]
+    tail = sorted(
+        ((s, b) for s, b in boxes if s.kind in TAIL_KINDS),
+        key=lambda sb: TAIL_KINDS.index(sb[0].kind),
+    )
+    middle = [b for s, b in boxes if s.kind not in HEAD_KINDS + TAIL_KINDS]
+    middle.sort(key=lambda b: -b["height"])  # stable: equal heights keep order
+    return [*head, *middle, *(b for _, b in tail)]
 
 
 def _position_children(box: dict[str, Any], opts: LayoutOptions) -> None:
@@ -196,14 +265,14 @@ def _position_children(box: dict[str, Any], opts: LayoutOptions) -> None:
         return
     border = box["inputs"]["borderWidth"] / opts.tile_size
     if box["inputs"]["layout"] == "vertical":
-        y = box["y"] + (opts.title_height if box["inputs"]["title"] else 0) + border
+        y = box["y"] + border
         for child in children:
             child["x"] = round(box["x"] + border, 2)
             child["y"] = round(y, 2)
             child["width"] = round(box["width"] - 2 * border, 2)
             child["height"] = _height(child, opts)
             # Fix each child's height, rather than letting Taranta share the
-            # box's height out equally, so dropdowns can be taller than rows.
+            # box's height out equally.
             child["percentage"] = CUSTOM_HEIGHT
             y += child["height"]
             _position_children(child, opts)
@@ -221,33 +290,41 @@ def _position_children(box: dict[str, Any], opts: LayoutOptions) -> None:
             _position_children(child, opts)
 
 
-def _centre_out(count_: int) -> list[int]:
-    """Column indexes from the middle outwards, e.g. 4 -> [1, 2, 0, 3]."""
-    middle = (count_ - 1) / 2
-    return sorted(range(count_), key=lambda c: (abs(c - middle), c))
-
-
-def pack(
+def grid(
     boxes: list[dict[str, Any]], opts: LayoutOptions, top: float
 ) -> list[dict[str, Any]]:
     """
-    Place boxes in columns, each into the currently shortest column.
+    Place boxes left to right in rows on the page grid.
 
-    Only as many columns as there are boxes are used, centred on the page, and
-    ties go to the middle columns first, so layouts grow outwards from the
-    centre of the screen.
+    A box ``n`` columns wide (from its width) takes ``n`` grid columns. Every
+    box in a row is stretched to the row's tallest, so rows line up.
     """
-    columns = max(1, min(opts.columns, len(boxes)))
-    block = columns * (opts.section_width + opts.gap) - opts.gap
-    x0 = opts.left + (opts.page_width - block) / 2
-    rank = {c: i for i, c in enumerate(_centre_out(columns))}
-    heights = [top] * columns
+    row: list[dict[str, Any]] = []
+    column = 0
+    y = top
+
+    def finish_row() -> float:
+        height = max(b["height"] for b in row)
+        for b in row:
+            b["height"] = height
+            _position_children(b, opts)
+        return y + height + opts.gap
+
     for box in boxes:
-        col = min(range(columns), key=lambda c: (round(heights[c], 2), rank[c]))
-        box["x"] = round(x0 + col * (opts.section_width + opts.gap), 2)
-        box["y"] = round(heights[col], 2)
-        heights[col] += box["height"] + opts.gap
-        _position_children(box, opts)
+        span = max(
+            1, round((box["width"] + opts.gap) / (opts.section_width + opts.gap))
+        )
+        span = min(span, opts.columns)
+        if row and column + span > opts.columns:
+            y = finish_row()
+            row, column = [], 0
+        box["x"] = opts.column_x(column)
+        box["y"] = round(y, 2)
+        box["width"] = opts.span_width(span)
+        row.append(box)
+        column += span
+    if row:
+        finish_row()
     return boxes
 
 
@@ -260,8 +337,8 @@ def _finalise(widgets_: list[dict[str, Any]]) -> list[dict[str, Any]]:
         widget["canvas"] = "0"
         widget["order"] = order
         widget["valid"] = 1
-        widget.pop(w.MENU_ROWS, None)
-        widget.pop(w.ROWS, None)
+        for hint in (w.MENU_ROWS, w.ROWS, PX):
+            widget.pop(hint, None)
         for i, child in enumerate(widget.get("innerWidgets", [])):
             visit(child, i)
         return widget
@@ -303,19 +380,19 @@ def header(
     opts: LayoutOptions,
     links: list[tuple[str, str]] = (),
     top: float | None = None,
-    size: float = 1.4,
-    background: str = "#dfe6ee",
+    size: float = 1.5,
+    colours: tuple[str, str] = w.PAGE_TITLE,
+    height_px: float | None = None,
 ) -> list[dict[str, Any]]:
     """
-    A full-width title band, with navigation buttons at its right end.
+    A full-width title bar, with navigation buttons at its right end.
 
     ``links`` are ``(dashboard name, button text)`` pairs.
     """
     top = opts.gap / 2 if top is None else top
-    height = opts.header_height - opts.gap / 2
+    height = opts.units(height_px) if height_px else opts.header_height - opts.gap / 2
     link_space = len(links) * (opts.link_width + opts.gap / 2)
-    title = w.label(text, size=size, background=background)
-    title["inputs"]["customCss"] = w.css(padding="0 12px", box_sizing="border-box")
+    title = w.title_bar(text, size, colours)
     widgets_ = [_place(title, opts.left, top, opts.page_width - link_space, height)]
     x = opts.left + opts.page_width - link_space + opts.gap / 2
     for name, label in links:
@@ -371,10 +448,11 @@ def status_bar(
     ctx: Context, devices: list[DeviceInstance], top: float
 ) -> list[dict[str, Any]]:
     """
-    Rows of per-device status cells (state + headline LEDs) across the page.
+    Per-device status cells (state + headline LEDs), on the page grid.
 
-    Cells are top-level boxes of equal height: shorter ones are padded with
-    blank rows, since Taranta stretches a box's widgets to fill its height.
+    Two cells fit each grid column, so they line up with the sections below.
+    Cells are padded with blank rows to the same height, since Taranta would
+    otherwise stretch a short cell's widgets to fill it.
     """
     opts = ctx.layout
     contents = []
@@ -385,30 +463,20 @@ def status_bar(
             contents.append((device, status_widgets(trl, interface, ctx.options)))
     if not contents:
         return []
-    per_row = max(1, ctx.options.status_bar_columns)
-    width = (opts.page_width - (per_row - 1) * opts.gap / 2) / per_row
+    per_row = ctx.options.status_bar_columns or 2 * opts.columns
+    width = (opts.section_width - opts.gap) / 2
     slots = max(len(widgets_) for _, widgets_ in contents)
-    height = opts.box_height(slots * opts.row_height, titled=True)
-    used = min(per_row, len(contents))
-    x0 = opts.left + (opts.page_width - used * width - (used - 1) * opts.gap / 2) / 2
     cells = []
     for i, (device, widgets_) in enumerate(contents):
-        padding = [
-            w.label("", background="#ffffff") for _ in range(slots - len(widgets_))
-        ]
-        cell = w.box(
-            short_name(device.trl),
-            widgets_ + padding,
-            padding=opts.title_padding,
-            inset=opts.inset_px,
-        )
+        blank = [w.label("", background=w.CLEAR) for _ in range(slots - len(widgets_))]
+        cell = themed_box(short_name(device.trl), "cell", widgets_ + blank, opts)
         row, col = divmod(i, per_row)
         _place(
             cell,
-            x0 + col * (width + opts.gap / 2),
-            top + row * (height + opts.gap / 2),
+            opts.left + col * (width + opts.gap),
+            top + row * (cell["height"] + opts.gap / 2),
             width,
-            height,
+            cell["height"],
         )
         _position_children(cell, opts)
         cells.append(cell)
@@ -423,7 +491,7 @@ SUMMARY_DEVICE_ATTRIBUTES = {
 
 def _compact_device_section(section: Section) -> Section:
     """The "Device" section with just state, health, status and modes."""
-    compact = Section(section.title)
+    compact = Section(section.title, kind=section.kind)
     for widget in section.widgets:
         ref = widget["inputs"].get("attribute") or {}
         if widget["type"] == "DEVICE_STATUS" or (
@@ -434,23 +502,42 @@ def _compact_device_section(section: Section) -> Section:
 
 
 def device_band(
-    ctx: Context, device: DeviceInstance, sections: list[Section], top: float
+    ctx: Context,
+    device: DeviceInstance,
+    sections: list[Section],
+    top: float,
+    trends: bool = False,
 ) -> list[dict[str, Any]]:
-    """A device's name bar, with its sections packed in columns below it."""
+    """A device's name bar, with its sections on the grid below it."""
     opts = ctx.layout
-    trl = full_trl(ctx.tango_db, device.trl)
     band = header(
-        f"{device.trl}  ({device.class_name})",
+        f"{device.trl}  ·  {device.class_name}",
         opts,
         ctx.device_link(device),
         top=top,
-        size=1.1,
-        background="#eef1f5",
+        size=1.15,
+        colours=w.BAND_TITLE,
+        height_px=44,
     )
-    boxes = [
-        section_box(s, trl, opts, ctx.options.max_plots_per_section) for s in sections
-    ]
-    return band + pack(boxes, opts, bottom(band) + opts.header_gap)
+    widgets_ = band + grid(
+        arrange(sections, opts), opts, bottom(band) + opts.header_gap
+    )
+    if trends:
+        widgets_ += _trends(ctx, device, sections, bottom(widgets_) + opts.gap)
+    return widgets_
+
+
+def _trends(
+    ctx: Context, device: DeviceInstance, sections: list[Section], top: float
+) -> list[dict[str, Any]]:
+    """A "Trends" bar and the device's plots, each spanning two columns."""
+    opts = ctx.layout
+    trl = full_trl(ctx.tango_db, device.trl)
+    boxes = trend_boxes(sections, trl, opts, ctx.options.max_plots_per_section)
+    if not boxes:
+        return []
+    bar = header("Trends", opts, top=top, size=1.1, colours=w.BAND_TITLE, height_px=40)
+    return bar + grid(boxes, opts, bottom(bar) + opts.header_gap)
 
 
 def _sections(ctx: Context, device: DeviceInstance) -> list[Section]:
@@ -475,15 +562,10 @@ def device_dashboard(ctx: Context, device: DeviceInstance) -> dict[str, Any] | N
     subsystem = ctx.hierarchy.subsystem_of(device)
     if subsystem is not None:
         links.append((ctx.name(subsystem.name), subsystem.name))
-    top = header(f"{ctx.title} — {device.trl}  ({device.class_name})", opts, links)
-    trl = full_trl(ctx.tango_db, device.trl)
-    boxes = [
-        section_box(s, trl, opts, ctx.options.max_plots_per_section) for s in sections
-    ]
-    return dashboard_file(
-        ctx.name(device.trl),
-        [*top, *pack(boxes, opts, bottom(top) + opts.header_gap)],
-    )
+    top = header(f"{ctx.title} — {device.trl}  ·  {device.class_name}", opts, links)
+    widgets_ = top + grid(arrange(sections, opts), opts, bottom(top) + opts.header_gap)
+    widgets_ += _trends(ctx, device, sections, bottom(widgets_) + opts.gap)
+    return dashboard_file(ctx.name(device.trl), widgets_)
 
 
 def subsystem_dashboard(ctx: Context, subsystem: Subsystem) -> dict[str, Any]:
@@ -493,21 +575,18 @@ def subsystem_dashboard(ctx: Context, subsystem: Subsystem) -> dict[str, Any]:
         f"{ctx.title} — {subsystem.name}", opts, [(ctx.overview_name, "Overview")]
     )
     widgets_ += status_bar(ctx, subsystem.devices, bottom(widgets_) + opts.header_gap)
+    full = subsystem.detail == "full"
     for device in subsystem.devices:
         sections = _sections(ctx, device)
         if not sections:
             continue
-        if subsystem.detail == "summary":
+        if not full:
             sections = summary_sections(sections, ctx.options.summary_sections)
             sections[0] = _compact_device_section(sections[0])
-        widgets_ += device_band(ctx, device, sections, bottom(widgets_) + opts.gap)
+        widgets_ += device_band(
+            ctx, device, sections, bottom(widgets_) + opts.gap, trends=full
+        )
     return dashboard_file(ctx.name(subsystem.name), widgets_)
-
-
-def _tile(ctx: Context, title: str, widgets_: list[dict[str, Any]]) -> dict[str, Any]:
-    section = Section(title)
-    section.widgets = widgets_
-    return section_box(section, "", ctx.layout)
 
 
 def overview_dashboard(ctx: Context, devices: list[DeviceInstance]) -> dict[str, Any]:
@@ -526,12 +605,10 @@ def overview_dashboard(ctx: Context, devices: list[DeviceInstance]) -> dict[str,
         if interface is None:
             continue
         trl = full_trl(ctx.tango_db, device.trl)
+        children = overview_widgets(trl, interface, ctx.options)
         tiles.append(
-            _tile(
-                ctx,
-                device.trl,
-                overview_widgets(trl, interface, ctx.options)
-                + links(ctx.device_link(device)),
+            themed_box(
+                device.trl, "device", children + links(ctx.device_link(device)), opts
             )
         )
     for subsystem in hierarchy.subsystems:
@@ -545,8 +622,10 @@ def overview_dashboard(ctx: Context, devices: list[DeviceInstance]) -> dict[str,
             headline = status_widgets(trl, interface, ctx.options)[1:2]
             members += [w.device_status(trl), *headline]
         target = [(ctx.name(subsystem.name), f"Open {subsystem.name}")]
-        tiles.append(_tile(ctx, subsystem.name, members + links(target)))
-    widgets_ += pack(tiles, opts, bottom(widgets_) + opts.gap)
+        tiles.append(
+            themed_box(subsystem.name, "subsystem", members + links(target), opts)
+        )
+    widgets_ += grid(tiles, opts, bottom(widgets_) + opts.gap)
     return dashboard_file(ctx.overview_name, widgets_)
 
 

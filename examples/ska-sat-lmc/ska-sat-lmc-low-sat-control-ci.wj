@@ -10,22 +10,22 @@
   "widget": [
     {
       "type": "LABEL",
-      "width": 166.5,
-      "height": 4.1,
+      "width": 165.0,
+      "height": 4.4,
       "inputs": {
-        "text": "ska-sat-lmc — low-sat/control/ci  (SatController)",
-        "textColor": "#1a1a1a",
-        "backgroundColor": "#dfe6ee",
+        "text": "ska-sat-lmc — low-sat/control/ci  ·  SatController",
+        "textColor": "#ffffff",
+        "backgroundColor": "#1f3a5f",
         "borderWidth": 0,
         "borderColor": "#000000",
         "font": "Helvetica",
         "automaticResize": "Disabled",
-        "size": 1.4,
+        "size": 1.5,
         "linkTo": "",
-        "customCss": "padding: 0 12px\nbox-sizing: border-box"
+        "customCss": "font-family: \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, sans-serif\nfont-weight: 600\npadding: 0 16px\nbox-sizing: border-box\nborder-radius: 6px\ndisplay: flex\nalign-items: center"
       },
-      "x": 3.5,
-      "y": 1.5,
+      "x": 4.4,
+      "y": 1.2,
       "id": "1",
       "canvas": "0",
       "order": 0,
@@ -34,18 +34,18 @@
     {
       "type": "DASHLINK",
       "width": 17.0,
-      "height": 4.1,
+      "height": 4.4,
       "inputs": {
         "DefaultDashboard": "{\"name\": \"ska-sat-lmc - Overview\", \"id\": \"\"}",
         "HideDropdown": true,
         "NewTab": false,
         "ButtonText": "Overview",
         "DropDownCss": "",
-        "ButtonCss": "width: 100%\nfont-weight: bold",
+        "ButtonCss": "width: 100%\nheight: 100%\nfont-weight: 600\nfont-family: \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, sans-serif\ncolor: #1f3a5f\nbackground: #ffffff\nborder: 2px solid #1f3a5f\nborder-radius: 6px",
         "CustomCss": "padding: 0 4px\nbox-sizing: border-box"
       },
-      "x": 171.5,
-      "y": 1.5,
+      "x": 170.6,
+      "y": 1.2,
       "id": "2",
       "canvas": "0",
       "order": 1,
@@ -54,27 +54,51 @@
     {
       "type": "BOX",
       "width": 44.0,
-      "height": 110.6,
+      "height": 100.0,
       "inputs": {
-        "title": "Device",
-        "bigWidget": 5,
+        "title": "",
+        "bigWidget": 3,
         "smallWidget": 1,
         "textColor": "#1a1a1a",
-        "backgroundColor": "#ffffff",
-        "borderColor": "#ffffff",
-        "borderWidth": 8,
+        "backgroundColor": "#f1f5fa",
+        "borderColor": "#f1f5fa",
+        "borderWidth": 10,
         "borderStyle": "solid",
         "textSize": 1,
         "fontFamily": "Helvetica",
         "layout": "vertical",
         "alignment": "Left",
-        "padding": 0.25,
-        "customCss": "outline: 1px solid #c3cad4\noutline-offset: -1px\nfont-weight: bold"
+        "padding": 0,
+        "customCss": "outline: 2px solid #2f5d8a33\noutline-offset: -2px\nborder-radius: 8px"
       },
       "innerWidgets": [
         {
+          "type": "LABEL",
+          "width": 42.0,
+          "height": 3.2,
+          "inputs": {
+            "text": "Device",
+            "textColor": "#ffffff",
+            "backgroundColor": "#2f5d8a",
+            "borderWidth": 0,
+            "borderColor": "#000000",
+            "font": "Helvetica",
+            "automaticResize": "Disabled",
+            "size": 1.05,
+            "linkTo": "",
+            "customCss": "font-family: \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, sans-serif\nfont-weight: 600\nletter-spacing: 0.02em\npadding: 0 10px\nbox-sizing: border-box\nborder-radius: 4px\ndisplay: flex\nalign-items: center"
+          },
+          "x": 5.4,
+          "y": 8.6,
+          "percentage": -1,
+          "id": "4",
+          "canvas": "0",
+          "order": 0,
+          "valid": 1
+        },
+        {
           "type": "DEVICE_STATUS",
-          "width": 42.4,
+          "width": 42.0,
           "height": 3.8,
           "inputs": {
             "device": "taranta://low-sat/control/ci",
@@ -89,22 +113,22 @@
             "showStateLED": true,
             "LEDSize": 1,
             "textColor": "#000000",
-            "backgroundColor": "#ffffff",
+            "backgroundColor": "transparent",
             "textSize": 1,
             "linkTo": "",
-            "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
+            "widgetCss": "padding: 0 10px\nbox-sizing: border-box\nborder-bottom: 1px solid rgba(20, 40, 70, 0.08)"
           },
-          "x": 74.8,
-          "y": 11.4,
+          "x": 5.4,
+          "y": 11.8,
           "percentage": -1,
-          "id": "4",
+          "id": "5",
           "canvas": "0",
-          "order": 0,
+          "order": 1,
           "valid": 1
         },
         {
           "type": "LED_DISPLAY",
-          "width": 42.4,
+          "width": 42.0,
           "height": 3.8,
           "inputs": {
             "attribute": {
@@ -124,19 +148,19 @@
             "showAttribute": "Label",
             "alignTextCenter": false,
             "alignValueRight": true,
-            "customCss": "padding: 0 10px\nbox-sizing: border-box"
+            "customCss": "padding: 0 10px\nbox-sizing: border-box\nborder-bottom: 1px solid rgba(20, 40, 70, 0.08)"
           },
-          "x": 74.8,
-          "y": 15.2,
+          "x": 5.4,
+          "y": 15.6,
           "percentage": -1,
-          "id": "5",
+          "id": "6",
           "canvas": "0",
-          "order": 1,
+          "order": 2,
           "valid": 1
         },
         {
           "type": "ATTRIBUTE_DISPLAY",
-          "width": 42.4,
+          "width": 42.0,
           "height": 3.8,
           "inputs": {
             "attribute": {
@@ -157,22 +181,22 @@
             "showEnumLabels": true,
             "showAttrQuality": false,
             "textColor": "#1a1a1a",
-            "backgroundColor": "#ffffff",
+            "backgroundColor": "transparent",
             "size": 1,
             "font": "Helvetica",
-            "widgetCss": "padding: 0 10px\nbox-sizing: border-box\noverflow: hidden"
+            "widgetCss": "padding: 0 10px\nbox-sizing: border-box\nborder-bottom: 1px solid rgba(20, 40, 70, 0.08)\noverflow: hidden"
           },
-          "x": 74.8,
-          "y": 19.0,
+          "x": 5.4,
+          "y": 19.4,
           "percentage": -1,
-          "id": "6",
+          "id": "7",
           "canvas": "0",
-          "order": 2,
+          "order": 3,
           "valid": 1
         },
         {
           "type": "ATTRIBUTE_DISPLAY",
-          "width": 42.4,
+          "width": 42.0,
           "height": 3.8,
           "inputs": {
             "attribute": {
@@ -193,22 +217,22 @@
             "showEnumLabels": true,
             "showAttrQuality": false,
             "textColor": "#1a1a1a",
-            "backgroundColor": "#ffffff",
+            "backgroundColor": "transparent",
             "size": 1,
             "font": "Helvetica",
-            "widgetCss": "padding: 0 10px\nbox-sizing: border-box\noverflow: hidden"
+            "widgetCss": "padding: 0 10px\nbox-sizing: border-box\nborder-bottom: 1px solid rgba(20, 40, 70, 0.08)\noverflow: hidden"
           },
-          "x": 74.8,
-          "y": 22.8,
+          "x": 5.4,
+          "y": 23.2,
           "percentage": -1,
-          "id": "7",
+          "id": "8",
           "canvas": "0",
-          "order": 3,
+          "order": 4,
           "valid": 1
         },
         {
           "type": "ATTRIBUTE WRITER DROPDOWN",
-          "width": 42.4,
+          "width": 42.0,
           "height": 11.8,
           "inputs": {
             "attribute": {
@@ -237,24 +261,24 @@
             "showTangoDB": false,
             "showAttribute": "None",
             "textColor": "#1a1a1a",
-            "backgroundColor": "#ffffff",
+            "backgroundColor": "transparent",
             "size": 1,
             "font": "Helvetica",
             "dropdownButtonCss": "",
             "submitButtonCss": "",
-            "customCss": "padding: 0 10px\nbox-sizing: border-box"
+            "customCss": "padding: 0 10px\nbox-sizing: border-box\nborder-bottom: 1px solid rgba(20, 40, 70, 0.08)"
           },
-          "x": 74.8,
-          "y": 26.6,
+          "x": 5.4,
+          "y": 27.0,
           "percentage": -1,
-          "id": "8",
+          "id": "9",
           "canvas": "0",
-          "order": 4,
+          "order": 5,
           "valid": 1
         },
         {
           "type": "ATTRIBUTE_DISPLAY",
-          "width": 42.4,
+          "width": 42.0,
           "height": 3.8,
           "inputs": {
             "attribute": {
@@ -275,22 +299,22 @@
             "showEnumLabels": true,
             "showAttrQuality": false,
             "textColor": "#1a1a1a",
-            "backgroundColor": "#ffffff",
+            "backgroundColor": "transparent",
             "size": 1,
             "font": "Helvetica",
-            "widgetCss": "padding: 0 10px\nbox-sizing: border-box\noverflow: hidden"
+            "widgetCss": "padding: 0 10px\nbox-sizing: border-box\nborder-bottom: 1px solid rgba(20, 40, 70, 0.08)\noverflow: hidden"
           },
-          "x": 74.8,
-          "y": 38.4,
+          "x": 5.4,
+          "y": 38.8,
           "percentage": -1,
-          "id": "9",
+          "id": "10",
           "canvas": "0",
-          "order": 5,
+          "order": 6,
           "valid": 1
         },
         {
           "type": "ATTRIBUTE WRITER DROPDOWN",
-          "width": 42.4,
+          "width": 42.0,
           "height": 15.0,
           "inputs": {
             "attribute": {
@@ -323,43 +347,15 @@
             "showTangoDB": false,
             "showAttribute": "None",
             "textColor": "#1a1a1a",
-            "backgroundColor": "#ffffff",
+            "backgroundColor": "transparent",
             "size": 1,
             "font": "Helvetica",
             "dropdownButtonCss": "",
             "submitButtonCss": "",
-            "customCss": "padding: 0 10px\nbox-sizing: border-box"
+            "customCss": "padding: 0 10px\nbox-sizing: border-box\nborder-bottom: 1px solid rgba(20, 40, 70, 0.08)"
           },
-          "x": 74.8,
-          "y": 42.2,
-          "percentage": -1,
-          "id": "10",
-          "canvas": "0",
-          "order": 6,
-          "valid": 1
-        },
-        {
-          "type": "ATTRIBUTE_LOGGER",
-          "width": 42.4,
-          "height": 19.0,
-          "inputs": {
-            "attribute": {
-              "device": "taranta://low-sat/control/ci",
-              "attribute": "healthinfo",
-              "label": "Health Info"
-            },
-            "linesDisplayed": 4,
-            "showLastValue": false,
-            "showDevice": false,
-            "showTangoDB": false,
-            "showAttribute": "Label",
-            "showTime": true,
-            "OuterDivCSS": "padding: 0 10px\nbox-sizing: border-box",
-            "LastValueCSS": "",
-            "TableCSS": "font-size: 11px"
-          },
-          "x": 74.8,
-          "y": 57.2,
+          "x": 5.4,
+          "y": 42.6,
           "percentage": -1,
           "id": "11",
           "canvas": "0",
@@ -367,8 +363,36 @@
           "valid": 1
         },
         {
+          "type": "ATTRIBUTE_LOGGER",
+          "width": 42.0,
+          "height": 11.4,
+          "inputs": {
+            "attribute": {
+              "device": "taranta://low-sat/control/ci",
+              "attribute": "healthinfo",
+              "label": "Health Info"
+            },
+            "linesDisplayed": 3,
+            "showLastValue": false,
+            "showDevice": false,
+            "showTangoDB": false,
+            "showAttribute": "Label",
+            "showTime": true,
+            "OuterDivCSS": "padding: 0 10px\nbox-sizing: border-box\nborder-bottom: 1px solid rgba(20, 40, 70, 0.08)",
+            "LastValueCSS": "",
+            "TableCSS": "font-size: 11px"
+          },
+          "x": 5.4,
+          "y": 57.6,
+          "percentage": -1,
+          "id": "12",
+          "canvas": "0",
+          "order": 8,
+          "valid": 1
+        },
+        {
           "type": "ATTRIBUTE_DISPLAY",
-          "width": 42.4,
+          "width": 42.0,
           "height": 3.8,
           "inputs": {
             "attribute": {
@@ -389,22 +413,22 @@
             "showEnumLabels": true,
             "showAttrQuality": false,
             "textColor": "#1a1a1a",
-            "backgroundColor": "#ffffff",
+            "backgroundColor": "transparent",
             "size": 1,
             "font": "Helvetica",
-            "widgetCss": "padding: 0 10px\nbox-sizing: border-box\noverflow: hidden"
+            "widgetCss": "padding: 0 10px\nbox-sizing: border-box\nborder-bottom: 1px solid rgba(20, 40, 70, 0.08)\noverflow: hidden"
           },
-          "x": 74.8,
-          "y": 76.2,
+          "x": 5.4,
+          "y": 69.0,
           "percentage": -1,
-          "id": "12",
+          "id": "13",
           "canvas": "0",
-          "order": 8,
+          "order": 9,
           "valid": 1
         },
         {
           "type": "ATTRIBUTE_DISPLAY",
-          "width": 42.4,
+          "width": 42.0,
           "height": 7.6,
           "inputs": {
             "attribute": {
@@ -425,22 +449,22 @@
             "showEnumLabels": true,
             "showAttrQuality": false,
             "textColor": "#1a1a1a",
-            "backgroundColor": "#ffffff",
+            "backgroundColor": "transparent",
             "size": 1,
             "font": "Helvetica",
-            "widgetCss": "padding: 0 10px\nbox-sizing: border-box\noverflow: hidden"
+            "widgetCss": "padding: 0 10px\nbox-sizing: border-box\nborder-bottom: 1px solid rgba(20, 40, 70, 0.08)\noverflow: hidden"
           },
-          "x": 74.8,
-          "y": 80.0,
+          "x": 5.4,
+          "y": 72.8,
           "percentage": -1,
-          "id": "13",
+          "id": "14",
           "canvas": "0",
-          "order": 9,
+          "order": 10,
           "valid": 1
         },
         {
           "type": "ATTRIBUTE_DISPLAY",
-          "width": 42.4,
+          "width": 42.0,
           "height": 3.8,
           "inputs": {
             "attribute": {
@@ -461,23 +485,23 @@
             "showEnumLabels": true,
             "showAttrQuality": false,
             "textColor": "#1a1a1a",
-            "backgroundColor": "#ffffff",
+            "backgroundColor": "transparent",
             "size": 1,
             "font": "Helvetica",
-            "widgetCss": "padding: 0 10px\nbox-sizing: border-box\noverflow: hidden"
+            "widgetCss": "padding: 0 10px\nbox-sizing: border-box\nborder-bottom: 1px solid rgba(20, 40, 70, 0.08)\noverflow: hidden"
           },
-          "x": 74.8,
-          "y": 87.6,
+          "x": 5.4,
+          "y": 80.4,
           "percentage": -1,
-          "id": "14",
+          "id": "15",
           "canvas": "0",
-          "order": 10,
+          "order": 11,
           "valid": 1
         },
         {
           "type": "ATTRIBUTE WRITER DROPDOWN",
-          "width": 42.4,
-          "height": 24.6,
+          "width": 42.0,
+          "height": 21.4,
           "inputs": {
             "attribute": {
               "device": "taranta://low-sat/control/ci",
@@ -521,23 +545,23 @@
             "showTangoDB": false,
             "showAttribute": "None",
             "textColor": "#1a1a1a",
-            "backgroundColor": "#ffffff",
+            "backgroundColor": "transparent",
             "size": 1,
             "font": "Helvetica",
             "dropdownButtonCss": "",
             "submitButtonCss": "",
-            "customCss": "padding: 0 10px\nbox-sizing: border-box"
+            "customCss": "padding: 0 10px\nbox-sizing: border-box\nborder-bottom: 1px solid rgba(20, 40, 70, 0.08)"
           },
-          "x": 74.8,
-          "y": 91.4,
+          "x": 5.4,
+          "y": 84.2,
           "percentage": -1,
-          "id": "15",
+          "id": "16",
           "canvas": "0",
-          "order": 11,
+          "order": 12,
           "valid": 1
         }
       ],
-      "x": 74.0,
+      "x": 4.4,
       "y": 7.6,
       "id": "3",
       "canvas": "0",
@@ -547,27 +571,51 @@
     {
       "type": "BOX",
       "width": 44.0,
-      "height": 13.6,
+      "height": 100.0,
       "inputs": {
-        "title": "Commands",
-        "bigWidget": 5,
+        "title": "",
+        "bigWidget": 3,
         "smallWidget": 1,
         "textColor": "#1a1a1a",
-        "backgroundColor": "#ffffff",
-        "borderColor": "#ffffff",
-        "borderWidth": 8,
+        "backgroundColor": "#fdf3ee",
+        "borderColor": "#fdf3ee",
+        "borderWidth": 10,
         "borderStyle": "solid",
         "textSize": 1,
         "fontFamily": "Helvetica",
         "layout": "vertical",
         "alignment": "Left",
-        "padding": 0.25,
-        "customCss": "outline: 1px solid #c3cad4\noutline-offset: -1px\nfont-weight: bold"
+        "padding": 0,
+        "customCss": "outline: 2px solid #c2410c33\noutline-offset: -2px\nborder-radius: 8px"
       },
       "innerWidgets": [
         {
+          "type": "LABEL",
+          "width": 42.0,
+          "height": 3.2,
+          "inputs": {
+            "text": "Commands",
+            "textColor": "#ffffff",
+            "backgroundColor": "#c2410c",
+            "borderWidth": 0,
+            "borderColor": "#000000",
+            "font": "Helvetica",
+            "automaticResize": "Disabled",
+            "size": 1.05,
+            "linkTo": "",
+            "customCss": "font-family: \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, sans-serif\nfont-weight: 600\nletter-spacing: 0.02em\npadding: 0 10px\nbox-sizing: border-box\nborder-radius: 4px\ndisplay: flex\nalign-items: center"
+          },
+          "x": 51.8,
+          "y": 8.6,
+          "percentage": -1,
+          "id": "18",
+          "canvas": "0",
+          "order": 0,
+          "valid": 1
+        },
+        {
           "type": "COMMAND",
-          "width": 42.4,
+          "width": 42.0,
           "height": 7.6,
           "inputs": {
             "title": "",
@@ -590,24 +638,24 @@
             "alignButtonRight": true,
             "placeholder": "intype",
             "textColor": "#000000",
-            "backgroundColor": "#ffffff",
+            "backgroundColor": "transparent",
             "size": 1,
             "font": "Helvetica",
             "btnCss": "",
-            "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
+            "widgetCss": "padding: 0 10px\nbox-sizing: border-box\nborder-bottom: 1px solid rgba(20, 40, 70, 0.08)"
           },
-          "x": 27.8,
-          "y": 11.4,
+          "x": 51.8,
+          "y": 11.8,
           "percentage": -1,
-          "id": "17",
+          "id": "19",
           "canvas": "0",
-          "order": 0,
+          "order": 1,
           "valid": 1
         }
       ],
-      "x": 27.0,
+      "x": 50.8,
       "y": 7.6,
-      "id": "16",
+      "id": "17",
       "canvas": "0",
       "order": 3,
       "valid": 1
@@ -615,27 +663,51 @@
     {
       "type": "BOX",
       "width": 44.0,
-      "height": 13.6,
+      "height": 100.0,
       "inputs": {
-        "title": "Expert",
-        "bigWidget": 5,
+        "title": "",
+        "bigWidget": 3,
         "smallWidget": 1,
         "textColor": "#1a1a1a",
-        "backgroundColor": "#ffffff",
-        "borderColor": "#ffffff",
-        "borderWidth": 8,
+        "backgroundColor": "#f2f3f5",
+        "borderColor": "#f2f3f5",
+        "borderWidth": 10,
         "borderStyle": "solid",
         "textSize": 1,
         "fontFamily": "Helvetica",
         "layout": "vertical",
         "alignment": "Left",
-        "padding": 0.25,
-        "customCss": "outline: 1px solid #c3cad4\noutline-offset: -1px\nfont-weight: bold"
+        "padding": 0,
+        "customCss": "outline: 2px solid #37415133\noutline-offset: -2px\nborder-radius: 8px"
       },
       "innerWidgets": [
         {
+          "type": "LABEL",
+          "width": 42.0,
+          "height": 3.2,
+          "inputs": {
+            "text": "Expert",
+            "textColor": "#ffffff",
+            "backgroundColor": "#374151",
+            "borderWidth": 0,
+            "borderColor": "#000000",
+            "font": "Helvetica",
+            "automaticResize": "Disabled",
+            "size": 1.05,
+            "linkTo": "",
+            "customCss": "font-family: \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, sans-serif\nfont-weight: 600\nletter-spacing: 0.02em\npadding: 0 10px\nbox-sizing: border-box\nborder-radius: 4px\ndisplay: flex\nalign-items: center"
+          },
+          "x": 98.2,
+          "y": 8.6,
+          "percentage": -1,
+          "id": "21",
+          "canvas": "0",
+          "order": 0,
+          "valid": 1
+        },
+        {
           "type": "COMMAND",
-          "width": 42.4,
+          "width": 42.0,
           "height": 7.6,
           "inputs": {
             "title": "",
@@ -658,24 +730,24 @@
             "alignButtonRight": true,
             "placeholder": "intype",
             "textColor": "#000000",
-            "backgroundColor": "#ffffff",
+            "backgroundColor": "transparent",
             "size": 1,
             "font": "Helvetica",
             "btnCss": "",
-            "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
+            "widgetCss": "padding: 0 10px\nbox-sizing: border-box\nborder-bottom: 1px solid rgba(20, 40, 70, 0.08)"
           },
-          "x": 121.8,
-          "y": 11.4,
+          "x": 98.2,
+          "y": 11.8,
           "percentage": -1,
-          "id": "19",
+          "id": "22",
           "canvas": "0",
-          "order": 0,
+          "order": 1,
           "valid": 1
         }
       ],
-      "x": 121.0,
+      "x": 97.2,
       "y": 7.6,
-      "id": "18",
+      "id": "20",
       "canvas": "0",
       "order": 4,
       "valid": 1

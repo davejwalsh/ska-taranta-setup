@@ -208,6 +208,7 @@ library of whichever account you upload as, and survive tearing minikube down.
 | `ska-taranta discover` | Finds your devices and records their full interfaces in `taranta/devices.json`. `--live` queries running devices instead. |
 | `ska-taranta generate` | Writes the linked dashboards: `<project>-overview.wj`, one `<project>-subsystem-<name>.wj` per subsystem and one `.wj` per device. `--no-device-pages` skips the per-device pages; `-d REGEX` limits it to some devices; `--columns N` sets the layout width. |
 | `ska-taranta preview` | Draws wireframes of the dashboards into an HTML page, so you can check a layout without deploying. |
+| `ska-taranta attributes` | Lists every attribute of every device class: the section and widget(s) it gets, and for the ones left out, why. Use it to choose what to exclude. `-d REGEX` limits it; `--hidden` shows only what's left out. |
 | `ska-taranta upload` | Logs in to a running Taranta and creates or updates the dashboards (matched by name), printing a link to each. `--user`, `--token`: see [Which account](#which-account-do-dashboards-go-to). |
 | `ska-taranta setup` | `init`, `discover` and `generate` in one go. |
 
@@ -271,6 +272,18 @@ link. Every device with children gets a page holding itself and its children,
 except an "umbrella" device whose children all have pages of their own (the
 controller above), which goes on the overview. Define them yourself with
 `[[tool.ska-taranta-setup.subsystems]]` (see below).
+
+**Look and layout.** Every page sits on one grid (`columns` columns of
+`section_width_px`), centred on the screen. Each section is a box with a
+coloured heading strip and a tint of the same colour: Device blue, Status
+green, Measurements purple, Settings amber, Commands orange, Expert grey,
+name families slate. Sections fill rows left to right, and the boxes in a
+row are stretched to the same height so they line up. Device and Status come
+first and Settings, Commands and Expert last; the rest are ordered by height,
+so sections sharing a row are of similar size. Trend plots go in a **Trends**
+area at the bottom of each device page, each two columns wide, rather than
+being squeezed into their sections (except for repeated blocks like ports,
+whose values and dials stay in their sections).
 
 On a subsystem page each device shows a **summary** by default: its state,
 health, status and mode controls, plus its most indicator-heavy sections
@@ -363,8 +376,16 @@ expert = true                   # include EXPERT attributes/commands
 plots = true                    # trend plots for physical quantities
 max_plots_per_section = 2
 dials = true                    # dials for bounded quantities
-exclude_attributes = ["loggingLevel", "net_wr1[0-5]_.*"]   # regexes, any case
+exclude_attributes = ["loggingLevel"]   # every class; regexes, any case
 exclude_commands = ["GetVersionInfo"]
+
+# Leave attributes / commands out for one device class only. See what each
+# class has, and where it goes, with `ska-taranta attributes`.
+[tool.ska-taranta-setup.generate.exclude_attributes_by_class]
+SatWhiteRabbit = ["net_wr1[0-5]_.*", "hdd.*"]
+
+[tool.ska-taranta-setup.generate.exclude_commands_by_class]
+SatUtc = ["ForceRollup"]
 
 # Force a widget for matching attributes (first match wins). Kinds: led,
 # display, dial, plot, writer, dropdown, switch, logger, spectrum, hide.
@@ -389,13 +410,29 @@ detail = "full"
 columns = 4
 section_width_px = 440
 row_px = 38
-gap_px = 30
+gap_px = 24
 dials_per_row = 3
-inset_px = 8                    # padding inside each box
+dial_px = 170                   # height of a row of dials
+plot_px = 320                   # trend plot height
+plot_span = 2                   # grid columns per trend plot
+inset_px = 10                   # padding inside each box
+heading_px = 32                 # section heading strip height
 header_gap_px = 20              # space under title bars
-screen_width_px = 1920          # pages are centred on this width; sections fill
-                                # the middle columns first and grow outwards
+screen_width_px = 1920          # pages are centred on this width
+menu_max_items = 5              # dropdown menu items to make room for
 ```
+
+### Choosing which attributes to show
+
+Everything is shown to begin with. To trim a dashboard:
+
+1. `uv run ska-taranta attributes -d <device or class>` lists each attribute,
+   its section and widget(s).
+2. Add the ones you don't want, as regexes, to
+   `exclude_attributes_by_class` (one class) or `exclude_attributes` (all).
+   To change a widget rather than hide it, use `generate.widgets`
+   (e.g. `"pwsl_temp" = "display"`, or `"hide"`).
+3. `uv run ska-taranta generate && make taranta-upload`.
 
 ## Development
 

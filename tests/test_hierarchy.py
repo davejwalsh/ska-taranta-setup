@@ -19,6 +19,12 @@ def _all(widgets):
         yield from _all(widget.get("innerWidgets", []))
 
 
+def _heading(box):
+    """A section box's name: the text of its heading strip (first child)."""
+    first = (box.get("innerWidgets") or [{}])[0]
+    return first.get("inputs", {}).get("text") if first.get("type") == "LABEL" else None
+
+
 def _devices(snapshot):
     return [d for d in snapshot.devices if d.interface]
 
@@ -101,16 +107,25 @@ def test_subsystem_page_has_status_bar_and_bands(tmp_path, sat_lmc_snapshot):
         "S", _devices(sat_lmc_snapshot), sat_lmc_snapshot, tmp_path, "taranta"
     )
     widgets = json.loads((tmp_path / "s-subsystem-utc.wj").read_text())["widget"]
-    titles = [x["inputs"].get("title") for x in widgets if x["type"] == "BOX"]
+    titles = [_heading(x) for x in widgets if x["type"] == "BOX"]
     assert titles[:3] == ["utc/ci", "endnode/ci-1", "grandmaster/1"]
     cells = [x for x in widgets if x["type"] == "BOX"][:3]
     assert len({c["height"] for c in cells}) == 1  # padded to the same height
+    # Cells sit on the grid: two per section column, left-justified.
+    xs = [c["x"] for c in cells]
+    assert xs[0] < xs[1] < xs[2]
     bands = [x["inputs"]["text"] for x in widgets if x["type"] == "LABEL"]
     assert [b.split()[0] for b in bands[1:]] == [
         "low-sat/utc/ci",
         "low-sat/endnode/ci-1",
         "low-sat/grandmaster/1",
     ]
+    # Each band starts with the device's (compact, blue) Device section.
+    device_boxes = [
+        x for x in widgets if x["type"] == "BOX" and _heading(x) == "Device"
+    ]
+    assert len(device_boxes) == 3
+    assert {x["inputs"]["backgroundColor"] for x in device_boxes} == {"#f1f5fa"}
     # Summary detail: the grandmaster's 16 NET WRn port sections stay on its page.
     assert not any(t and t.startswith("Net WR") for t in titles)
 
@@ -127,8 +142,13 @@ def test_full_detail_includes_everything(tmp_path, sat_lmc_snapshot):
         subsystems=specs,
     )
     widgets = json.loads((tmp_path / "s-subsystem-gm.wj").read_text())["widget"]
-    titles = [x["inputs"].get("title") for x in widgets if x["type"] == "BOX"]
-    assert sum(1 for t in titles if t and t.startswith("Net WR")) == 16
+    titles = [_heading(x) for x in widgets if x["type"] == "BOX"]
+    sections = [t for t in titles if t and " · " not in t]
+    trends = [t for t in titles if t and " · " in t]
+    assert sum(1 for t in sections if t.startswith("Net WR")) == 16
+    # Full detail includes trend plots, but not one per repeated port block.
+    assert trends
+    assert not any(t.startswith("Net WR") for t in trends)
 
 
 def test_no_device_pages(tmp_path, sat_lmc_snapshot):
@@ -262,3 +282,34 @@ def test_link_target_is_json(tmp_path, sat_lmc_snapshot):
                 target = json.loads(x["inputs"]["DefaultDashboard"])
                 assert set(target) == {"name", "id"}
                 assert x["inputs"]["HideDropdown"] is True
+
+
+def test_exclude_attributes_by_class(tmp_path):
+    """Per-class excludes remove attributes from dashboards and the listing."""
+    from click.testing import CliRunner
+
+    from ska_taranta_setup.cli import main
+
+    (tmp_path / "pyproject.toml").write_text(
+        '[project]\nname = "p"\n'
+        "[tool.ska-taranta-setup.generate.exclude_attributes_by_class]\n"
+        'SatWhiteRabbit = ["hdd.*", "net_wr_sfp_.*"]\n'
+    )
+    (tmp_path / "taranta").mkdir()
+    fixture = Path(__file__).parent / "fixtures" / "sat-lmc-devices.json"
+    (tmp_path / "taranta" / "devices.json").write_text(fixture.read_text())
+    runner = CliRunner()
+
+    listing = runner.invoke(main, ["-C", str(tmp_path), "attributes", "-d", "endnode"])
+    assert listing.exit_code == 0, listing.output
+    assert "hdd1_free" in listing.output
+    assert 'exclude_attributes_by_class["SatWhiteRabbit"]' in listing.output
+
+    result = runner.invoke(main, ["-C", str(tmp_path), "generate"])
+    assert result.exit_code == 0, result.output
+    page = (tmp_path / "dashboards" / "p-low-sat-endnode-ci-1.wj").read_text()
+    assert "hdd1_free" not in page and "net_wr_sfp_temp" not in page
+    assert "net_wr_status" in page  # other NET attributes stay
+    # Other classes are untouched.
+    utc = (tmp_path / "dashboards" / "p-low-sat-utc-ci.wj").read_text()
+    assert "healthstate" in utc
