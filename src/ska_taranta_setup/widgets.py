@@ -156,6 +156,7 @@ def heading(text: str, kind: str = "family") -> dict[str, Any]:
             border_radius="4px",
             display="flex",
             align_items="center",
+            white_space="nowrap",
         ),
     )
 
@@ -364,22 +365,52 @@ def led(
     )
 
 
+#: Layout hint (stripped before saving): the caption shown above a dial.
+CAPTION = "_caption"
+
+
 def dial(
     device: str, attr: AttributeInfo, text: str, low: float, high: float
 ) -> dict[str, Any]:
-    """A gauge for a bounded physical quantity."""
-    return widget(
+    """A gauge for a bounded physical quantity, captioned with name and unit."""
+    result = widget(
         "ATTRIBUTE_DIAL",
         {
             "attribute": attribute_ref(device, attr, text),
             "min": low,
             "max": high,
-            "label": "attribute",
+            "label": "",  # the caption above names it
             "showWriteValue": False,
             "showTangoDB": False,
             "widgetCss": "",
         },
     )
+    unit = attr.unit.strip()
+    result[CAPTION] = f"{text} ({unit})" if unit else text
+    return result
+
+
+def caption(text: str) -> dict[str, Any]:
+    """A gauge's title, centred above it."""
+    return label(
+        text,
+        size=0.95,
+        background=CLEAR,
+        colour="#1a1a1a",
+        style=css(
+            font_family=HEADING_FONT,
+            font_weight="600",
+            display="flex",
+            align_items="center",
+            justify_content="center",
+            white_space="nowrap",
+        ),
+    )
+
+
+def spacer() -> dict[str, Any]:
+    """Empty space in a row."""
+    return label("", background=CLEAR)
 
 
 #: Layout hint (stripped before saving): extra rows of height a widget needs

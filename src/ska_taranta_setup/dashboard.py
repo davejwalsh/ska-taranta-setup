@@ -63,9 +63,13 @@ class LayoutOptions:
     header_px: float = 56
     #: Kept for compatibility; titles are heading strips now.
     title_padding: float = 0.25
-    dials_per_row: int = 3
-    #: Height of a row of dials.
-    dial_px: float = 170
+    #: Gauges per row, and their size (two in a row, or one on its own).
+    dials_per_row: int = 2
+    dial_px: float = 180
+    dial_alone_px: float = 220
+    #: Gauge card: caption height and the padding round the dial.
+    caption_px: float = 24
+    card_inset_px: int = 6
     #: Height of a section's heading strip.
     heading_px: float = 32
     #: Trend plots: height, and how many grid columns each one spans.
@@ -160,8 +164,10 @@ class LayoutOptions:
         return round(content + self.margin + 2 * self.inset, 2)
 
 
-#: Taranta's "custom height" marker for a BOX child (shared/utils/canvas.js).
+#: Taranta's "custom height" / "custom width" markers for a BOX child
+#: (shared/utils/canvas.js).
 CUSTOM_HEIGHT = -1
+CUSTOM_WIDTH = -2
 #: Layout hint (stripped before saving): a widget's height in pixels.
 PX = "_px"
 
@@ -183,17 +189,50 @@ def _heading(text: str, kind: str, opts: LayoutOptions) -> dict[str, Any]:
     return strip
 
 
+def _gauge_card(
+    dial: dict[str, Any], size: float, opts: LayoutOptions
+) -> dict[str, Any]:
+    """A dial in a small white card, captioned with its name and unit."""
+    title = w.caption(dial.pop(w.CAPTION, ""))
+    title[PX] = opts.caption_px
+    dial[PX] = size
+    # No card background: Taranta paints only a sliver of a box nested in a
+    # horizontal row, so the caption and dial sit on the section's tint.
+    card = w.box("", [title, dial], inset=opts.card_inset_px, frame=False)
+    card[PX] = opts.caption_px + size + 2 * opts.card_inset_px + opts.margin_px
+    card["width"] = opts.units(size + 2 * opts.card_inset_px)
+    return card
+
+
 def _dial_rows(section: Section, opts: LayoutOptions) -> list[dict[str, Any]]:
+    """
+    Gauges in rows of cards, centred, with even space round each card.
+
+    Each card is exactly as wide as its dial (Taranta draws a dial as big as
+    the smaller of its width and height, from its top-left corner), so the
+    dial is centred and never touches the card's edge or its neighbours.
+    """
     rows = []
+    inner_width = opts.section_width_px - 2 * opts.inset_px
     for start in range(0, len(section.dials), opts.dials_per_row):
-        row = w.box(
-            "",
-            section.dials[start : start + opts.dials_per_row],
-            layout="horizontal",
-            inset=0,
-            frame=False,
-        )
-        row[PX] = opts.dial_px
+        dials = section.dials[start : start + opts.dials_per_row]
+        size = opts.dial_alone_px if len(dials) == 1 else opts.dial_px
+        card_px = size + 2 * opts.card_inset_px
+        # Shrink if the cards (plus a minimum gap) wouldn't fit.
+        if len(dials) * card_px + (len(dials) + 1) * 8 > inner_width:
+            card_px = (inner_width - (len(dials) + 1) * 8) / len(dials)
+            size = card_px - 2 * opts.card_inset_px
+        gap = (inner_width - len(dials) * card_px) / (len(dials) + 1)
+        children: list[dict[str, Any]] = []
+        for dial in dials:
+            space = w.spacer()
+            space["width"] = opts.units(gap)
+            children += [space, _gauge_card(dial, size, opts)]
+        end = w.spacer()
+        end["width"] = opts.units(gap)
+        children.append(end)
+        row = w.box("", children, layout="horizontal", inset=0, frame=False)
+        row[PX] = max(c.get(PX, 0) for c in children)
         rows.append(row)
     return rows
 
@@ -287,6 +326,17 @@ def _position_children(box: dict[str, Any], opts: LayoutOptions) -> None:
             child["percentage"] = CUSTOM_HEIGHT
             y += child["height"]
             _position_children(child, opts)
+    elif all("width" in child for child in children):
+        # Children with their own widths (gauge rows): Taranta's custom width.
+        x = box["x"] + border
+        for child in children:
+            child["x"] = round(x, 2)
+            child["y"] = round(box["y"] + border, 2)
+            child["width"] = round(child["width"], 2)
+            child["height"] = round(box["height"] - 2 * border, 2)
+            child["percentage"] = CUSTOM_WIDTH
+            x += child["width"]
+            _position_children(child, opts)
     else:
         width = (box["width"] - 2 * border) / len(children)
         # Round the edges, not the widths, so neighbours tile exactly.
@@ -348,7 +398,7 @@ def _finalise(widgets_: list[dict[str, Any]]) -> list[dict[str, Any]]:
         widget["canvas"] = "0"
         widget["order"] = order
         widget["valid"] = 1
-        for hint in (w.MENU_ROWS, w.ROWS, PX):
+        for hint in (w.MENU_ROWS, w.ROWS, PX, w.CAPTION):
             widget.pop(hint, None)
         for i, child in enumerate(widget.get("innerWidgets", [])):
             visit(child, i)
@@ -481,6 +531,25 @@ def short_name(trl: str) -> str:
     return trl.split("/", 1)[-1]
 
 
+def short_names(trls: list[str]) -> dict[str, str]:
+    """
+    The shortest distinct names for some devices.
+
+    ``member`` when they all share a domain and family (``s1`` .. ``s5`` for
+    ``ska-mid/weather-monitoring/s*``), otherwise ``family/member``.
+
+    >>> short_names(["a/wms/s1", "a/wms/s2"])
+    {'a/wms/s1': 's1', 'a/wms/s2': 's2'}
+    >>> short_names(["a/utc/ci", "a/grandmaster/1"])
+    {'a/utc/ci': 'utc/ci', 'a/grandmaster/1': 'grandmaster/1'}
+    """
+    heads = {trl.rsplit("/", 1)[0] for trl in trls}
+    members = [trl.rsplit("/", 1)[-1] for trl in trls]
+    if len(heads) == 1 and len(set(members)) == len(members):
+        return dict(zip(trls, members, strict=True))
+    return {trl: short_name(trl) for trl in trls}
+
+
 # --------------------------------------------------------------------------
 # Building blocks
 # --------------------------------------------------------------------------
@@ -532,13 +601,14 @@ def status_bar(
             contents.append((device, status_widgets(trl, interface, ctx.options)))
     if not contents:
         return []
+    names = short_names([device.trl for device, _ in contents])
     per_row = ctx.options.status_bar_columns or 2 * opts.columns
     width = (opts.section_width - opts.gap) / 2
     slots = max(len(widgets_) for _, widgets_ in contents)
     cells = []
     for i, (device, widgets_) in enumerate(contents):
         blank = [w.label("", background=w.CLEAR) for _ in range(slots - len(widgets_))]
-        cell = themed_box(short_name(device.trl), "cell", widgets_ + blank, opts)
+        cell = themed_box(names[device.trl], "cell", widgets_ + blank, opts)
         row, col = divmod(i, per_row)
         _place(
             cell,

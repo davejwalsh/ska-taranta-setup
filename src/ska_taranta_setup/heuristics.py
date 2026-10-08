@@ -244,6 +244,8 @@ def dial_range(attr: AttributeInfo, kind: str) -> tuple[float, float] | None:
     """
     if kind == "Direction":
         return (0.0, 360.0)
+    if kind in ("Humidity", "Load") and _real_limit(attr.max_value) is None:
+        return (0.0, 100.0)  # percentages
     low = _real_limit(attr.min_value)
     high = _real_limit(attr.max_value)
     lo_alarm, hi_alarm = attr.min_alarm, attr.max_alarm
