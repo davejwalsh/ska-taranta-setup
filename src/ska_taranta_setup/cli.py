@@ -203,6 +203,10 @@ def _generate(
     except (OptionsError, TypeError) as exc:
         raise click.ClickException(str(exc)) from exc
     opts.tile_size = config.layout.get("tile_size", config.tile_size)
+    if opts.logo:
+        opts.logo = str((config.root / opts.logo).resolve())
+        if not Path(opts.logo).is_file():
+            raise click.ClickException(f"layout.logo: {opts.logo} not found")
     opts.columns = columns or config.layout.get("columns", config.columns)
     return write_dashboards(
         config.title,

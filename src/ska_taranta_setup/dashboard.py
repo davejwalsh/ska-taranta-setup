@@ -16,6 +16,7 @@ from __future__ import annotations
 import json
 import re
 from dataclasses import dataclass
+from importlib import resources
 from itertools import count
 from pathlib import Path
 from typing import Any
@@ -83,6 +84,13 @@ class LayoutOptions:
     header_gap_px: float = 20
     #: Screen width the page is centred on.
     screen_width_px: float = 1920
+    #: The SKAO banner at the top of each page (logo, title, brand stripe).
+    banner: bool = True
+    #: Logo for the banner: an SVG/PNG/JPEG path (default: the SKAO mark).
+    logo: str = ""
+    logo_px: int = 34
+    banner_px: float = 58
+    stripe_px: float = 6
 
     def units(self, px: float) -> float:
         """Pixels to grid units."""
@@ -402,6 +410,64 @@ def header(
     return widgets_
 
 
+def logo_uri(opts: LayoutOptions) -> str:
+    """The banner logo as a data URI: ``opts.logo``, or the bundled SKAO mark."""
+    if opts.logo:
+        path = Path(opts.logo)
+        mime = {
+            ".svg": "image/svg+xml",
+            ".png": "image/png",
+            ".jpg": "image/jpeg",
+            ".jpeg": "image/jpeg",
+        }.get(path.suffix.lower(), "image/png")
+        return w.data_uri(path.read_bytes(), mime)
+    asset = resources.files("ska_taranta_setup.templates").joinpath("skao_logo.png")
+    return w.data_uri(asset.read_bytes(), "image/png")
+
+
+def page_header(
+    text: str, opts: LayoutOptions, links: list[tuple[str, str]] = ()
+) -> list[dict[str, Any]]:
+    """
+    The standard page header: the SKAO banner over the brand stripe.
+
+    The banner has the circular SKAO logo, the title in white on navy, and the
+    navigation buttons; the stripe is SKAO magenta fading to navy.
+
+    With ``banner = false`` it's a plain title bar.
+    """
+    if not opts.banner:
+        return header(text, opts, links)
+    top = opts.gap / 2
+    height = opts.units(opts.banner_px)
+    link_space = len(links) * (opts.link_width + opts.gap / 2)
+    title = w.banner(text, logo_uri(opts), opts.logo_px)
+    widgets_ = [_place(title, opts.left, top, opts.page_width, height)]
+    # Buttons sit inside the right end of the banner.
+    x = opts.left + opts.page_width - link_space
+    button_height = height * 0.6
+    for name, label in links:
+        link = w.dashboard_link(name, label)
+        widgets_.append(
+            _place(
+                link,
+                x,
+                top + (height - button_height) / 2,
+                opts.link_width,
+                button_height,
+            )
+        )
+        x += opts.link_width + opts.gap / 2
+    stripe = w.brand_stripe()
+    widgets_.insert(
+        1,
+        _place(
+            stripe, opts.left, top + height, opts.page_width, opts.units(opts.stripe_px)
+        ),
+    )
+    return widgets_
+
+
 def full_trl(tango_db: str, trl: str) -> str:
     """The device name as Taranta stores it, e.g. ``taranta://low-sat/control/ci``."""
     return f"{tango_db}://{trl}" if tango_db else trl
@@ -562,7 +628,9 @@ def device_dashboard(ctx: Context, device: DeviceInstance) -> dict[str, Any] | N
     subsystem = ctx.hierarchy.subsystem_of(device)
     if subsystem is not None:
         links.append((ctx.name(subsystem.name), subsystem.name))
-    top = header(f"{ctx.title} — {device.trl}  ·  {device.class_name}", opts, links)
+    top = page_header(
+        f"{ctx.title} — {device.trl}  ·  {device.class_name}", opts, links
+    )
     widgets_ = top + grid(arrange(sections, opts), opts, bottom(top) + opts.header_gap)
     widgets_ += _trends(ctx, device, sections, bottom(widgets_) + opts.gap)
     return dashboard_file(ctx.name(device.trl), widgets_)
@@ -571,7 +639,7 @@ def device_dashboard(ctx: Context, device: DeviceInstance) -> dict[str, Any] | N
 def subsystem_dashboard(ctx: Context, subsystem: Subsystem) -> dict[str, Any]:
     """A status bar for the subsystem, then a band per device."""
     opts = ctx.layout
-    widgets_ = header(
+    widgets_ = page_header(
         f"{ctx.title} — {subsystem.name}", opts, [(ctx.overview_name, "Overview")]
     )
     widgets_ += status_bar(ctx, subsystem.devices, bottom(widgets_) + opts.header_gap)
@@ -592,7 +660,7 @@ def subsystem_dashboard(ctx: Context, subsystem: Subsystem) -> dict[str, Any]:
 def overview_dashboard(ctx: Context, devices: list[DeviceInstance]) -> dict[str, Any]:
     """A status bar for everything, then a tile per subsystem and device."""
     opts = ctx.layout
-    widgets_ = header(f"{ctx.title} — Overview", opts)
+    widgets_ = page_header(f"{ctx.title} — Overview", opts)
     widgets_ += status_bar(ctx, devices, bottom(widgets_) + opts.header_gap)
 
     def links(targets: list[tuple[str, str]]) -> list[dict[str, Any]]:

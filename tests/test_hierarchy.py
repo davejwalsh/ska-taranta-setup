@@ -11,6 +11,7 @@ from ska_taranta_setup.heuristics import Section, device_sections, place_attribu
 from ska_taranta_setup.hierarchy import build_hierarchy, device_references
 from ska_taranta_setup.model import AttributeInfo, DeviceInstance
 from ska_taranta_setup.options import GenerateOptions, OptionsError, SubsystemSpec
+from ska_taranta_setup.widgets import THEMES
 
 
 def _all(widgets):
@@ -114,7 +115,11 @@ def test_subsystem_page_has_status_bar_and_bands(tmp_path, sat_lmc_snapshot):
     # Cells sit on the grid: two per section column, left-justified.
     xs = [c["x"] for c in cells]
     assert xs[0] < xs[1] < xs[2]
-    bands = [x["inputs"]["text"] for x in widgets if x["type"] == "LABEL"]
+    bands = [
+        x["inputs"]["text"]
+        for x in widgets
+        if x["type"] == "LABEL" and x["inputs"]["text"]
+    ]
     assert [b.split()[0] for b in bands[1:]] == [
         "low-sat/utc/ci",
         "low-sat/endnode/ci-1",
@@ -125,7 +130,8 @@ def test_subsystem_page_has_status_bar_and_bands(tmp_path, sat_lmc_snapshot):
         x for x in widgets if x["type"] == "BOX" and _heading(x) == "Device"
     ]
     assert len(device_boxes) == 3
-    assert {x["inputs"]["backgroundColor"] for x in device_boxes} == {"#f1f5fa"}
+    device_tint = THEMES["device"][1]
+    assert {x["inputs"]["backgroundColor"] for x in device_boxes} == {device_tint}
     # Summary detail: the grandmaster's 16 NET WRn port sections stay on its page.
     assert not any(t and t.startswith("Net WR") for t in titles)
 

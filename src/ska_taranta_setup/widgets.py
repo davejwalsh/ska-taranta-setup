@@ -47,26 +47,34 @@ def css(**declarations: str) -> str:
     return "\n".join(f"{k.replace('_', '-')}: {v}" for k, v in declarations.items())
 
 
-#: Fonts: headings in a modern sans-serif, values in Taranta's Helvetica.
-HEADING_FONT = '"Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif'
+#: SKAO brand colours (from ska-ser-sphinx-theme, which follows the SKA brand
+#: guidelines).
+SKAO_NAVY = "#070068"  # Primary Blueshift Navy, rgb(7, 0, 104)
+SKAO_MAGENTA = "#e40769"  # Primary Redshift Magenta, rgb(228, 7, 105)
+SKAO_MAGENTA_ON_NAVY = "#f81b7f"  # Magenta variant with contrast on navy
+SKAO_GREY = "#c2c7ca"  # Tech 2 accent 5, rgb(194, 199, 202)
+
+#: Fonts: headings in the SKA brand font (Noto Sans) where installed, falling
+#: back to common sans-serifs; values in Taranta's Helvetica.
+HEADING_FONT = '"Noto Sans", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif'
 
 #: Section colour themes: (accent for the heading strip and frame, tint for
 #: the section's background).
 THEMES: dict[str, tuple[str, str]] = {
-    "device": ("#2f5d8a", "#f1f5fa"),
+    "device": (SKAO_NAVY, "#f1f2f9"),
     "status": ("#2e7d4f", "#f0f7f2"),
     "family": ("#4a5a6a", "#f4f6f8"),
     "measurements": ("#6a4c93", "#f6f2fa"),
     "information": ("#6b7280", "#f6f7f8"),
     "settings": ("#b7791f", "#fcf6ec"),
-    "commands": ("#c2410c", "#fdf3ee"),
+    "commands": ("#5b6abf", "#f3f4fb"),  # neutral indigo: not a warning colour
     "expert": ("#374151", "#f2f3f5"),
     "trends": ("#1f6f8b", "#f0f7fa"),
-    "subsystem": ("#2f5d8a", "#f1f5fa"),
+    "subsystem": (SKAO_NAVY, "#f1f2f9"),
     "cell": ("#4a5a6a", "#f7f9fb"),
 }
-PAGE_TITLE = ("#1f3a5f", "#ffffff")  # background, text
-BAND_TITLE = ("#dde6f0", "#1f3a5f")
+PAGE_TITLE = (SKAO_NAVY, "#ffffff")  # background, text
+BAND_TITLE = ("#e6e8ef", SKAO_NAVY)
 
 #: Applied to every row widget: padding so labels and values don't touch the
 #: box edge, and a faint rule between rows so they read as a table.
@@ -148,6 +156,54 @@ def heading(text: str, kind: str = "family") -> dict[str, Any]:
             border_radius="4px",
             display="flex",
             align_items="center",
+        ),
+    )
+
+
+def data_uri(data: bytes, mime: str) -> str:
+    """
+    An image as a data URI that survives Taranta's CSS parser.
+
+    The parser drops the first ``;`` in a value, which breaks ``;base64``
+    URIs, so every byte other than letters and digits is percent-encoded.
+    """
+    from urllib.parse import quote
+
+    return f"data:{mime},{quote(data, safe='')}"
+
+
+def banner(text: str, logo: str, logo_px: int, size: float = 1.5) -> dict[str, Any]:
+    """The SKAO page banner: logo on the left, title in white on navy."""
+    return label(
+        text,
+        size=size,
+        background=SKAO_NAVY,
+        colour="#ffffff",
+        style=css(
+            font_family=HEADING_FONT,
+            font_weight="600",
+            letter_spacing="0.01em",
+            padding=f"0 16px 0 {logo_px + 30}px",
+            box_sizing="border-box",
+            border_radius="8px 8px 0 0",
+            display="flex",
+            align_items="center",
+            background_image=f'url("{logo}")',
+            background_repeat="no-repeat",
+            background_position="16px center",
+            background_size=f"{logo_px}px {logo_px}px",
+        ),
+    )
+
+
+def brand_stripe() -> dict[str, Any]:
+    """The SKAO magenta-to-navy stripe under the banner."""
+    return label(
+        "",
+        background=SKAO_NAVY,
+        style=css(
+            background_image=f"linear-gradient(90deg, {SKAO_MAGENTA}, {SKAO_NAVY})",
+            border_radius="0 0 8px 8px",
         ),
     )
 
@@ -534,9 +590,9 @@ def dashboard_link(dashboard_name: str, text: str) -> dict[str, Any]:
                 height="100%",
                 font_weight="600",
                 font_family=HEADING_FONT,
-                color="#1f3a5f",
+                color=SKAO_NAVY,
                 background="#ffffff",
-                border="2px solid #1f3a5f",
+                border=f"2px solid {SKAO_MAGENTA}",
                 border_radius="6px",
             ),
             "CustomCss": css(padding="0 4px", box_sizing="border-box"),

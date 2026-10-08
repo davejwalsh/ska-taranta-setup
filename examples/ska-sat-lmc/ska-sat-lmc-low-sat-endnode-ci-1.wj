@@ -10,19 +10,19 @@
   "widget": [
     {
       "type": "LABEL",
-      "width": 146.8,
-      "height": 4.4,
+      "width": 183.2,
+      "height": 5.8,
       "inputs": {
         "text": "ska-sat-lmc — low-sat/endnode/ci-1  ·  SatWhiteRabbit",
         "textColor": "#ffffff",
-        "backgroundColor": "#1f3a5f",
+        "backgroundColor": "#070068",
         "borderWidth": 0,
         "borderColor": "#000000",
         "font": "Helvetica",
         "automaticResize": "Disabled",
         "size": 1.5,
         "linkTo": "",
-        "customCss": "font-family: \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, sans-serif\nfont-weight: 600\npadding: 0 16px\nbox-sizing: border-box\nborder-radius: 6px\ndisplay: flex\nalign-items: center"
+        "customCss": "font-family: \"Noto Sans\", \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, sans-serif\nfont-weight: 600\nletter-spacing: 0.01em\npadding: 0 16px 0 64px\nbox-sizing: border-box\nborder-radius: 8px 8px 0 0\ndisplay: flex\nalign-items: center\nbackground-image: url(\"data:image/png,%89PNG%0D%0A%1A%0A%00%00%00%0DIHDR%00%00%00%20%00%00%00%20%08%06%00%00%00szz%F4%00%00%05eIDATx%DA%D5%97kl%14U%14%C7%7F%B3S%DA%B2%05%0A%B5%A5%95%CA%A3%05%DAR%10lyI%0Aj%94%88%A0%D0%C4%F8%C9%F8%004%98%F8%C0%17%8F%AF~6%88%20%185%90%80%60%8C%891%A2%E9%07%05%A1%2A%06%13%85R%A0%94%B6%90n%0B%5D%28l%C1%DA%16vvg%E7%1E%3F%ECkfw%B6%01Cb%9C%E4%E6%EE%EC%BDs%EE%FF%9C%F3%3F%8F%0B%FF%F1%A3%DD%C9%E6Cs%DE%F4X0%29%8CT%1B%22%15%06Rh%00%21%91%40%10%E9%08%8B%B4F%E0%D2%7B-%9F%A8%BB%06%E0L%CD%3B%84%91%C9aae%08y%3D%24Ri%20%18%22%18%80%21%2A%3A%23%84D0%90s%86%C8%CE%10%D2%10%12%B9%B8%BBu%D7%B0%F2%F5%E1%16%DBk%DE%F5%02%AF%2A%B4O-x%D6%84B%13%88%24%86%D8~Cl%AD%C8%84%27%23Po%82%CC%2A%9A%7B%E6t%A0%29r%C7%00%BAk7%14%03_%5B%F0J%04%0A%9C%07%A7%1E%2A%98%E2%00%81%09%E3Lx%DCD%16T%14%D6%FCx%AE%EF%E4-%B7s%3Cn%7F%F6%D6nx%C8%03%C7%04%96%2A%D0%15%82%20%28%40%00e%1B%92%98%05%85%20%12%7B%17%10%D0%15%2C%B3%E0%D8%133%D6%D6%DD%16%80%BFj7%96x%D0%F6%00%E5%12%3B%40%1C%87%09n%FF%27G%12l%1C%88%82i%16%EC%7D%B8jM%D1%B0%00%86%E6n%F2j%1A_%08%94%DB5%8Ci%83%12I%CC%2A%05%84J%03%94%06d%9A%05%FB%17V%AD%1E%E9%0A%C0%98%BB%09%0D%D6%01%8F%88MK%E5%AA%256%97H%DA%9Ar%B1NL%CER%0B%5E%9AS%F9b%3A%00%0D%CA4x%2B%E6%B7%A4O3%08U%80%9E3%02-%3B%2B%E1w%E5%BA%CF%C1%1D%DD%12%DEV0%C9%0D%C0J%81%C9J%86%D7%22%3E%8F%185%92%7B%E7O%A7h%C6%C4%24%D0%D8%B7%DE%B1y%AE%BC%88%7D%5Bn%C1S%0E%00%D6%DC%CD%1E%D0%D6%3B%0E%92%B8%FF%9D%FE%D6%BD9%E8%DE%1C%22f%84%E9%2B%E6Q%B9b~%E2%90%DC1%5E%E6%D7%3FH%B677j%0Dq%82G%8B%EE%B3%E0%8D%B2%8A%17%3C%09%00%1A%94%01S3%11K%90%04%01E%83%F2%FA%85xK%C6QR3%95%29u%D5%E8%23%B3%29%AE%28e%D9%FAU%F8%2F%5C%A6%CF%DF%E7%2A%A7%E4%BEBD%D3PH%95%C0D%80%2C%A2%8B3Sc%3D%3E%18%A1%A3%8D%D0%91%9B%06%0A%214d%D0%F3%5B%2B%8FnYK%5E%F1XD%84%C5%EB%963eQ%15%3F%7C%DC%C0%C0%F5%C1%94HH%02%E9%B9%14HF%12T%03%DDq%0ET9%D9mcv%96%8E%96%9D%15%15%AAi%E4%14%8C%E6%9EY%93%C9%2B%19%87G%F7%A0g%E9%D4%BD%BC%0C%FF%B9K%5C%B9p%99%FE%40%7F%3A%F9b%AE%28%99PHvnv%CC%2ARi%B7%40Q%7C%A33%DB%09V0%8C%19%B1%18%FF%D8lJ%9F%5ED~%F5Dr%C6%E6%81%E6%ACc%0B%9EY%CC%EC%E5%F3%B8%7C%DE%CF%C1%2F%1B9v%A8%09%09%85%1D%CA%F8%FD%7D%18%B1l%29P%94%00%A0RL%1FE%9CL%ABc%1E%28%23%F0%7B%3BF%C4b%C2%F2Z%8A%17T%90%5B0%DA%01%60%E0Z%3F-G%5B8~%B0%89%96%13%1D%84%C2%A6%93C.%A9%DCn%81%BE%0C%89%03A%B8%F1%E7yL%84%CB%BF%B6%D0%D7u%95%CA%9B%21J%97%CC%24o%7C%3E%00%81%CE%5E%CE%1Ci%E6%C0%B6%03%B12-%19%C9l%E3E_2%0C%A1Me%C8%EDqWd%17%8Cbdi%21x4%7CGN%F1%CD%EA%AD%98%C1%10%C6%60%90%3D%EB%B6s%CD%D7K%F1%F4%09.a%EC%96W%04%81v%9B%0B8k%2F4i%A9W%C0%B8%3E%88%21%03%D1%C6%A3%B3%97%B0%EE%E1Fg%2F%86a2%10%18%E0x%C3%1F%E8%F9%DE%F4%1A%60%93a%07%01%B4%DA%5D%E0S%22%3E%81%B2%E1j%80%02%F0x%F0%8E%CF%27K%D7%E88%7C%8A%C1%9B%06%96RX%22%DC%BA1%E8p%9D%1B%90XDt%08%5CL%B8%60%F4%89%F7-%0Bv%24%C3%27%DD%87%09%21%1A%84%83a%FE%EE%E9%A3%ED%A7f%DA%1AO%A7%999%95C%A9%0Ai%B0%E3Z%C7~%E5%A8%05%11%E4%3B%05%97%92%C2%C4%B5%F6%5B%96%22%D8%3F%84%02%AEw_%A5%BF%F7F2%81I%26%0E9%92R%97%06%0Di%C5HAg%04%B6%2B%B0%9C%E4%91%0C%E5%18%2C%25%8EZ%91%9Ax%12DL%96nK%83m%02%5Di%00J%9B%B6%A0D%3ESp4%95%3C%F1%A2%94%A9%2C%A76%20%998%044%02%BB%FC%1D%FB%DD%3B%A2%F2%93%1F%0CE%90%E7%14t%A7%15%A3x%94%88%3B%88%0C%B1n_%F3%01%CFwu%EC%BB5lO8%F3%E4V%BF%25%B2V%A0%DBM%93%D4%DA%9F%B9%13%B2%01%11%7C%1A%AC9%DF%BE%AF%F7%B6%BA%E2y%CD%1F%1E%89%20u%0A~%96%18%27TZ%97%23%D8%EBG%06%ABX%02%87%3DP%D7%D2%FE%F9%2F%B7%DD%96%03%2Ci%DE%E67EV%2Ad%B3%82%1E7%12%2A%17s%DB%E6%8B%C0F%0F%AC%3A%D1%BE%F7%CA%BF%BE%9A%7D%3Bg%3Da%91%F20%D4%07%91%F5%21%91%29%A1%C4%D5L%08%8A%10%7DO%5C%CF%3A%0D%E4%A3%10%F2%BD%29%E2kl%DBs%F7.%A7%3B%EF%7FM%B7%90%F2%90%C8L%03%2A%0D%A4%C8%88%02%08%18B%5B%189k%22%BE%AFZw%5B%FC_%9E%7F%00F%8C5%D4o%C0y%8A%00%00%00%00IEND%AEB%60%82\")\nbackground-repeat: no-repeat\nbackground-position: 16px center\nbackground-size: 34px 34px"
       },
       "x": 4.4,
       "y": 1.2,
@@ -32,20 +32,23 @@
       "valid": 1
     },
     {
-      "type": "DASHLINK",
-      "width": 17.0,
-      "height": 4.4,
+      "type": "LABEL",
+      "width": 183.2,
+      "height": 0.6,
       "inputs": {
-        "DefaultDashboard": "{\"name\": \"ska-sat-lmc - Overview\", \"id\": \"\"}",
-        "HideDropdown": true,
-        "NewTab": false,
-        "ButtonText": "Overview",
-        "DropDownCss": "",
-        "ButtonCss": "width: 100%\nheight: 100%\nfont-weight: 600\nfont-family: \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, sans-serif\ncolor: #1f3a5f\nbackground: #ffffff\nborder: 2px solid #1f3a5f\nborder-radius: 6px",
-        "CustomCss": "padding: 0 4px\nbox-sizing: border-box"
+        "text": "",
+        "textColor": "#1a1a1a",
+        "backgroundColor": "#070068",
+        "borderWidth": 0,
+        "borderColor": "#000000",
+        "font": "Helvetica",
+        "automaticResize": "Disabled",
+        "size": 1.0,
+        "linkTo": "",
+        "customCss": "background-image: linear-gradient(90deg, #e40769, #070068)\nborder-radius: 0 0 8px 8px"
       },
-      "x": 152.4,
-      "y": 1.2,
+      "x": 4.4,
+      "y": 7.0,
       "id": "2",
       "canvas": "0",
       "order": 1,
@@ -54,21 +57,41 @@
     {
       "type": "DASHLINK",
       "width": 17.0,
-      "height": 4.4,
+      "height": 3.48,
+      "inputs": {
+        "DefaultDashboard": "{\"name\": \"ska-sat-lmc - Overview\", \"id\": \"\"}",
+        "HideDropdown": true,
+        "NewTab": false,
+        "ButtonText": "Overview",
+        "DropDownCss": "",
+        "ButtonCss": "width: 100%\nheight: 100%\nfont-weight: 600\nfont-family: \"Noto Sans\", \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, sans-serif\ncolor: #070068\nbackground: #ffffff\nborder: 2px solid #e40769\nborder-radius: 6px",
+        "CustomCss": "padding: 0 4px\nbox-sizing: border-box"
+      },
+      "x": 151.2,
+      "y": 2.36,
+      "id": "3",
+      "canvas": "0",
+      "order": 2,
+      "valid": 1
+    },
+    {
+      "type": "DASHLINK",
+      "width": 17.0,
+      "height": 3.48,
       "inputs": {
         "DefaultDashboard": "{\"name\": \"ska-sat-lmc - UTC\", \"id\": \"\"}",
         "HideDropdown": true,
         "NewTab": false,
         "ButtonText": "UTC",
         "DropDownCss": "",
-        "ButtonCss": "width: 100%\nheight: 100%\nfont-weight: 600\nfont-family: \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, sans-serif\ncolor: #1f3a5f\nbackground: #ffffff\nborder: 2px solid #1f3a5f\nborder-radius: 6px",
+        "ButtonCss": "width: 100%\nheight: 100%\nfont-weight: 600\nfont-family: \"Noto Sans\", \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, sans-serif\ncolor: #070068\nbackground: #ffffff\nborder: 2px solid #e40769\nborder-radius: 6px",
         "CustomCss": "padding: 0 4px\nbox-sizing: border-box"
       },
-      "x": 170.6,
-      "y": 1.2,
-      "id": "3",
+      "x": 169.4,
+      "y": 2.36,
+      "id": "4",
       "canvas": "0",
-      "order": 2,
+      "order": 3,
       "valid": 1
     },
     {
@@ -80,8 +103,8 @@
         "bigWidget": 3,
         "smallWidget": 1,
         "textColor": "#1a1a1a",
-        "backgroundColor": "#f1f5fa",
-        "borderColor": "#f1f5fa",
+        "backgroundColor": "#f1f2f9",
+        "borderColor": "#f1f2f9",
         "borderWidth": 10,
         "borderStyle": "solid",
         "textSize": 1,
@@ -89,7 +112,7 @@
         "layout": "vertical",
         "alignment": "Left",
         "padding": 0,
-        "customCss": "outline: 2px solid #2f5d8a33\noutline-offset: -2px\nborder-radius: 8px"
+        "customCss": "outline: 2px solid #07006833\noutline-offset: -2px\nborder-radius: 8px"
       },
       "innerWidgets": [
         {
@@ -99,19 +122,19 @@
           "inputs": {
             "text": "Device",
             "textColor": "#ffffff",
-            "backgroundColor": "#2f5d8a",
+            "backgroundColor": "#070068",
             "borderWidth": 0,
             "borderColor": "#000000",
             "font": "Helvetica",
             "automaticResize": "Disabled",
             "size": 1.05,
             "linkTo": "",
-            "customCss": "font-family: \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, sans-serif\nfont-weight: 600\nletter-spacing: 0.02em\npadding: 0 10px\nbox-sizing: border-box\nborder-radius: 4px\ndisplay: flex\nalign-items: center"
+            "customCss": "font-family: \"Noto Sans\", \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, sans-serif\nfont-weight: 600\nletter-spacing: 0.02em\npadding: 0 10px\nbox-sizing: border-box\nborder-radius: 4px\ndisplay: flex\nalign-items: center"
           },
           "x": 5.4,
-          "y": 8.6,
+          "y": 10.6,
           "percentage": -1,
-          "id": "5",
+          "id": "6",
           "canvas": "0",
           "order": 0,
           "valid": 1
@@ -139,9 +162,9 @@
             "widgetCss": "padding: 0 10px\nbox-sizing: border-box\nborder-bottom: 1px solid rgba(20, 40, 70, 0.08)"
           },
           "x": 5.4,
-          "y": 11.8,
+          "y": 13.8,
           "percentage": -1,
-          "id": "6",
+          "id": "7",
           "canvas": "0",
           "order": 1,
           "valid": 1
@@ -171,9 +194,9 @@
             "customCss": "padding: 0 10px\nbox-sizing: border-box\nborder-bottom: 1px solid rgba(20, 40, 70, 0.08)"
           },
           "x": 5.4,
-          "y": 15.6,
+          "y": 17.6,
           "percentage": -1,
-          "id": "7",
+          "id": "8",
           "canvas": "0",
           "order": 2,
           "valid": 1
@@ -207,9 +230,9 @@
             "widgetCss": "padding: 0 10px\nbox-sizing: border-box\nborder-bottom: 1px solid rgba(20, 40, 70, 0.08)\noverflow: hidden"
           },
           "x": 5.4,
-          "y": 19.4,
+          "y": 21.4,
           "percentage": -1,
-          "id": "8",
+          "id": "9",
           "canvas": "0",
           "order": 3,
           "valid": 1
@@ -243,9 +266,9 @@
             "widgetCss": "padding: 0 10px\nbox-sizing: border-box\nborder-bottom: 1px solid rgba(20, 40, 70, 0.08)\noverflow: hidden"
           },
           "x": 5.4,
-          "y": 23.2,
+          "y": 25.2,
           "percentage": -1,
-          "id": "9",
+          "id": "10",
           "canvas": "0",
           "order": 4,
           "valid": 1
@@ -289,9 +312,9 @@
             "customCss": "padding: 0 10px\nbox-sizing: border-box\nborder-bottom: 1px solid rgba(20, 40, 70, 0.08)"
           },
           "x": 5.4,
-          "y": 27.0,
+          "y": 29.0,
           "percentage": -1,
-          "id": "10",
+          "id": "11",
           "canvas": "0",
           "order": 5,
           "valid": 1
@@ -325,9 +348,9 @@
             "widgetCss": "padding: 0 10px\nbox-sizing: border-box\nborder-bottom: 1px solid rgba(20, 40, 70, 0.08)\noverflow: hidden"
           },
           "x": 5.4,
-          "y": 38.8,
+          "y": 40.8,
           "percentage": -1,
-          "id": "11",
+          "id": "12",
           "canvas": "0",
           "order": 6,
           "valid": 1
@@ -375,9 +398,9 @@
             "customCss": "padding: 0 10px\nbox-sizing: border-box\nborder-bottom: 1px solid rgba(20, 40, 70, 0.08)"
           },
           "x": 5.4,
-          "y": 42.6,
+          "y": 44.6,
           "percentage": -1,
-          "id": "12",
+          "id": "13",
           "canvas": "0",
           "order": 7,
           "valid": 1
@@ -403,9 +426,9 @@
             "TableCSS": "font-size: 11px"
           },
           "x": 5.4,
-          "y": 57.6,
+          "y": 59.6,
           "percentage": -1,
-          "id": "13",
+          "id": "14",
           "canvas": "0",
           "order": 8,
           "valid": 1
@@ -439,9 +462,9 @@
             "widgetCss": "padding: 0 10px\nbox-sizing: border-box\nborder-bottom: 1px solid rgba(20, 40, 70, 0.08)\noverflow: hidden"
           },
           "x": 5.4,
-          "y": 69.0,
+          "y": 71.0,
           "percentage": -1,
-          "id": "14",
+          "id": "15",
           "canvas": "0",
           "order": 9,
           "valid": 1
@@ -475,9 +498,9 @@
             "widgetCss": "padding: 0 10px\nbox-sizing: border-box\nborder-bottom: 1px solid rgba(20, 40, 70, 0.08)\noverflow: hidden"
           },
           "x": 5.4,
-          "y": 72.8,
+          "y": 74.8,
           "percentage": -1,
-          "id": "15",
+          "id": "16",
           "canvas": "0",
           "order": 10,
           "valid": 1
@@ -511,9 +534,9 @@
             "widgetCss": "padding: 0 10px\nbox-sizing: border-box\nborder-bottom: 1px solid rgba(20, 40, 70, 0.08)\noverflow: hidden"
           },
           "x": 5.4,
-          "y": 80.4,
+          "y": 82.4,
           "percentage": -1,
-          "id": "16",
+          "id": "17",
           "canvas": "0",
           "order": 11,
           "valid": 1
@@ -573,19 +596,19 @@
             "customCss": "padding: 0 10px\nbox-sizing: border-box\nborder-bottom: 1px solid rgba(20, 40, 70, 0.08)"
           },
           "x": 5.4,
-          "y": 84.2,
+          "y": 86.2,
           "percentage": -1,
-          "id": "17",
+          "id": "18",
           "canvas": "0",
           "order": 12,
           "valid": 1
         }
       ],
       "x": 4.4,
-      "y": 7.6,
-      "id": "4",
+      "y": 9.6,
+      "id": "5",
       "canvas": "0",
-      "order": 3,
+      "order": 4,
       "valid": 1
     },
     {
@@ -623,12 +646,12 @@
             "automaticResize": "Disabled",
             "size": 1.05,
             "linkTo": "",
-            "customCss": "font-family: \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, sans-serif\nfont-weight: 600\nletter-spacing: 0.02em\npadding: 0 10px\nbox-sizing: border-box\nborder-radius: 4px\ndisplay: flex\nalign-items: center"
+            "customCss": "font-family: \"Noto Sans\", \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, sans-serif\nfont-weight: 600\nletter-spacing: 0.02em\npadding: 0 10px\nbox-sizing: border-box\nborder-radius: 4px\ndisplay: flex\nalign-items: center"
           },
           "x": 51.8,
-          "y": 8.6,
+          "y": 10.6,
           "percentage": -1,
-          "id": "19",
+          "id": "20",
           "canvas": "0",
           "order": 0,
           "valid": 1
@@ -658,9 +681,9 @@
             "customCss": "padding: 0 10px\nbox-sizing: border-box\nborder-bottom: 1px solid rgba(20, 40, 70, 0.08)"
           },
           "x": 51.8,
-          "y": 11.8,
+          "y": 13.8,
           "percentage": -1,
-          "id": "20",
+          "id": "21",
           "canvas": "0",
           "order": 1,
           "valid": 1
@@ -690,9 +713,9 @@
             "customCss": "padding: 0 10px\nbox-sizing: border-box\nborder-bottom: 1px solid rgba(20, 40, 70, 0.08)"
           },
           "x": 51.8,
-          "y": 15.6,
+          "y": 17.6,
           "percentage": -1,
-          "id": "21",
+          "id": "22",
           "canvas": "0",
           "order": 2,
           "valid": 1
@@ -722,9 +745,9 @@
             "customCss": "padding: 0 10px\nbox-sizing: border-box\nborder-bottom: 1px solid rgba(20, 40, 70, 0.08)"
           },
           "x": 51.8,
-          "y": 19.4,
+          "y": 21.4,
           "percentage": -1,
-          "id": "22",
+          "id": "23",
           "canvas": "0",
           "order": 3,
           "valid": 1
@@ -754,9 +777,9 @@
             "customCss": "padding: 0 10px\nbox-sizing: border-box\nborder-bottom: 1px solid rgba(20, 40, 70, 0.08)"
           },
           "x": 51.8,
-          "y": 23.2,
+          "y": 25.2,
           "percentage": -1,
-          "id": "23",
+          "id": "24",
           "canvas": "0",
           "order": 4,
           "valid": 1
@@ -786,19 +809,19 @@
             "customCss": "padding: 0 10px\nbox-sizing: border-box\nborder-bottom: 1px solid rgba(20, 40, 70, 0.08)"
           },
           "x": 51.8,
-          "y": 27.0,
+          "y": 29.0,
           "percentage": -1,
-          "id": "24",
+          "id": "25",
           "canvas": "0",
           "order": 5,
           "valid": 1
         }
       ],
       "x": 50.8,
-      "y": 7.6,
-      "id": "18",
+      "y": 9.6,
+      "id": "19",
       "canvas": "0",
-      "order": 4,
+      "order": 5,
       "valid": 1
     },
     {
@@ -836,12 +859,12 @@
             "automaticResize": "Disabled",
             "size": 1.05,
             "linkTo": "",
-            "customCss": "font-family: \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, sans-serif\nfont-weight: 600\nletter-spacing: 0.02em\npadding: 0 10px\nbox-sizing: border-box\nborder-radius: 4px\ndisplay: flex\nalign-items: center"
+            "customCss": "font-family: \"Noto Sans\", \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, sans-serif\nfont-weight: 600\nletter-spacing: 0.02em\npadding: 0 10px\nbox-sizing: border-box\nborder-radius: 4px\ndisplay: flex\nalign-items: center"
           },
           "x": 98.2,
-          "y": 8.6,
+          "y": 10.6,
           "percentage": -1,
-          "id": "26",
+          "id": "27",
           "canvas": "0",
           "order": 0,
           "valid": 1
@@ -871,9 +894,9 @@
             "customCss": "padding: 0 10px\nbox-sizing: border-box\nborder-bottom: 1px solid rgba(20, 40, 70, 0.08)"
           },
           "x": 98.2,
-          "y": 11.8,
+          "y": 13.8,
           "percentage": -1,
-          "id": "27",
+          "id": "28",
           "canvas": "0",
           "order": 1,
           "valid": 1
@@ -907,9 +930,9 @@
             "widgetCss": "padding: 0 10px\nbox-sizing: border-box\nborder-bottom: 1px solid rgba(20, 40, 70, 0.08)\noverflow: hidden"
           },
           "x": 98.2,
-          "y": 15.6,
+          "y": 17.6,
           "percentage": -1,
-          "id": "28",
+          "id": "29",
           "canvas": "0",
           "order": 2,
           "valid": 1
@@ -943,9 +966,9 @@
             "widgetCss": "padding: 0 10px\nbox-sizing: border-box\nborder-bottom: 1px solid rgba(20, 40, 70, 0.08)\noverflow: hidden"
           },
           "x": 98.2,
-          "y": 19.4,
+          "y": 21.4,
           "percentage": -1,
-          "id": "29",
+          "id": "30",
           "canvas": "0",
           "order": 3,
           "valid": 1
@@ -979,9 +1002,9 @@
             "widgetCss": "padding: 0 10px\nbox-sizing: border-box\nborder-bottom: 1px solid rgba(20, 40, 70, 0.08)\noverflow: hidden"
           },
           "x": 98.2,
-          "y": 23.2,
+          "y": 25.2,
           "percentage": -1,
-          "id": "30",
+          "id": "31",
           "canvas": "0",
           "order": 4,
           "valid": 1
@@ -1015,9 +1038,9 @@
             "widgetCss": "padding: 0 10px\nbox-sizing: border-box\nborder-bottom: 1px solid rgba(20, 40, 70, 0.08)\noverflow: hidden"
           },
           "x": 98.2,
-          "y": 27.0,
+          "y": 29.0,
           "percentage": -1,
-          "id": "31",
+          "id": "32",
           "canvas": "0",
           "order": 5,
           "valid": 1
@@ -1051,9 +1074,9 @@
             "widgetCss": "padding: 0 10px\nbox-sizing: border-box\nborder-bottom: 1px solid rgba(20, 40, 70, 0.08)\noverflow: hidden"
           },
           "x": 98.2,
-          "y": 30.8,
+          "y": 32.8,
           "percentage": -1,
-          "id": "32",
+          "id": "33",
           "canvas": "0",
           "order": 6,
           "valid": 1
@@ -1087,9 +1110,9 @@
             "widgetCss": "padding: 0 10px\nbox-sizing: border-box\nborder-bottom: 1px solid rgba(20, 40, 70, 0.08)\noverflow: hidden"
           },
           "x": 98.2,
-          "y": 34.6,
+          "y": 36.6,
           "percentage": -1,
-          "id": "33",
+          "id": "34",
           "canvas": "0",
           "order": 7,
           "valid": 1
@@ -1123,9 +1146,9 @@
             "widgetCss": "padding: 0 10px\nbox-sizing: border-box\nborder-bottom: 1px solid rgba(20, 40, 70, 0.08)\noverflow: hidden"
           },
           "x": 98.2,
-          "y": 38.4,
+          "y": 40.4,
           "percentage": -1,
-          "id": "34",
+          "id": "35",
           "canvas": "0",
           "order": 8,
           "valid": 1
@@ -1159,9 +1182,9 @@
             "widgetCss": "padding: 0 10px\nbox-sizing: border-box\nborder-bottom: 1px solid rgba(20, 40, 70, 0.08)\noverflow: hidden"
           },
           "x": 98.2,
-          "y": 42.2,
+          "y": 44.2,
           "percentage": -1,
-          "id": "35",
+          "id": "36",
           "canvas": "0",
           "order": 9,
           "valid": 1
@@ -1195,9 +1218,9 @@
             "widgetCss": "padding: 0 10px\nbox-sizing: border-box\nborder-bottom: 1px solid rgba(20, 40, 70, 0.08)\noverflow: hidden"
           },
           "x": 98.2,
-          "y": 46.0,
+          "y": 48.0,
           "percentage": -1,
-          "id": "36",
+          "id": "37",
           "canvas": "0",
           "order": 10,
           "valid": 1
@@ -1231,9 +1254,9 @@
             "widgetCss": "padding: 0 10px\nbox-sizing: border-box\nborder-bottom: 1px solid rgba(20, 40, 70, 0.08)\noverflow: hidden"
           },
           "x": 98.2,
-          "y": 49.8,
+          "y": 51.8,
           "percentage": -1,
-          "id": "37",
+          "id": "38",
           "canvas": "0",
           "order": 11,
           "valid": 1
@@ -1263,9 +1286,9 @@
             "customCss": "padding: 0 10px\nbox-sizing: border-box\nborder-bottom: 1px solid rgba(20, 40, 70, 0.08)"
           },
           "x": 98.2,
-          "y": 53.6,
+          "y": 55.6,
           "percentage": -1,
-          "id": "38",
+          "id": "39",
           "canvas": "0",
           "order": 12,
           "valid": 1
@@ -1299,9 +1322,9 @@
             "widgetCss": "padding: 0 10px\nbox-sizing: border-box\nborder-bottom: 1px solid rgba(20, 40, 70, 0.08)\noverflow: hidden"
           },
           "x": 98.2,
-          "y": 57.4,
+          "y": 59.4,
           "percentage": -1,
-          "id": "39",
+          "id": "40",
           "canvas": "0",
           "order": 13,
           "valid": 1
@@ -1335,9 +1358,9 @@
             "widgetCss": "padding: 0 10px\nbox-sizing: border-box\nborder-bottom: 1px solid rgba(20, 40, 70, 0.08)\noverflow: hidden"
           },
           "x": 98.2,
-          "y": 61.2,
+          "y": 63.2,
           "percentage": -1,
-          "id": "40",
+          "id": "41",
           "canvas": "0",
           "order": 14,
           "valid": 1
@@ -1371,9 +1394,9 @@
             "widgetCss": "padding: 0 10px\nbox-sizing: border-box\nborder-bottom: 1px solid rgba(20, 40, 70, 0.08)\noverflow: hidden"
           },
           "x": 98.2,
-          "y": 65.0,
+          "y": 67.0,
           "percentage": -1,
-          "id": "41",
+          "id": "42",
           "canvas": "0",
           "order": 15,
           "valid": 1
@@ -1417,8 +1440,8 @@
                 "widgetCss": ""
               },
               "x": 98.2,
-              "y": 68.8,
-              "id": "43",
+              "y": 70.8,
+              "id": "44",
               "canvas": "0",
               "order": 0,
               "valid": 1
@@ -1441,8 +1464,8 @@
                 "widgetCss": ""
               },
               "x": 112.2,
-              "y": 68.8,
-              "id": "44",
+              "y": 70.8,
+              "id": "45",
               "canvas": "0",
               "order": 1,
               "valid": 1
@@ -1465,27 +1488,27 @@
                 "widgetCss": ""
               },
               "x": 126.2,
-              "y": 68.8,
-              "id": "45",
+              "y": 70.8,
+              "id": "46",
               "canvas": "0",
               "order": 2,
               "valid": 1
             }
           ],
           "x": 98.2,
-          "y": 68.8,
+          "y": 70.8,
           "percentage": -1,
-          "id": "42",
+          "id": "43",
           "canvas": "0",
           "order": 16,
           "valid": 1
         }
       ],
       "x": 97.2,
-      "y": 7.6,
-      "id": "25",
+      "y": 9.6,
+      "id": "26",
       "canvas": "0",
-      "order": 5,
+      "order": 6,
       "valid": 1
     },
     {
@@ -1523,12 +1546,12 @@
             "automaticResize": "Disabled",
             "size": 1.05,
             "linkTo": "",
-            "customCss": "font-family: \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, sans-serif\nfont-weight: 600\nletter-spacing: 0.02em\npadding: 0 10px\nbox-sizing: border-box\nborder-radius: 4px\ndisplay: flex\nalign-items: center"
+            "customCss": "font-family: \"Noto Sans\", \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, sans-serif\nfont-weight: 600\nletter-spacing: 0.02em\npadding: 0 10px\nbox-sizing: border-box\nborder-radius: 4px\ndisplay: flex\nalign-items: center"
           },
           "x": 144.6,
-          "y": 8.6,
+          "y": 10.6,
           "percentage": -1,
-          "id": "47",
+          "id": "48",
           "canvas": "0",
           "order": 0,
           "valid": 1
@@ -1562,9 +1585,9 @@
             "widgetCss": "padding: 0 10px\nbox-sizing: border-box\nborder-bottom: 1px solid rgba(20, 40, 70, 0.08)\noverflow: hidden"
           },
           "x": 144.6,
-          "y": 11.8,
+          "y": 13.8,
           "percentage": -1,
-          "id": "48",
+          "id": "49",
           "canvas": "0",
           "order": 1,
           "valid": 1
@@ -1598,9 +1621,9 @@
             "widgetCss": "padding: 0 10px\nbox-sizing: border-box\nborder-bottom: 1px solid rgba(20, 40, 70, 0.08)\noverflow: hidden"
           },
           "x": 144.6,
-          "y": 15.6,
+          "y": 17.6,
           "percentage": -1,
-          "id": "49",
+          "id": "50",
           "canvas": "0",
           "order": 2,
           "valid": 1
@@ -1634,9 +1657,9 @@
             "widgetCss": "padding: 0 10px\nbox-sizing: border-box\nborder-bottom: 1px solid rgba(20, 40, 70, 0.08)\noverflow: hidden"
           },
           "x": 144.6,
-          "y": 19.4,
+          "y": 21.4,
           "percentage": -1,
-          "id": "50",
+          "id": "51",
           "canvas": "0",
           "order": 3,
           "valid": 1
@@ -1670,9 +1693,9 @@
             "widgetCss": "padding: 0 10px\nbox-sizing: border-box\nborder-bottom: 1px solid rgba(20, 40, 70, 0.08)\noverflow: hidden"
           },
           "x": 144.6,
-          "y": 23.2,
+          "y": 25.2,
           "percentage": -1,
-          "id": "51",
+          "id": "52",
           "canvas": "0",
           "order": 4,
           "valid": 1
@@ -1706,9 +1729,9 @@
             "widgetCss": "padding: 0 10px\nbox-sizing: border-box\nborder-bottom: 1px solid rgba(20, 40, 70, 0.08)\noverflow: hidden"
           },
           "x": 144.6,
-          "y": 27.0,
+          "y": 29.0,
           "percentage": -1,
-          "id": "52",
+          "id": "53",
           "canvas": "0",
           "order": 5,
           "valid": 1
@@ -1742,9 +1765,9 @@
             "widgetCss": "padding: 0 10px\nbox-sizing: border-box\nborder-bottom: 1px solid rgba(20, 40, 70, 0.08)\noverflow: hidden"
           },
           "x": 144.6,
-          "y": 30.8,
+          "y": 32.8,
           "percentage": -1,
-          "id": "53",
+          "id": "54",
           "canvas": "0",
           "order": 6,
           "valid": 1
@@ -1788,8 +1811,8 @@
                 "widgetCss": ""
               },
               "x": 144.6,
-              "y": 34.6,
-              "id": "55",
+              "y": 36.6,
+              "id": "56",
               "canvas": "0",
               "order": 0,
               "valid": 1
@@ -1812,8 +1835,8 @@
                 "widgetCss": ""
               },
               "x": 158.6,
-              "y": 34.6,
-              "id": "56",
+              "y": 36.6,
+              "id": "57",
               "canvas": "0",
               "order": 1,
               "valid": 1
@@ -1836,27 +1859,27 @@
                 "widgetCss": ""
               },
               "x": 172.6,
-              "y": 34.6,
-              "id": "57",
+              "y": 36.6,
+              "id": "58",
               "canvas": "0",
               "order": 2,
               "valid": 1
             }
           ],
           "x": 144.6,
-          "y": 34.6,
+          "y": 36.6,
           "percentage": -1,
-          "id": "54",
+          "id": "55",
           "canvas": "0",
           "order": 7,
           "valid": 1
         }
       ],
       "x": 143.6,
-      "y": 7.6,
-      "id": "46",
+      "y": 9.6,
+      "id": "47",
       "canvas": "0",
-      "order": 6,
+      "order": 7,
       "valid": 1
     },
     {
@@ -1894,12 +1917,12 @@
             "automaticResize": "Disabled",
             "size": 1.05,
             "linkTo": "",
-            "customCss": "font-family: \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, sans-serif\nfont-weight: 600\nletter-spacing: 0.02em\npadding: 0 10px\nbox-sizing: border-box\nborder-radius: 4px\ndisplay: flex\nalign-items: center"
+            "customCss": "font-family: \"Noto Sans\", \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, sans-serif\nfont-weight: 600\nletter-spacing: 0.02em\npadding: 0 10px\nbox-sizing: border-box\nborder-radius: 4px\ndisplay: flex\nalign-items: center"
           },
           "x": 5.4,
-          "y": 111.0,
+          "y": 113.0,
           "percentage": -1,
-          "id": "59",
+          "id": "60",
           "canvas": "0",
           "order": 0,
           "valid": 1
@@ -1933,9 +1956,9 @@
             "widgetCss": "padding: 0 10px\nbox-sizing: border-box\nborder-bottom: 1px solid rgba(20, 40, 70, 0.08)\noverflow: hidden"
           },
           "x": 5.4,
-          "y": 114.2,
+          "y": 116.2,
           "percentage": -1,
-          "id": "60",
+          "id": "61",
           "canvas": "0",
           "order": 1,
           "valid": 1
@@ -1969,9 +1992,9 @@
             "widgetCss": "padding: 0 10px\nbox-sizing: border-box\nborder-bottom: 1px solid rgba(20, 40, 70, 0.08)\noverflow: hidden"
           },
           "x": 5.4,
-          "y": 118.0,
+          "y": 120.0,
           "percentage": -1,
-          "id": "61",
+          "id": "62",
           "canvas": "0",
           "order": 2,
           "valid": 1
@@ -2005,9 +2028,9 @@
             "widgetCss": "padding: 0 10px\nbox-sizing: border-box\nborder-bottom: 1px solid rgba(20, 40, 70, 0.08)\noverflow: hidden"
           },
           "x": 5.4,
-          "y": 121.8,
+          "y": 123.8,
           "percentage": -1,
-          "id": "62",
+          "id": "63",
           "canvas": "0",
           "order": 3,
           "valid": 1
@@ -2037,9 +2060,9 @@
             "customCss": "padding: 0 10px\nbox-sizing: border-box\nborder-bottom: 1px solid rgba(20, 40, 70, 0.08)"
           },
           "x": 5.4,
-          "y": 125.6,
+          "y": 127.6,
           "percentage": -1,
-          "id": "63",
+          "id": "64",
           "canvas": "0",
           "order": 4,
           "valid": 1
@@ -2073,9 +2096,9 @@
             "widgetCss": "padding: 0 10px\nbox-sizing: border-box\nborder-bottom: 1px solid rgba(20, 40, 70, 0.08)\noverflow: hidden"
           },
           "x": 5.4,
-          "y": 129.4,
+          "y": 131.4,
           "percentage": -1,
-          "id": "64",
+          "id": "65",
           "canvas": "0",
           "order": 5,
           "valid": 1
@@ -2109,9 +2132,9 @@
             "widgetCss": "padding: 0 10px\nbox-sizing: border-box\nborder-bottom: 1px solid rgba(20, 40, 70, 0.08)\noverflow: hidden"
           },
           "x": 5.4,
-          "y": 133.2,
+          "y": 135.2,
           "percentage": -1,
-          "id": "65",
+          "id": "66",
           "canvas": "0",
           "order": 6,
           "valid": 1
@@ -2145,9 +2168,9 @@
             "widgetCss": "padding: 0 10px\nbox-sizing: border-box\nborder-bottom: 1px solid rgba(20, 40, 70, 0.08)\noverflow: hidden"
           },
           "x": 5.4,
-          "y": 137.0,
+          "y": 139.0,
           "percentage": -1,
-          "id": "66",
+          "id": "67",
           "canvas": "0",
           "order": 7,
           "valid": 1
@@ -2181,9 +2204,9 @@
             "widgetCss": "padding: 0 10px\nbox-sizing: border-box\nborder-bottom: 1px solid rgba(20, 40, 70, 0.08)\noverflow: hidden"
           },
           "x": 5.4,
-          "y": 140.8,
+          "y": 142.8,
           "percentage": -1,
-          "id": "67",
+          "id": "68",
           "canvas": "0",
           "order": 8,
           "valid": 1
@@ -2217,9 +2240,9 @@
             "widgetCss": "padding: 0 10px\nbox-sizing: border-box\nborder-bottom: 1px solid rgba(20, 40, 70, 0.08)\noverflow: hidden"
           },
           "x": 5.4,
-          "y": 144.6,
+          "y": 146.6,
           "percentage": -1,
-          "id": "68",
+          "id": "69",
           "canvas": "0",
           "order": 9,
           "valid": 1
@@ -2253,19 +2276,19 @@
             "widgetCss": "padding: 0 10px\nbox-sizing: border-box\nborder-bottom: 1px solid rgba(20, 40, 70, 0.08)\noverflow: hidden"
           },
           "x": 5.4,
-          "y": 148.4,
+          "y": 150.4,
           "percentage": -1,
-          "id": "69",
+          "id": "70",
           "canvas": "0",
           "order": 10,
           "valid": 1
         }
       ],
       "x": 4.4,
-      "y": 110.0,
-      "id": "58",
+      "y": 112.0,
+      "id": "59",
       "canvas": "0",
-      "order": 7,
+      "order": 8,
       "valid": 1
     },
     {
@@ -2303,12 +2326,12 @@
             "automaticResize": "Disabled",
             "size": 1.05,
             "linkTo": "",
-            "customCss": "font-family: \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, sans-serif\nfont-weight: 600\nletter-spacing: 0.02em\npadding: 0 10px\nbox-sizing: border-box\nborder-radius: 4px\ndisplay: flex\nalign-items: center"
+            "customCss": "font-family: \"Noto Sans\", \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, sans-serif\nfont-weight: 600\nletter-spacing: 0.02em\npadding: 0 10px\nbox-sizing: border-box\nborder-radius: 4px\ndisplay: flex\nalign-items: center"
           },
           "x": 51.8,
-          "y": 111.0,
+          "y": 113.0,
           "percentage": -1,
-          "id": "71",
+          "id": "72",
           "canvas": "0",
           "order": 0,
           "valid": 1
@@ -2342,9 +2365,9 @@
             "widgetCss": "padding: 0 10px\nbox-sizing: border-box\nborder-bottom: 1px solid rgba(20, 40, 70, 0.08)\noverflow: hidden"
           },
           "x": 51.8,
-          "y": 114.2,
+          "y": 116.2,
           "percentage": -1,
-          "id": "72",
+          "id": "73",
           "canvas": "0",
           "order": 1,
           "valid": 1
@@ -2378,9 +2401,9 @@
             "widgetCss": "padding: 0 10px\nbox-sizing: border-box\nborder-bottom: 1px solid rgba(20, 40, 70, 0.08)\noverflow: hidden"
           },
           "x": 51.8,
-          "y": 118.0,
+          "y": 120.0,
           "percentage": -1,
-          "id": "73",
+          "id": "74",
           "canvas": "0",
           "order": 2,
           "valid": 1
@@ -2414,9 +2437,9 @@
             "widgetCss": "padding: 0 10px\nbox-sizing: border-box\nborder-bottom: 1px solid rgba(20, 40, 70, 0.08)\noverflow: hidden"
           },
           "x": 51.8,
-          "y": 121.8,
+          "y": 123.8,
           "percentage": -1,
-          "id": "74",
+          "id": "75",
           "canvas": "0",
           "order": 3,
           "valid": 1
@@ -2446,9 +2469,9 @@
             "customCss": "padding: 0 10px\nbox-sizing: border-box\nborder-bottom: 1px solid rgba(20, 40, 70, 0.08)"
           },
           "x": 51.8,
-          "y": 125.6,
+          "y": 127.6,
           "percentage": -1,
-          "id": "75",
+          "id": "76",
           "canvas": "0",
           "order": 4,
           "valid": 1
@@ -2482,9 +2505,9 @@
             "widgetCss": "padding: 0 10px\nbox-sizing: border-box\nborder-bottom: 1px solid rgba(20, 40, 70, 0.08)\noverflow: hidden"
           },
           "x": 51.8,
-          "y": 129.4,
+          "y": 131.4,
           "percentage": -1,
-          "id": "76",
+          "id": "77",
           "canvas": "0",
           "order": 5,
           "valid": 1
@@ -2518,9 +2541,9 @@
             "widgetCss": "padding: 0 10px\nbox-sizing: border-box\nborder-bottom: 1px solid rgba(20, 40, 70, 0.08)\noverflow: hidden"
           },
           "x": 51.8,
-          "y": 133.2,
+          "y": 135.2,
           "percentage": -1,
-          "id": "77",
+          "id": "78",
           "canvas": "0",
           "order": 6,
           "valid": 1
@@ -2554,9 +2577,9 @@
             "widgetCss": "padding: 0 10px\nbox-sizing: border-box\nborder-bottom: 1px solid rgba(20, 40, 70, 0.08)\noverflow: hidden"
           },
           "x": 51.8,
-          "y": 137.0,
+          "y": 139.0,
           "percentage": -1,
-          "id": "78",
+          "id": "79",
           "canvas": "0",
           "order": 7,
           "valid": 1
@@ -2590,9 +2613,9 @@
             "widgetCss": "padding: 0 10px\nbox-sizing: border-box\nborder-bottom: 1px solid rgba(20, 40, 70, 0.08)\noverflow: hidden"
           },
           "x": 51.8,
-          "y": 140.8,
+          "y": 142.8,
           "percentage": -1,
-          "id": "79",
+          "id": "80",
           "canvas": "0",
           "order": 8,
           "valid": 1
@@ -2626,9 +2649,9 @@
             "widgetCss": "padding: 0 10px\nbox-sizing: border-box\nborder-bottom: 1px solid rgba(20, 40, 70, 0.08)\noverflow: hidden"
           },
           "x": 51.8,
-          "y": 144.6,
+          "y": 146.6,
           "percentage": -1,
-          "id": "80",
+          "id": "81",
           "canvas": "0",
           "order": 9,
           "valid": 1
@@ -2662,19 +2685,19 @@
             "widgetCss": "padding: 0 10px\nbox-sizing: border-box\nborder-bottom: 1px solid rgba(20, 40, 70, 0.08)\noverflow: hidden"
           },
           "x": 51.8,
-          "y": 148.4,
+          "y": 150.4,
           "percentage": -1,
-          "id": "81",
+          "id": "82",
           "canvas": "0",
           "order": 10,
           "valid": 1
         }
       ],
       "x": 50.8,
-      "y": 110.0,
-      "id": "70",
+      "y": 112.0,
+      "id": "71",
       "canvas": "0",
-      "order": 8,
+      "order": 9,
       "valid": 1
     },
     {
@@ -2712,12 +2735,12 @@
             "automaticResize": "Disabled",
             "size": 1.05,
             "linkTo": "",
-            "customCss": "font-family: \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, sans-serif\nfont-weight: 600\nletter-spacing: 0.02em\npadding: 0 10px\nbox-sizing: border-box\nborder-radius: 4px\ndisplay: flex\nalign-items: center"
+            "customCss": "font-family: \"Noto Sans\", \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, sans-serif\nfont-weight: 600\nletter-spacing: 0.02em\npadding: 0 10px\nbox-sizing: border-box\nborder-radius: 4px\ndisplay: flex\nalign-items: center"
           },
           "x": 98.2,
-          "y": 111.0,
+          "y": 113.0,
           "percentage": -1,
-          "id": "83",
+          "id": "84",
           "canvas": "0",
           "order": 0,
           "valid": 1
@@ -2747,9 +2770,9 @@
             "customCss": "padding: 0 10px\nbox-sizing: border-box\nborder-bottom: 1px solid rgba(20, 40, 70, 0.08)"
           },
           "x": 98.2,
-          "y": 114.2,
+          "y": 116.2,
           "percentage": -1,
-          "id": "84",
+          "id": "85",
           "canvas": "0",
           "order": 1,
           "valid": 1
@@ -2783,9 +2806,9 @@
             "widgetCss": "padding: 0 10px\nbox-sizing: border-box\nborder-bottom: 1px solid rgba(20, 40, 70, 0.08)\noverflow: hidden"
           },
           "x": 98.2,
-          "y": 118.0,
+          "y": 120.0,
           "percentage": -1,
-          "id": "85",
+          "id": "86",
           "canvas": "0",
           "order": 2,
           "valid": 1
@@ -2819,9 +2842,9 @@
             "widgetCss": "padding: 0 10px\nbox-sizing: border-box\nborder-bottom: 1px solid rgba(20, 40, 70, 0.08)\noverflow: hidden"
           },
           "x": 98.2,
-          "y": 121.8,
+          "y": 123.8,
           "percentage": -1,
-          "id": "86",
+          "id": "87",
           "canvas": "0",
           "order": 3,
           "valid": 1
@@ -2855,9 +2878,9 @@
             "widgetCss": "padding: 0 10px\nbox-sizing: border-box\nborder-bottom: 1px solid rgba(20, 40, 70, 0.08)\noverflow: hidden"
           },
           "x": 98.2,
-          "y": 125.6,
+          "y": 127.6,
           "percentage": -1,
-          "id": "87",
+          "id": "88",
           "canvas": "0",
           "order": 4,
           "valid": 1
@@ -2891,9 +2914,9 @@
             "widgetCss": "padding: 0 10px\nbox-sizing: border-box\nborder-bottom: 1px solid rgba(20, 40, 70, 0.08)\noverflow: hidden"
           },
           "x": 98.2,
-          "y": 129.4,
+          "y": 131.4,
           "percentage": -1,
-          "id": "88",
+          "id": "89",
           "canvas": "0",
           "order": 5,
           "valid": 1
@@ -2937,27 +2960,27 @@
                 "widgetCss": ""
               },
               "x": 98.2,
-              "y": 133.2,
-              "id": "90",
+              "y": 135.2,
+              "id": "91",
               "canvas": "0",
               "order": 0,
               "valid": 1
             }
           ],
           "x": 98.2,
-          "y": 133.2,
+          "y": 135.2,
           "percentage": -1,
-          "id": "89",
+          "id": "90",
           "canvas": "0",
           "order": 6,
           "valid": 1
         }
       ],
       "x": 97.2,
-      "y": 110.0,
-      "id": "82",
+      "y": 112.0,
+      "id": "83",
       "canvas": "0",
-      "order": 9,
+      "order": 10,
       "valid": 1
     },
     {
@@ -2995,12 +3018,12 @@
             "automaticResize": "Disabled",
             "size": 1.05,
             "linkTo": "",
-            "customCss": "font-family: \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, sans-serif\nfont-weight: 600\nletter-spacing: 0.02em\npadding: 0 10px\nbox-sizing: border-box\nborder-radius: 4px\ndisplay: flex\nalign-items: center"
+            "customCss": "font-family: \"Noto Sans\", \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, sans-serif\nfont-weight: 600\nletter-spacing: 0.02em\npadding: 0 10px\nbox-sizing: border-box\nborder-radius: 4px\ndisplay: flex\nalign-items: center"
           },
           "x": 144.6,
-          "y": 111.0,
+          "y": 113.0,
           "percentage": -1,
-          "id": "92",
+          "id": "93",
           "canvas": "0",
           "order": 0,
           "valid": 1
@@ -3030,9 +3053,9 @@
             "customCss": "padding: 0 10px\nbox-sizing: border-box\nborder-bottom: 1px solid rgba(20, 40, 70, 0.08)"
           },
           "x": 144.6,
-          "y": 114.2,
+          "y": 116.2,
           "percentage": -1,
-          "id": "93",
+          "id": "94",
           "canvas": "0",
           "order": 1,
           "valid": 1
@@ -3066,9 +3089,9 @@
             "widgetCss": "padding: 0 10px\nbox-sizing: border-box\nborder-bottom: 1px solid rgba(20, 40, 70, 0.08)\noverflow: hidden"
           },
           "x": 144.6,
-          "y": 118.0,
+          "y": 120.0,
           "percentage": -1,
-          "id": "94",
+          "id": "95",
           "canvas": "0",
           "order": 2,
           "valid": 1
@@ -3102,9 +3125,9 @@
             "widgetCss": "padding: 0 10px\nbox-sizing: border-box\nborder-bottom: 1px solid rgba(20, 40, 70, 0.08)\noverflow: hidden"
           },
           "x": 144.6,
-          "y": 121.8,
+          "y": 123.8,
           "percentage": -1,
-          "id": "95",
+          "id": "96",
           "canvas": "0",
           "order": 3,
           "valid": 1
@@ -3138,9 +3161,9 @@
             "widgetCss": "padding: 0 10px\nbox-sizing: border-box\nborder-bottom: 1px solid rgba(20, 40, 70, 0.08)\noverflow: hidden"
           },
           "x": 144.6,
-          "y": 125.6,
+          "y": 127.6,
           "percentage": -1,
-          "id": "96",
+          "id": "97",
           "canvas": "0",
           "order": 4,
           "valid": 1
@@ -3174,9 +3197,9 @@
             "widgetCss": "padding: 0 10px\nbox-sizing: border-box\nborder-bottom: 1px solid rgba(20, 40, 70, 0.08)\noverflow: hidden"
           },
           "x": 144.6,
-          "y": 129.4,
+          "y": 131.4,
           "percentage": -1,
-          "id": "97",
+          "id": "98",
           "canvas": "0",
           "order": 5,
           "valid": 1
@@ -3220,27 +3243,27 @@
                 "widgetCss": ""
               },
               "x": 144.6,
-              "y": 133.2,
-              "id": "99",
+              "y": 135.2,
+              "id": "100",
               "canvas": "0",
               "order": 0,
               "valid": 1
             }
           ],
           "x": 144.6,
-          "y": 133.2,
+          "y": 135.2,
           "percentage": -1,
-          "id": "98",
+          "id": "99",
           "canvas": "0",
           "order": 6,
           "valid": 1
         }
       ],
       "x": 143.6,
-      "y": 110.0,
-      "id": "91",
+      "y": 112.0,
+      "id": "92",
       "canvas": "0",
-      "order": 10,
+      "order": 11,
       "valid": 1
     },
     {
@@ -3278,12 +3301,12 @@
             "automaticResize": "Disabled",
             "size": 1.05,
             "linkTo": "",
-            "customCss": "font-family: \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, sans-serif\nfont-weight: 600\nletter-spacing: 0.02em\npadding: 0 10px\nbox-sizing: border-box\nborder-radius: 4px\ndisplay: flex\nalign-items: center"
+            "customCss": "font-family: \"Noto Sans\", \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, sans-serif\nfont-weight: 600\nletter-spacing: 0.02em\npadding: 0 10px\nbox-sizing: border-box\nborder-radius: 4px\ndisplay: flex\nalign-items: center"
           },
           "x": 5.4,
-          "y": 157.6,
+          "y": 159.6,
           "percentage": -1,
-          "id": "101",
+          "id": "102",
           "canvas": "0",
           "order": 0,
           "valid": 1
@@ -3313,9 +3336,9 @@
             "customCss": "padding: 0 10px\nbox-sizing: border-box\nborder-bottom: 1px solid rgba(20, 40, 70, 0.08)"
           },
           "x": 5.4,
-          "y": 160.8,
+          "y": 162.8,
           "percentage": -1,
-          "id": "102",
+          "id": "103",
           "canvas": "0",
           "order": 1,
           "valid": 1
@@ -3349,9 +3372,9 @@
             "widgetCss": "padding: 0 10px\nbox-sizing: border-box\nborder-bottom: 1px solid rgba(20, 40, 70, 0.08)\noverflow: hidden"
           },
           "x": 5.4,
-          "y": 164.6,
+          "y": 166.6,
           "percentage": -1,
-          "id": "103",
+          "id": "104",
           "canvas": "0",
           "order": 2,
           "valid": 1
@@ -3385,9 +3408,9 @@
             "widgetCss": "padding: 0 10px\nbox-sizing: border-box\nborder-bottom: 1px solid rgba(20, 40, 70, 0.08)\noverflow: hidden"
           },
           "x": 5.4,
-          "y": 168.4,
+          "y": 170.4,
           "percentage": -1,
-          "id": "104",
+          "id": "105",
           "canvas": "0",
           "order": 3,
           "valid": 1
@@ -3421,9 +3444,9 @@
             "widgetCss": "padding: 0 10px\nbox-sizing: border-box\nborder-bottom: 1px solid rgba(20, 40, 70, 0.08)\noverflow: hidden"
           },
           "x": 5.4,
-          "y": 172.2,
+          "y": 174.2,
           "percentage": -1,
-          "id": "105",
+          "id": "106",
           "canvas": "0",
           "order": 4,
           "valid": 1
@@ -3457,9 +3480,9 @@
             "widgetCss": "padding: 0 10px\nbox-sizing: border-box\nborder-bottom: 1px solid rgba(20, 40, 70, 0.08)\noverflow: hidden"
           },
           "x": 5.4,
-          "y": 176.0,
+          "y": 178.0,
           "percentage": -1,
-          "id": "106",
+          "id": "107",
           "canvas": "0",
           "order": 5,
           "valid": 1
@@ -3493,9 +3516,9 @@
             "widgetCss": "padding: 0 10px\nbox-sizing: border-box\nborder-bottom: 1px solid rgba(20, 40, 70, 0.08)\noverflow: hidden"
           },
           "x": 5.4,
-          "y": 179.8,
+          "y": 181.8,
           "percentage": -1,
-          "id": "107",
+          "id": "108",
           "canvas": "0",
           "order": 6,
           "valid": 1
@@ -3529,9 +3552,9 @@
             "widgetCss": "padding: 0 10px\nbox-sizing: border-box\nborder-bottom: 1px solid rgba(20, 40, 70, 0.08)\noverflow: hidden"
           },
           "x": 5.4,
-          "y": 183.6,
+          "y": 185.6,
           "percentage": -1,
-          "id": "108",
+          "id": "109",
           "canvas": "0",
           "order": 7,
           "valid": 1
@@ -3565,9 +3588,9 @@
             "widgetCss": "padding: 0 10px\nbox-sizing: border-box\nborder-bottom: 1px solid rgba(20, 40, 70, 0.08)\noverflow: hidden"
           },
           "x": 5.4,
-          "y": 187.4,
+          "y": 189.4,
           "percentage": -1,
-          "id": "109",
+          "id": "110",
           "canvas": "0",
           "order": 8,
           "valid": 1
@@ -3601,19 +3624,19 @@
             "widgetCss": "padding: 0 10px\nbox-sizing: border-box\nborder-bottom: 1px solid rgba(20, 40, 70, 0.08)\noverflow: hidden"
           },
           "x": 5.4,
-          "y": 191.2,
+          "y": 193.2,
           "percentage": -1,
-          "id": "110",
+          "id": "111",
           "canvas": "0",
           "order": 9,
           "valid": 1
         }
       ],
       "x": 4.4,
-      "y": 156.6,
-      "id": "100",
+      "y": 158.6,
+      "id": "101",
       "canvas": "0",
-      "order": 11,
+      "order": 12,
       "valid": 1
     },
     {
@@ -3651,12 +3674,12 @@
             "automaticResize": "Disabled",
             "size": 1.05,
             "linkTo": "",
-            "customCss": "font-family: \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, sans-serif\nfont-weight: 600\nletter-spacing: 0.02em\npadding: 0 10px\nbox-sizing: border-box\nborder-radius: 4px\ndisplay: flex\nalign-items: center"
+            "customCss": "font-family: \"Noto Sans\", \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, sans-serif\nfont-weight: 600\nletter-spacing: 0.02em\npadding: 0 10px\nbox-sizing: border-box\nborder-radius: 4px\ndisplay: flex\nalign-items: center"
           },
           "x": 51.8,
-          "y": 157.6,
+          "y": 159.6,
           "percentage": -1,
-          "id": "112",
+          "id": "113",
           "canvas": "0",
           "order": 0,
           "valid": 1
@@ -3690,9 +3713,9 @@
             "widgetCss": "padding: 0 10px\nbox-sizing: border-box\nborder-bottom: 1px solid rgba(20, 40, 70, 0.08)\noverflow: hidden"
           },
           "x": 51.8,
-          "y": 160.8,
+          "y": 162.8,
           "percentage": -1,
-          "id": "113",
+          "id": "114",
           "canvas": "0",
           "order": 1,
           "valid": 1
@@ -3726,9 +3749,9 @@
             "widgetCss": "padding: 0 10px\nbox-sizing: border-box\nborder-bottom: 1px solid rgba(20, 40, 70, 0.08)\noverflow: hidden"
           },
           "x": 51.8,
-          "y": 164.6,
+          "y": 166.6,
           "percentage": -1,
-          "id": "114",
+          "id": "115",
           "canvas": "0",
           "order": 2,
           "valid": 1
@@ -3762,9 +3785,9 @@
             "widgetCss": "padding: 0 10px\nbox-sizing: border-box\nborder-bottom: 1px solid rgba(20, 40, 70, 0.08)\noverflow: hidden"
           },
           "x": 51.8,
-          "y": 168.4,
+          "y": 170.4,
           "percentage": -1,
-          "id": "115",
+          "id": "116",
           "canvas": "0",
           "order": 3,
           "valid": 1
@@ -3798,9 +3821,9 @@
             "widgetCss": "padding: 0 10px\nbox-sizing: border-box\nborder-bottom: 1px solid rgba(20, 40, 70, 0.08)\noverflow: hidden"
           },
           "x": 51.8,
-          "y": 172.2,
+          "y": 174.2,
           "percentage": -1,
-          "id": "116",
+          "id": "117",
           "canvas": "0",
           "order": 4,
           "valid": 1
@@ -3834,9 +3857,9 @@
             "widgetCss": "padding: 0 10px\nbox-sizing: border-box\nborder-bottom: 1px solid rgba(20, 40, 70, 0.08)\noverflow: hidden"
           },
           "x": 51.8,
-          "y": 176.0,
+          "y": 178.0,
           "percentage": -1,
-          "id": "117",
+          "id": "118",
           "canvas": "0",
           "order": 5,
           "valid": 1
@@ -3870,19 +3893,19 @@
             "widgetCss": "padding: 0 10px\nbox-sizing: border-box\nborder-bottom: 1px solid rgba(20, 40, 70, 0.08)\noverflow: hidden"
           },
           "x": 51.8,
-          "y": 179.8,
+          "y": 181.8,
           "percentage": -1,
-          "id": "118",
+          "id": "119",
           "canvas": "0",
           "order": 6,
           "valid": 1
         }
       ],
       "x": 50.8,
-      "y": 156.6,
-      "id": "111",
+      "y": 158.6,
+      "id": "112",
       "canvas": "0",
-      "order": 12,
+      "order": 13,
       "valid": 1
     },
     {
@@ -3920,12 +3943,12 @@
             "automaticResize": "Disabled",
             "size": 1.05,
             "linkTo": "",
-            "customCss": "font-family: \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, sans-serif\nfont-weight: 600\nletter-spacing: 0.02em\npadding: 0 10px\nbox-sizing: border-box\nborder-radius: 4px\ndisplay: flex\nalign-items: center"
+            "customCss": "font-family: \"Noto Sans\", \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, sans-serif\nfont-weight: 600\nletter-spacing: 0.02em\npadding: 0 10px\nbox-sizing: border-box\nborder-radius: 4px\ndisplay: flex\nalign-items: center"
           },
           "x": 98.2,
-          "y": 157.6,
+          "y": 159.6,
           "percentage": -1,
-          "id": "120",
+          "id": "121",
           "canvas": "0",
           "order": 0,
           "valid": 1
@@ -3959,9 +3982,9 @@
             "widgetCss": "padding: 0 10px\nbox-sizing: border-box\nborder-bottom: 1px solid rgba(20, 40, 70, 0.08)\noverflow: hidden"
           },
           "x": 98.2,
-          "y": 160.8,
+          "y": 162.8,
           "percentage": -1,
-          "id": "121",
+          "id": "122",
           "canvas": "0",
           "order": 1,
           "valid": 1
@@ -3991,9 +4014,9 @@
             "customCss": "padding: 0 10px\nbox-sizing: border-box\nborder-bottom: 1px solid rgba(20, 40, 70, 0.08)"
           },
           "x": 98.2,
-          "y": 164.6,
+          "y": 166.6,
           "percentage": -1,
-          "id": "122",
+          "id": "123",
           "canvas": "0",
           "order": 2,
           "valid": 1
@@ -4027,19 +4050,19 @@
             "widgetCss": "padding: 0 10px\nbox-sizing: border-box\nborder-bottom: 1px solid rgba(20, 40, 70, 0.08)\noverflow: hidden"
           },
           "x": 98.2,
-          "y": 168.4,
+          "y": 170.4,
           "percentage": -1,
-          "id": "123",
+          "id": "124",
           "canvas": "0",
           "order": 3,
           "valid": 1
         }
       ],
       "x": 97.2,
-      "y": 156.6,
-      "id": "119",
+      "y": 158.6,
+      "id": "120",
       "canvas": "0",
-      "order": 13,
+      "order": 14,
       "valid": 1
     },
     {
@@ -4077,12 +4100,12 @@
             "automaticResize": "Disabled",
             "size": 1.05,
             "linkTo": "",
-            "customCss": "font-family: \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, sans-serif\nfont-weight: 600\nletter-spacing: 0.02em\npadding: 0 10px\nbox-sizing: border-box\nborder-radius: 4px\ndisplay: flex\nalign-items: center"
+            "customCss": "font-family: \"Noto Sans\", \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, sans-serif\nfont-weight: 600\nletter-spacing: 0.02em\npadding: 0 10px\nbox-sizing: border-box\nborder-radius: 4px\ndisplay: flex\nalign-items: center"
           },
           "x": 144.6,
-          "y": 157.6,
+          "y": 159.6,
           "percentage": -1,
-          "id": "125",
+          "id": "126",
           "canvas": "0",
           "order": 0,
           "valid": 1
@@ -4116,9 +4139,9 @@
             "widgetCss": "padding: 0 10px\nbox-sizing: border-box\nborder-bottom: 1px solid rgba(20, 40, 70, 0.08)\noverflow: hidden"
           },
           "x": 144.6,
-          "y": 160.8,
+          "y": 162.8,
           "percentage": -1,
-          "id": "126",
+          "id": "127",
           "canvas": "0",
           "order": 1,
           "valid": 1
@@ -4226,19 +4249,19 @@
             "customCss": "padding: 0 10px\nbox-sizing: border-box\nborder-bottom: 1px solid rgba(20, 40, 70, 0.08)"
           },
           "x": 144.6,
-          "y": 164.6,
+          "y": 166.6,
           "percentage": -1,
-          "id": "127",
+          "id": "128",
           "canvas": "0",
           "order": 2,
           "valid": 1
         }
       ],
       "x": 143.6,
-      "y": 156.6,
-      "id": "124",
+      "y": 158.6,
+      "id": "125",
       "canvas": "0",
-      "order": 14,
+      "order": 15,
       "valid": 1
     },
     {
@@ -4250,8 +4273,8 @@
         "bigWidget": 3,
         "smallWidget": 1,
         "textColor": "#1a1a1a",
-        "backgroundColor": "#fdf3ee",
-        "borderColor": "#fdf3ee",
+        "backgroundColor": "#f3f4fb",
+        "borderColor": "#f3f4fb",
         "borderWidth": 10,
         "borderStyle": "solid",
         "textSize": 1,
@@ -4259,7 +4282,7 @@
         "layout": "vertical",
         "alignment": "Left",
         "padding": 0,
-        "customCss": "outline: 2px solid #c2410c33\noutline-offset: -2px\nborder-radius: 8px"
+        "customCss": "outline: 2px solid #5b6abf33\noutline-offset: -2px\nborder-radius: 8px"
       },
       "innerWidgets": [
         {
@@ -4269,19 +4292,19 @@
           "inputs": {
             "text": "Commands",
             "textColor": "#ffffff",
-            "backgroundColor": "#c2410c",
+            "backgroundColor": "#5b6abf",
             "borderWidth": 0,
             "borderColor": "#000000",
             "font": "Helvetica",
             "automaticResize": "Disabled",
             "size": 1.05,
             "linkTo": "",
-            "customCss": "font-family: \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, sans-serif\nfont-weight: 600\nletter-spacing: 0.02em\npadding: 0 10px\nbox-sizing: border-box\nborder-radius: 4px\ndisplay: flex\nalign-items: center"
+            "customCss": "font-family: \"Noto Sans\", \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, sans-serif\nfont-weight: 600\nletter-spacing: 0.02em\npadding: 0 10px\nbox-sizing: border-box\nborder-radius: 4px\ndisplay: flex\nalign-items: center"
           },
           "x": 5.4,
-          "y": 200.4,
+          "y": 202.4,
           "percentage": -1,
-          "id": "129",
+          "id": "130",
           "canvas": "0",
           "order": 0,
           "valid": 1
@@ -4318,19 +4341,19 @@
             "widgetCss": "padding: 0 10px\nbox-sizing: border-box\nborder-bottom: 1px solid rgba(20, 40, 70, 0.08)"
           },
           "x": 5.4,
-          "y": 203.6,
+          "y": 205.6,
           "percentage": -1,
-          "id": "130",
+          "id": "131",
           "canvas": "0",
           "order": 1,
           "valid": 1
         }
       ],
       "x": 4.4,
-      "y": 199.4,
-      "id": "128",
+      "y": 201.4,
+      "id": "129",
       "canvas": "0",
-      "order": 15,
+      "order": 16,
       "valid": 1
     },
     {
@@ -4339,21 +4362,21 @@
       "height": 4.0,
       "inputs": {
         "text": "Trends",
-        "textColor": "#1f3a5f",
-        "backgroundColor": "#dde6f0",
+        "textColor": "#070068",
+        "backgroundColor": "#e6e8ef",
         "borderWidth": 0,
         "borderColor": "#000000",
         "font": "Helvetica",
         "automaticResize": "Disabled",
         "size": 1.1,
         "linkTo": "",
-        "customCss": "font-family: \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, sans-serif\nfont-weight: 600\npadding: 0 16px\nbox-sizing: border-box\nborder-radius: 6px\ndisplay: flex\nalign-items: center"
+        "customCss": "font-family: \"Noto Sans\", \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, sans-serif\nfont-weight: 600\npadding: 0 16px\nbox-sizing: border-box\nborder-radius: 6px\ndisplay: flex\nalign-items: center"
       },
       "x": 4.4,
-      "y": 215.6,
-      "id": "131",
+      "y": 217.6,
+      "id": "132",
       "canvas": "0",
-      "order": 16,
+      "order": 17,
       "valid": 1
     },
     {
@@ -4391,12 +4414,12 @@
             "automaticResize": "Disabled",
             "size": 1.05,
             "linkTo": "",
-            "customCss": "font-family: \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, sans-serif\nfont-weight: 600\nletter-spacing: 0.02em\npadding: 0 10px\nbox-sizing: border-box\nborder-radius: 4px\ndisplay: flex\nalign-items: center"
+            "customCss": "font-family: \"Noto Sans\", \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, sans-serif\nfont-weight: 600\nletter-spacing: 0.02em\npadding: 0 10px\nbox-sizing: border-box\nborder-radius: 4px\ndisplay: flex\nalign-items: center"
           },
           "x": 5.4,
-          "y": 222.6,
+          "y": 224.6,
           "percentage": -1,
-          "id": "133",
+          "id": "134",
           "canvas": "0",
           "order": 0,
           "valid": 1
@@ -4429,19 +4452,19 @@
             "backgroundColor": "#ffffff"
           },
           "x": 5.4,
-          "y": 225.8,
+          "y": 227.8,
           "percentage": -1,
-          "id": "134",
+          "id": "135",
           "canvas": "0",
           "order": 1,
           "valid": 1
         }
       ],
       "x": 4.4,
-      "y": 221.6,
-      "id": "132",
+      "y": 223.6,
+      "id": "133",
       "canvas": "0",
-      "order": 17,
+      "order": 18,
       "valid": 1
     },
     {
@@ -4479,12 +4502,12 @@
             "automaticResize": "Disabled",
             "size": 1.05,
             "linkTo": "",
-            "customCss": "font-family: \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, sans-serif\nfont-weight: 600\nletter-spacing: 0.02em\npadding: 0 10px\nbox-sizing: border-box\nborder-radius: 4px\ndisplay: flex\nalign-items: center"
+            "customCss": "font-family: \"Noto Sans\", \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, sans-serif\nfont-weight: 600\nletter-spacing: 0.02em\npadding: 0 10px\nbox-sizing: border-box\nborder-radius: 4px\ndisplay: flex\nalign-items: center"
           },
           "x": 98.2,
-          "y": 222.6,
+          "y": 224.6,
           "percentage": -1,
-          "id": "136",
+          "id": "137",
           "canvas": "0",
           "order": 0,
           "valid": 1
@@ -4527,19 +4550,19 @@
             "backgroundColor": "#ffffff"
           },
           "x": 98.2,
-          "y": 225.8,
+          "y": 227.8,
           "percentage": -1,
-          "id": "137",
+          "id": "138",
           "canvas": "0",
           "order": 1,
           "valid": 1
         }
       ],
       "x": 97.2,
-      "y": 221.6,
-      "id": "135",
+      "y": 223.6,
+      "id": "136",
       "canvas": "0",
-      "order": 18,
+      "order": 19,
       "valid": 1
     },
     {
@@ -4577,12 +4600,12 @@
             "automaticResize": "Disabled",
             "size": 1.05,
             "linkTo": "",
-            "customCss": "font-family: \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, sans-serif\nfont-weight: 600\nletter-spacing: 0.02em\npadding: 0 10px\nbox-sizing: border-box\nborder-radius: 4px\ndisplay: flex\nalign-items: center"
+            "customCss": "font-family: \"Noto Sans\", \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, sans-serif\nfont-weight: 600\nletter-spacing: 0.02em\npadding: 0 10px\nbox-sizing: border-box\nborder-radius: 4px\ndisplay: flex\nalign-items: center"
           },
           "x": 5.4,
-          "y": 263.2,
+          "y": 265.2,
           "percentage": -1,
-          "id": "139",
+          "id": "140",
           "canvas": "0",
           "order": 0,
           "valid": 1
@@ -4625,19 +4648,19 @@
             "backgroundColor": "#ffffff"
           },
           "x": 5.4,
-          "y": 266.4,
+          "y": 268.4,
           "percentage": -1,
-          "id": "140",
+          "id": "141",
           "canvas": "0",
           "order": 1,
           "valid": 1
         }
       ],
       "x": 4.4,
-      "y": 262.2,
-      "id": "138",
+      "y": 264.2,
+      "id": "139",
       "canvas": "0",
-      "order": 19,
+      "order": 20,
       "valid": 1
     },
     {
@@ -4675,12 +4698,12 @@
             "automaticResize": "Disabled",
             "size": 1.05,
             "linkTo": "",
-            "customCss": "font-family: \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, sans-serif\nfont-weight: 600\nletter-spacing: 0.02em\npadding: 0 10px\nbox-sizing: border-box\nborder-radius: 4px\ndisplay: flex\nalign-items: center"
+            "customCss": "font-family: \"Noto Sans\", \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, sans-serif\nfont-weight: 600\nletter-spacing: 0.02em\npadding: 0 10px\nbox-sizing: border-box\nborder-radius: 4px\ndisplay: flex\nalign-items: center"
           },
           "x": 98.2,
-          "y": 263.2,
+          "y": 265.2,
           "percentage": -1,
-          "id": "142",
+          "id": "143",
           "canvas": "0",
           "order": 0,
           "valid": 1
@@ -4723,19 +4746,19 @@
             "backgroundColor": "#ffffff"
           },
           "x": 98.2,
-          "y": 266.4,
+          "y": 268.4,
           "percentage": -1,
-          "id": "143",
+          "id": "144",
           "canvas": "0",
           "order": 1,
           "valid": 1
         }
       ],
       "x": 97.2,
-      "y": 262.2,
-      "id": "141",
+      "y": 264.2,
+      "id": "142",
       "canvas": "0",
-      "order": 20,
+      "order": 21,
       "valid": 1
     },
     {
@@ -4773,12 +4796,12 @@
             "automaticResize": "Disabled",
             "size": 1.05,
             "linkTo": "",
-            "customCss": "font-family: \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, sans-serif\nfont-weight: 600\nletter-spacing: 0.02em\npadding: 0 10px\nbox-sizing: border-box\nborder-radius: 4px\ndisplay: flex\nalign-items: center"
+            "customCss": "font-family: \"Noto Sans\", \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, sans-serif\nfont-weight: 600\nletter-spacing: 0.02em\npadding: 0 10px\nbox-sizing: border-box\nborder-radius: 4px\ndisplay: flex\nalign-items: center"
           },
           "x": 5.4,
-          "y": 303.8,
+          "y": 305.8,
           "percentage": -1,
-          "id": "145",
+          "id": "146",
           "canvas": "0",
           "order": 0,
           "valid": 1
@@ -4821,19 +4844,19 @@
             "backgroundColor": "#ffffff"
           },
           "x": 5.4,
-          "y": 307.0,
+          "y": 309.0,
           "percentage": -1,
-          "id": "146",
+          "id": "147",
           "canvas": "0",
           "order": 1,
           "valid": 1
         }
       ],
       "x": 4.4,
-      "y": 302.8,
-      "id": "144",
+      "y": 304.8,
+      "id": "145",
       "canvas": "0",
-      "order": 21,
+      "order": 22,
       "valid": 1
     },
     {
@@ -4871,12 +4894,12 @@
             "automaticResize": "Disabled",
             "size": 1.05,
             "linkTo": "",
-            "customCss": "font-family: \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, sans-serif\nfont-weight: 600\nletter-spacing: 0.02em\npadding: 0 10px\nbox-sizing: border-box\nborder-radius: 4px\ndisplay: flex\nalign-items: center"
+            "customCss": "font-family: \"Noto Sans\", \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, sans-serif\nfont-weight: 600\nletter-spacing: 0.02em\npadding: 0 10px\nbox-sizing: border-box\nborder-radius: 4px\ndisplay: flex\nalign-items: center"
           },
           "x": 98.2,
-          "y": 303.8,
+          "y": 305.8,
           "percentage": -1,
-          "id": "148",
+          "id": "149",
           "canvas": "0",
           "order": 0,
           "valid": 1
@@ -4919,19 +4942,19 @@
             "backgroundColor": "#ffffff"
           },
           "x": 98.2,
-          "y": 307.0,
+          "y": 309.0,
           "percentage": -1,
-          "id": "149",
+          "id": "150",
           "canvas": "0",
           "order": 1,
           "valid": 1
         }
       ],
       "x": 97.2,
-      "y": 302.8,
-      "id": "147",
+      "y": 304.8,
+      "id": "148",
       "canvas": "0",
-      "order": 22,
+      "order": 23,
       "valid": 1
     },
     {
@@ -4969,12 +4992,12 @@
             "automaticResize": "Disabled",
             "size": 1.05,
             "linkTo": "",
-            "customCss": "font-family: \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, sans-serif\nfont-weight: 600\nletter-spacing: 0.02em\npadding: 0 10px\nbox-sizing: border-box\nborder-radius: 4px\ndisplay: flex\nalign-items: center"
+            "customCss": "font-family: \"Noto Sans\", \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, sans-serif\nfont-weight: 600\nletter-spacing: 0.02em\npadding: 0 10px\nbox-sizing: border-box\nborder-radius: 4px\ndisplay: flex\nalign-items: center"
           },
           "x": 5.4,
-          "y": 344.4,
+          "y": 346.4,
           "percentage": -1,
-          "id": "151",
+          "id": "152",
           "canvas": "0",
           "order": 0,
           "valid": 1
@@ -5007,19 +5030,19 @@
             "backgroundColor": "#ffffff"
           },
           "x": 5.4,
-          "y": 347.6,
+          "y": 349.6,
           "percentage": -1,
-          "id": "152",
+          "id": "153",
           "canvas": "0",
           "order": 1,
           "valid": 1
         }
       ],
       "x": 4.4,
-      "y": 343.4,
-      "id": "150",
+      "y": 345.4,
+      "id": "151",
       "canvas": "0",
-      "order": 23,
+      "order": 24,
       "valid": 1
     },
     {
@@ -5057,12 +5080,12 @@
             "automaticResize": "Disabled",
             "size": 1.05,
             "linkTo": "",
-            "customCss": "font-family: \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, sans-serif\nfont-weight: 600\nletter-spacing: 0.02em\npadding: 0 10px\nbox-sizing: border-box\nborder-radius: 4px\ndisplay: flex\nalign-items: center"
+            "customCss": "font-family: \"Noto Sans\", \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, sans-serif\nfont-weight: 600\nletter-spacing: 0.02em\npadding: 0 10px\nbox-sizing: border-box\nborder-radius: 4px\ndisplay: flex\nalign-items: center"
           },
           "x": 98.2,
-          "y": 344.4,
+          "y": 346.4,
           "percentage": -1,
-          "id": "154",
+          "id": "155",
           "canvas": "0",
           "order": 0,
           "valid": 1
@@ -5115,19 +5138,19 @@
             "backgroundColor": "#ffffff"
           },
           "x": 98.2,
-          "y": 347.6,
+          "y": 349.6,
           "percentage": -1,
-          "id": "155",
+          "id": "156",
           "canvas": "0",
           "order": 1,
           "valid": 1
         }
       ],
       "x": 97.2,
-      "y": 343.4,
-      "id": "153",
+      "y": 345.4,
+      "id": "154",
       "canvas": "0",
-      "order": 24,
+      "order": 25,
       "valid": 1
     },
     {
@@ -5165,12 +5188,12 @@
             "automaticResize": "Disabled",
             "size": 1.05,
             "linkTo": "",
-            "customCss": "font-family: \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, sans-serif\nfont-weight: 600\nletter-spacing: 0.02em\npadding: 0 10px\nbox-sizing: border-box\nborder-radius: 4px\ndisplay: flex\nalign-items: center"
+            "customCss": "font-family: \"Noto Sans\", \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, sans-serif\nfont-weight: 600\nletter-spacing: 0.02em\npadding: 0 10px\nbox-sizing: border-box\nborder-radius: 4px\ndisplay: flex\nalign-items: center"
           },
           "x": 5.4,
-          "y": 385.0,
+          "y": 387.0,
           "percentage": -1,
-          "id": "157",
+          "id": "158",
           "canvas": "0",
           "order": 0,
           "valid": 1
@@ -5213,19 +5236,19 @@
             "backgroundColor": "#ffffff"
           },
           "x": 5.4,
-          "y": 388.2,
+          "y": 390.2,
           "percentage": -1,
-          "id": "158",
+          "id": "159",
           "canvas": "0",
           "order": 1,
           "valid": 1
         }
       ],
       "x": 4.4,
-      "y": 384.0,
-      "id": "156",
+      "y": 386.0,
+      "id": "157",
       "canvas": "0",
-      "order": 25,
+      "order": 26,
       "valid": 1
     }
   ],

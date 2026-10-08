@@ -38,6 +38,9 @@ def test_generated_files(tmp_path, sat_lmc_snapshot):
         top = data["widget"]
         for i, a in enumerate(top):
             for b in top[i + 1 :]:
+                # Navigation buttons are layered on the page banner on purpose.
+                if {a["type"], b["type"]} == {"LABEL", "DASHLINK"}:
+                    continue
                 assert not _overlap(a, b), (path.name, a["id"], b["id"])
         for widget in widgets:
             for child in widget.get("innerWidgets", []):
@@ -98,7 +101,10 @@ def test_css_is_one_declaration_per_line(tmp_path, sat_lmc_snapshot):
             for key, value in widget["inputs"].items():
                 if key.lower().endswith("css") and value:
                     for line in value.split("\n"):
-                        assert line.count(":") == 1, (widget["type"], key, value)
+                        # One "property: value" per line; values may contain
+                        # colons (data: URIs), never a semicolon.
+                        prop, sep, _ = line.partition(":")
+                        assert sep and prop and " " not in prop, (key, line)
                         assert ";" not in line, (widget["type"], key, value)
 
 
@@ -115,3 +121,24 @@ def test_box_children_have_fixed_heights(tmp_path, sat_lmc_snapshot):
                         # Room for the menu, up to 5 items (longer ones scroll).
                         rows = min(len(child["inputs"]["writeValues"]), 5)
                         assert child["height"] >= 3.8 + rows * 3.0
+
+
+def test_skao_banner(tmp_path, sat_lmc_snapshot):
+    """Every page starts with the SKAO banner (with logo) and brand stripe."""
+    devices = [d for d in sat_lmc_snapshot.devices if d.interface]
+    for path in write_dashboards("S", devices, sat_lmc_snapshot, tmp_path, "t"):
+        banner, stripe = json.loads(path.read_text())["widget"][:2]
+        assert banner["inputs"]["backgroundColor"] == "#070068"
+        assert 'background-image: url("data:image/png,' in banner["inputs"]["customCss"]
+        assert (
+            "linear-gradient(90deg, #e40769, #070068)" in stripe["inputs"]["customCss"]
+        )
+
+
+def test_banner_off(tmp_path, sat_lmc_snapshot):
+    """Banner = false falls back to a plain title bar with no logo."""
+    devices = [d for d in sat_lmc_snapshot.devices if d.interface]
+    files = write_dashboards(
+        "S", devices, sat_lmc_snapshot, tmp_path, "t", LayoutOptions(banner=False)
+    )
+    assert "data:image" not in files[0].read_text()

@@ -273,10 +273,14 @@ except an "umbrella" device whose children all have pages of their own (the
 controller above), which goes on the overview. Define them yourself with
 `[[tool.ska-taranta-setup.subsystems]]` (see below).
 
-**Look and layout.** Every page sits on one grid (`columns` columns of
+**Look and layout.** Every page starts with the standard **SKAO banner**: the
+circular SKAO logo and the page title on SKAO Blueshift Navy, the navigation
+buttons, and the Redshift Magenta-to-navy brand stripe beneath. Colours and
+the heading font (Noto Sans, where installed) follow the SKA brand guidelines
+as used by `ska-ser-sphinx-theme`. Every page sits on one grid (`columns` columns of
 `section_width_px`), centred on the screen. Each section is a box with a
-coloured heading strip and a tint of the same colour: Device blue, Status
-green, Measurements purple, Settings amber, Commands orange, Expert grey,
+coloured heading strip and a tint of the same colour: Device navy, Status
+green, Measurements purple, Settings amber, Commands indigo, Expert grey,
 name families slate. Sections fill rows left to right, and the boxes in a
 row are stretched to the same height so they line up. Device and Status come
 first and Settings, Commands and Expert last; the rest are ordered by height,
@@ -420,7 +424,13 @@ heading_px = 32                 # section heading strip height
 header_gap_px = 20              # space under title bars
 screen_width_px = 1920          # pages are centred on this width
 menu_max_items = 5              # dropdown menu items to make room for
+banner = true                   # the SKAO banner on every page
+logo = ""                       # banner logo: path to an SVG/PNG (default: SKAO mark)
+logo_px = 34
 ```
+
+The bundled logo is the circular SKAO mark from `ska-ser-sphinx-theme`
+(BSD-3-Clause, SKAO). It's 32 px; for a sharper one, point `logo` at an SVG.
 
 ### Choosing which attributes to show
 
