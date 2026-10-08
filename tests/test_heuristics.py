@@ -255,3 +255,34 @@ def test_enum_setter_shows_value_and_has_room_for_its_menu():
 def commands_widgets(sections):
     """All COMMAND widgets in some sections."""
     return [x for s in sections for x in s.widgets if x["type"] == "COMMAND"]
+
+
+@pytest.mark.parametrize(
+    ("name", "unit", "expected"),
+    [
+        ("windSpeed", "ms-1", "Speed"),
+        ("windDirection", "deg", "Direction"),
+        ("pressure", "mbar", "Pressure"),
+        ("temperature", "Celsius", "Temperature"),
+        ("humidity", "percent", "Humidity"),
+        ("rainfallRate", "mm.min-1", "Rainfall"),
+        # Raw signals behind a measurement are diagnostics, not quantities.
+        ("windSpeedCurrent", "mA", None),
+        ("temperatureADC", "counts", None),
+        ("pressureRaw", "", None),
+        # ...but a current on its own is a current.
+        ("psu_current", "A", "Current"),
+    ],
+)
+def test_weather_station_quantities(name, unit, expected):
+    """Units and names from a weather station (ska-mid-wms) are understood."""
+    assert quantity(AttributeInfo(name=name, dtype="DevDouble", unit=unit)) == expected
+
+
+def test_dial_range_from_alarm_span():
+    """Alarm limits plus 10% of their span; directions are always 0-360."""
+    pressure = AttributeInfo(name="pressure", min_alarm=500, max_alarm=1100)
+    assert dial_range(pressure, "Pressure") == (400.0, 1200.0)
+    wind = AttributeInfo(name="windSpeed", min_alarm=0, max_alarm=65)
+    assert dial_range(wind, "Speed") == (0.0, 75.0)
+    assert dial_range(AttributeInfo(name="windDirection"), "Direction") == (0.0, 360.0)

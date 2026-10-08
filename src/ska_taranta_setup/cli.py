@@ -11,7 +11,7 @@ from pathlib import Path
 import click
 
 from ska_taranta_setup.config import Config, load_config
-from ska_taranta_setup.dashboard import LayoutOptions, write_dashboards
+from ska_taranta_setup.dashboard import LayoutOptions, slugify, write_dashboards
 from ska_taranta_setup.model import DeviceInstance, Snapshot
 from ska_taranta_setup.options import OptionsError, build
 
@@ -456,7 +456,20 @@ def upload(
     if not url:
         namespace = os.environ.get("KUBE_NAMESPACE", config.project_name)
         url = f"http://localhost:8080/{namespace}/taranta/"
-    paths = list(files) or sorted(config.dashboards_path.glob("*.wj"))
+    if files:
+        paths = list(files)
+    else:
+        # Only the dashboards ska-taranta generated (named "<title>-..."): a
+        # project may keep its own hand-made ones in the same folder.
+        prefix = f"{slugify(config.title)}-"
+        every = sorted(config.dashboards_path.glob("*.wj"))
+        paths = [p for p in every if p.name.startswith(prefix)]
+        others = [p.name for p in every if p not in paths]
+        if others:
+            click.echo(
+                f"Skipping {len(others)} dashboard(s) not generated here "
+                f"({', '.join(others)}); pass them as arguments to upload them."
+            )
     if not paths:
         raise click.ClickException(
             "No dashboards to upload; run `ska-taranta generate`."

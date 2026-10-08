@@ -142,3 +142,22 @@ def test_banner_off(tmp_path, sat_lmc_snapshot):
         "S", devices, sat_lmc_snapshot, tmp_path, "t", LayoutOptions(banner=False)
     )
     assert "data:image" not in files[0].read_text()
+
+
+def test_trend_titles_dont_repeat():
+    """A section named after its quantity gets "Pressure", not "Pressure · Pressure"."""
+    from ska_taranta_setup.dashboard import trend_boxes
+    from ska_taranta_setup.heuristics import Section, place_attribute
+    from ska_taranta_setup.model import AttributeInfo
+
+    pressure = Section("Pressure")
+    place_attribute(
+        pressure, "d", AttributeInfo(name="pressure", unit="mbar", dtype="DevDouble")
+    )
+    psu = Section("PSU")
+    place_attribute(psu, "d", AttributeInfo(name="psu_vin", dtype="DevDouble"))
+    titles = [
+        b["innerWidgets"][0]["inputs"]["text"]
+        for b in trend_boxes([pressure, psu], "d", LayoutOptions(), 2)
+    ]
+    assert titles == ["Pressure", "PSU · Voltage"]

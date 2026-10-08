@@ -305,6 +305,7 @@ def update_pyproject(config: Config, report: Report, dry_run: bool) -> None:
         table["helmfile_env"] = inline
     table["exclude_classes"] = config.exclude_classes
     table["tango_db"] = config.tango_db
+    table.add(tomlkit.nl())  # keep a blank line before the next table
     tool[TOOL_KEY] = table
     report.changes.append(f"pyproject.toml: added [tool.{TOOL_KEY}]")
     if not dry_run:

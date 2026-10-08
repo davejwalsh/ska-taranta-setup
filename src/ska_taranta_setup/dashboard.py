@@ -234,7 +234,10 @@ def trend_boxes(
     for section in [s for s in sections if s.title not in repeated]:
         for quantity, plot in trend_plots(section, device, max_plots):
             plot[PX] = opts.plot_px
-            box = themed_box(f"{section.title} · {quantity}", "trends", [plot], opts)
+            # "Temperature · Temperature" reads badly; say it once.
+            same = quantity.lower() == section.title.lower()
+            title = section.title if same else f"{section.title} · {quantity}"
+            box = themed_box(title, "trends", [plot], opts)
             box["width"] = opts.span_width(opts.plot_span)
             boxes.append(box)
     return boxes

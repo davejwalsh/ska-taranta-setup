@@ -18,6 +18,11 @@ from typing import Any
 from ska_taranta_setup.options import GenerateOptions, SubsystemSpec, build
 
 TOOL_KEY = "ska-taranta-setup"
+#: Tango's own classes, which come with the ska-tango-base chart rather than
+#: the project (e.g. TangoTest's sys/tg_test/1): never put on dashboards.
+TANGO_SYSTEM_CLASSES = {
+    "TangoTest", "DataBase", "DataBaseds", "DServer", "Starter", "TangoAccessControl",
+}  # fmt: skip
 
 
 @dataclass
@@ -44,6 +49,7 @@ class Config:
     #: Extra environment variables used when rendering helmfile values.
     helmfile_env: dict[str, str] = field(default_factory=dict)
     #: Device classes to leave out of dashboards (regular expressions).
+    #: (Tango's own system and test classes are always left out too.)
     exclude_classes: list[str] = field(default_factory=lambda: [r".*Simulator$"])
     #: Device TRLs to leave out of dashboards (regular expressions).
     exclude_devices: list[str] = field(default_factory=list)
@@ -94,6 +100,8 @@ class Config:
 
     def is_excluded(self, class_name: str, trl: str) -> bool:
         """Whether a device should be left out of dashboards."""
+        if class_name in TANGO_SYSTEM_CLASSES:
+            return True
         return any(re.fullmatch(p, class_name) for p in self.exclude_classes) or any(
             re.fullmatch(p, trl) for p in self.exclude_devices
         )

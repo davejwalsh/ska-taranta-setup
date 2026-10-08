@@ -141,3 +141,36 @@ def test_html_response_is_an_error():
     client = TarantaClient(base="http://h/ns", session=HtmlSession())
     with pytest.raises(UploadError, match="unexpected response"):
         client.save({"name": "X", "widget": []})
+
+
+def test_upload_skips_hand_made_dashboards(tmp_path, monkeypatch):
+    """By default only generated dashboards are uploaded, not the project's own."""
+    from click.testing import CliRunner
+
+    from ska_taranta_setup import cli
+
+    (tmp_path / "pyproject.toml").write_text('[project]\nname = "proj"\n')
+    folder = tmp_path / "dashboards"
+    folder.mkdir()
+    for name in ("proj-overview.wj", "Hand made.wj"):
+        (folder / name).write_text(json.dumps({"name": name, "widget": []}))
+    sent = []
+
+    class Client:
+        base = "http://h/ns"
+
+        def whoami(self):
+            return "user1"
+
+    monkeypatch.setattr(
+        "ska_taranta_setup.upload.TarantaClient.login",
+        classmethod(lambda cls, *a, **k: Client()),
+    )
+    monkeypatch.setattr(
+        "ska_taranta_setup.upload.upload_files",
+        lambda client, paths, progress=None: sent.extend(p.name for p in paths) or [],
+    )
+    result = CliRunner().invoke(cli.main, ["-C", str(tmp_path), "upload"])
+    assert result.exit_code == 0, result.output
+    assert sent == ["proj-overview.wj"]
+    assert "Skipping 1 dashboard(s) not generated here (Hand made.wj)" in result.output

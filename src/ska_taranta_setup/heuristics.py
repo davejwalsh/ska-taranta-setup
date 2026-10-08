@@ -38,6 +38,7 @@ from typing import Any
 
 from ska_taranta_setup import widgets as w
 from ska_taranta_setup.model import (
+    _ACRONYMS,
     AttributeInfo,
     CommandInfo,
     DeviceInterface,
@@ -82,7 +83,31 @@ QUANTITIES: dict[str, str] = {
     "fan": "Fan", "rpm": "Fan",
     "humidity": "Humidity", "pressure": "Pressure",
     "freq": "Frequency", "frequency": "Frequency",
+    "speed": "Speed", "velocity": "Speed",
+    "direction": "Direction", "azimuth": "Direction", "bearing": "Direction",
+    "rainfall": "Rainfall", "rain": "Rainfall", "precipitation": "Rainfall",
 }  # fmt: skip
+#: Units (lower-case) that identify a quantity, checked before the name.
+UNIT_QUANTITIES: dict[str, str] = {
+    "c": "Temperature", "°c": "Temperature", "degc": "Temperature",
+    "deg c": "Temperature", "celsius": "Temperature", "k": "Temperature",
+    "kelvin": "Temperature",
+    "v": "Voltage", "mv": "Voltage",
+    "a": "Current", "ma": "Current",
+    "w": "Power", "mw": "Power", "dbm": "Power",
+    "%": "Load",
+    "hz": "Frequency", "khz": "Frequency", "mhz": "Frequency", "ghz": "Frequency",
+    "s": "Timing", "ms": "Timing", "us": "Timing", "ns": "Timing", "ps": "Timing",
+    "mbar": "Pressure", "hpa": "Pressure", "pa": "Pressure", "kpa": "Pressure",
+    "bar": "Pressure",
+    "ms-1": "Speed", "m/s": "Speed", "m.s-1": "Speed", "km/h": "Speed",
+    "kmh-1": "Speed", "knots": "Speed",
+    "deg": "Direction", "degrees": "Direction", "°": "Direction",
+    "mm": "Rainfall", "mm.min-1": "Rainfall", "mm/h": "Rainfall", "mmh-1": "Rainfall",
+}  # fmt: skip
+#: Last name-words of raw signals behind a measurement (ADC counts, 4-20 mA
+#: loop currents): diagnostics, shown as values but not dialled or plotted.
+RAW_SUFFIXES = {"adc", "raw", "counts", "count"}
 #: Quantities that read well on a dial (if we know its range).
 DIAL_QUANTITIES = {
     "Temperature",
@@ -92,6 +117,9 @@ DIAL_QUANTITIES = {
     "Load",
     "Fan",
     "Humidity",
+    "Pressure",
+    "Speed",
+    "Direction",
 }
 #: Name words that mean "this is a counter or an identifier": never plotted.
 COUNTER_WORDS = {
@@ -150,24 +178,38 @@ class Section:
 # --------------------------------------------------------------------------
 
 
+def is_raw_signal(attr: AttributeInfo) -> bool:
+    """
+    Whether an attribute is the raw signal behind a measurement.
+
+    ``temperatureADC`` (counts) and ``windSpeedCurrent`` (a 4-20 mA loop) are
+    diagnostics for ``temperature`` and ``windSpeed``, not measurements.
+    """
+    words = split_words(attr.name)
+    if not words:
+        return False
+    if attr.unit.strip().lower() == "counts" or words[-1] in RAW_SUFFIXES:
+        return True
+    # "...Current" on another quantity is its loop current, not a current.
+    return words[-1] == "current" and any(
+        w in QUANTITIES and QUANTITIES[w] != "Current" for w in words[:-1]
+    )
+
+
 def quantity(attr: AttributeInfo) -> str | None:
     """The physical quantity an attribute measures, guessed from its name/unit."""
-    unit = attr.unit.strip().lower()
-    if unit in {"c", "°c", "degc", "deg c", "k"}:
-        return "Temperature"
-    if unit in {"v", "mv"}:
-        return "Voltage"
-    if unit in {"a", "ma"}:
-        return "Current"
-    if unit in {"w", "mw", "dbm"}:
-        return "Power"
-    if unit == "%":
-        return "Load"
-    if unit in {"hz", "khz", "mhz", "ghz"}:
-        return "Frequency"
-    if unit in {"s", "ms", "us", "ns", "ps"}:
-        return "Timing"
+    if is_raw_signal(attr):
+        return None
     words = split_words(attr.name)
+    unit = attr.unit.strip().lower()
+    if unit in UNIT_QUANTITIES:
+        kind = UNIT_QUANTITIES[unit]
+        # "percent" and "%" are humidity for a humidity attribute.
+        if kind == "Load" and "humidity" in words:
+            return "Humidity"
+        return kind
+    if unit == "percent":
+        return "Humidity" if "humidity" in words else "Load"
     if any(word in COUNTER_WORDS for word in words):
         return None
     for word in words:
@@ -194,16 +236,34 @@ def _nice(value: float, up: bool) -> float:
 
 
 def dial_range(attr: AttributeInfo, kind: str) -> tuple[float, float] | None:
-    """A sensible dial range from limits, alarms or the kind of quantity."""
+    """
+    A sensible dial range from limits, alarms or the kind of quantity.
+
+    Real limits win; otherwise the alarm limits with 10% of their span either
+    side (not going below zero for a quantity whose alarms are all positive).
+    """
+    if kind == "Direction":
+        return (0.0, 360.0)
     low = _real_limit(attr.min_value)
     high = _real_limit(attr.max_value)
-    if high is None and attr.max_alarm is not None:
-        high = _nice(
-            attr.max_alarm * 1.2 if attr.max_alarm > 0 else attr.max_alarm, up=True
-        )
-    if low is None and attr.min_alarm is not None:
-        low = min(0.0, _nice(attr.min_alarm * 1.2, up=False))
-    if kind == "Load" and high is None:
+    lo_alarm, hi_alarm = attr.min_alarm, attr.max_alarm
+    if hi_alarm is not None and lo_alarm is not None and hi_alarm > lo_alarm:
+        span = hi_alarm - lo_alarm
+        # Round to a step that suits the span (500-1100 mbar -> steps of 50).
+        step = 10 ** math.floor(math.log10(span)) / 2
+        if high is None:
+            high = math.ceil((hi_alarm + 0.1 * span) / step) * step
+        if low is None:
+            low = math.floor((lo_alarm - 0.1 * span) / step) * step
+            if lo_alarm >= 0:
+                low = max(low, 0.0)
+        high, low = float(round(high, 6)), float(round(low, 6))
+    else:
+        if high is None and hi_alarm is not None:
+            high = _nice(hi_alarm * 1.2 if hi_alarm > 0 else hi_alarm, up=True)
+        if low is None and lo_alarm is not None:
+            low = min(0.0, _nice(lo_alarm * 1.2, up=False))
+    if kind in ("Load", "Humidity") and high is None:
         low, high = 0.0, 100.0
     if high is None:
         return None
@@ -249,9 +309,18 @@ def family_key(name: str) -> str:
 
 
 def family_title(key: str) -> str:
-    """A section title for a family key."""
+    """
+    A section title for a family key.
+
+    Short keys with no vowels (``pwsl``, ``tsrc1``, ``gntp``) or known acronyms
+    are upper-cased; words like ``wind`` are capitalised.
+
+    >>> family_title("pwsl"), family_title("tsrc1"), family_title("wind")
+    ('PWSL', 'TSRC1', 'Wind')
+    """
     alpha = re.sub(r"\d+", "", key)
-    return key.upper() if len(alpha) <= 4 else prettify(key)
+    acronym = alpha in _ACRONYMS or not re.search(r"[aeiou]", alpha)
+    return key.upper() if len(alpha) <= 4 and acronym else prettify(key)
 
 
 def short_label(attr: AttributeInfo, family: str | None) -> str:

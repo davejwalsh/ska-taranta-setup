@@ -209,7 +209,7 @@ library of whichever account you upload as, and survive tearing minikube down.
 | `ska-taranta generate` | Writes the linked dashboards: `<project>-overview.wj`, one `<project>-subsystem-<name>.wj` per subsystem and one `.wj` per device. `--no-device-pages` skips the per-device pages; `-d REGEX` limits it to some devices; `--columns N` sets the layout width. |
 | `ska-taranta preview` | Draws wireframes of the dashboards into an HTML page, so you can check a layout without deploying. |
 | `ska-taranta attributes` | Lists every attribute of every device class: the section and widget(s) it gets, and for the ones left out, why. Use it to choose what to exclude. `-d REGEX` limits it; `--hidden` shows only what's left out. |
-| `ska-taranta upload` | Logs in to a running Taranta and creates or updates the dashboards (matched by name), printing a link to each. `--user`, `--token`: see [Which account](#which-account-do-dashboards-go-to). |
+| `ska-taranta upload` | Logs in to a running Taranta and creates or updates the generated dashboards (matched by name), printing a link to each. Hand-made `.wj` files in the same folder are skipped unless named as arguments. `--user`, `--token`: see [Which account](#which-account-do-dashboards-go-to). |
 | `ska-taranta setup` | `init`, `discover` and `generate` in one go. |
 
 `-C PATH` runs any command against another project; `-v` shows detail.
@@ -224,13 +224,18 @@ In order of preference:
 2. `helmfile write-values` for the configured environment (default
    `minikube-ci`), which gives the real per-device properties, including those
    derived from telmodel, such as the SNMP `Model`;
-3. the raw `values*.yaml` files in `charts/` and `helmfile.d/`.
+3. `helm template` of the umbrella chart. Charts built on `ska-tango-util`
+   render a dsconfig `configuration.json` listing every server, class, device
+   and property, however the chart builds them (e.g. ska-mid-wms makes one
+   device per entry of a `station_ids` list from a config-file template);
+4. the raw `values*.yaml` files in `charts/` and `helmfile.d/`.
 
 Both the `ska-tango-devices` layout (`devices: {Class: {trl: props}}`) and
 the older `ska-tango-util` layout (`deviceServers … classes: [...]`) are
 understood. `init` turns on any `K8S_DEPLOY_*SIMULATOR*` switches it finds in
 your `Makefile` for this render, so that simulated device classes are included.
-Simulator device classes themselves are excluded from dashboards by default.
+Simulator device classes themselves are excluded from dashboards by default,
+and Tango's own classes (TangoTest, DataBaseds, ...) always are.
 
 ### 2. What does each device look like?
 
@@ -310,8 +315,9 @@ appended and breaks the links, whereas `ska-taranta upload` updates in place.
 | writable enum (`adminMode`, `controlMode`, …) | dropdown writer |
 | boolean | LED (red when true for `*fault*`/`*error*`/`*alarm*`) |
 | writable boolean | switch |
-| bounded physical quantity (temperature, voltage, power, load, …) | dial, and a trend plot |
+| bounded physical quantity (temperature, voltage, power, load, pressure, wind speed, direction, …; from name or unit) | dial, and a trend plot |
 | other physical or timing quantity (offsets, delays, …) | value display, and a trend plot |
+| raw signals behind a measurement (`…ADC`, `…Raw`, counts, a `…Current` 4–20 mA loop) | value display (no dial or plot) |
 | counters, identifiers, other numbers and strings | value display |
 | writable number or string | writer |
 | numeric array | spectrum plot |
