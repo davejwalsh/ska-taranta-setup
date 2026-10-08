@@ -188,6 +188,7 @@ def _generate(
     devices: tuple[str, ...],
     out: Path | None,
     columns: int | None,
+    screen_width: int | None = None,
 ) -> list[Path]:
     selected = [
         d
@@ -203,11 +204,21 @@ def _generate(
     except (OptionsError, TypeError) as exc:
         raise click.ClickException(str(exc)) from exc
     opts.tile_size = config.layout.get("tile_size", config.tile_size)
+    if screen_width:
+        opts.screen_width_px = screen_width
+        # Re-fit, unless columns/width were set explicitly.
+        opts.columns = config.layout.get("columns", 0)
+        opts.section_width_px = config.layout.get("section_width_px", 0)
+        opts.fit()
     if opts.logo:
         opts.logo = str((config.root / opts.logo).resolve())
         if not Path(opts.logo).is_file():
             raise click.ClickException(f"layout.logo: {opts.logo} not found")
-    opts.columns = columns or config.layout.get("columns", config.columns)
+    if columns or config.columns:
+        opts.columns = columns or config.columns
+        if "section_width_px" not in config.layout:
+            opts.section_width_px = 0
+        opts.fit()
     return write_dashboards(
         config.title,
         selected,
@@ -237,6 +248,11 @@ def _generate(
 )
 @click.option("--columns", type=int, help="Columns to pack sections into.")
 @click.option(
+    "--screen-width",
+    type=int,
+    help="Screen width in px to fill (default: layout.screen_width_px, 1920).",
+)
+@click.option(
     "--device-pages/--no-device-pages",
     default=None,
     help="Also write a detailed page per device (default: on, or "
@@ -249,6 +265,7 @@ def generate(
     output_dir: Path | None,
     devices: tuple[str, ...],
     columns: int | None,
+    screen_width: int | None,
     device_pages: bool | None,
 ) -> None:
     """
@@ -266,7 +283,9 @@ def generate(
         raise click.ClickException(
             f"{path} not found; run `ska-taranta discover` first."
         )
-    written = _generate(config, Snapshot.load(path), devices, output_dir, columns)
+    written = _generate(
+        config, Snapshot.load(path), devices, output_dir, columns, screen_width
+    )
     for file in written:
         click.echo(f"  wrote {_rel(config, file)}")
     click.echo(

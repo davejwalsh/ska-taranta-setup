@@ -33,8 +33,8 @@ class Config:
     project_name: str = ""
     #: Dashboard title prefix (defaults to the project name).
     title: str = ""
-    #: Number of columns sections are packed into.
-    columns: int = 4
+    #: Number of columns sections are packed into (0: fit the screen width).
+    columns: int = 0
     #: Taranta's grid size in pixels (``MIN_WIDGET_SIZE`` in its config.js).
     #: The SKA Taranta image uses 10; upstream Taranta defaults to 20.
     tile_size: int = 10

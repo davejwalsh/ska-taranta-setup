@@ -175,8 +175,8 @@ def test_device_sections_groups_families_and_commands():
             AttributeInfo(name="debug_thing", disp_level="EXPERT"),
         ],
         commands=[
-            CommandInfo(name="Init"),
             CommandInfo(name="Reset"),
+            CommandInfo(name="Init"),
             CommandInfo(name="Poke", in_type="DevString", doc_in="For testing only"),
         ],
     )
@@ -191,7 +191,8 @@ def test_device_sections_groups_families_and_commands():
     device = sections[0]
     assert [w["type"] for w in device.widgets] == ["DEVICE_STATUS", "LED_DISPLAY"]
     commands = sections[3].widgets
-    assert [c["inputs"]["command"]["command"] for c in commands] == ["Reset"]
+    # Init (re-initialise the device) is offered, first; State/Status aren't.
+    assert [c["inputs"]["command"]["command"] for c in commands] == ["Init", "Reset"]
     assert {w["inputs"].get("buttonText") for w in sections[4].widgets} >= {"Poke"}
     assert {w["inputs"]["title"] for w in commands_widgets(sections)} == {""}
 

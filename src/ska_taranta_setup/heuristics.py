@@ -145,7 +145,9 @@ DEVICE_SECTION_ORDER = [
 ]
 #: Attributes not shown at all (covered elsewhere or of no use on a dashboard).
 HIDDEN_ATTRIBUTES = {"state", "loggingtargets"}
-HIDDEN_COMMANDS = {"init", "state", "status"}
+HIDDEN_COMMANDS = {"state", "status"}  # shown by the device status widget
+#: Commands listed first in a Commands section.
+FIRST_COMMANDS = ["init"]
 
 MIN_FAMILY_SIZE = 3
 MAX_LINES_PER_PLOT = 6
@@ -535,7 +537,11 @@ def device_sections(
             place(target, attr)
 
     commands = Section("Commands", kind="commands")
-    for cmd in interface.commands:
+    order = {name: i for i, name in enumerate(FIRST_COMMANDS)}
+    ordered = sorted(
+        interface.commands, key=lambda c: order.get(c.name.lower(), len(order))
+    )
+    for cmd in ordered:
         if cmd.name.lower() in HIDDEN_COMMANDS or options.command_excluded(
             cmd.name, class_name
         ):

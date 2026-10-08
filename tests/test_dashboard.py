@@ -2,6 +2,8 @@
 
 import json
 
+import pytest
+
 from ska_taranta_setup.dashboard import LayoutOptions, write_dashboards
 from ska_taranta_setup.preview import write_preview
 
@@ -161,3 +163,20 @@ def test_trend_titles_dont_repeat():
         for b in trend_boxes([pressure, psu], "d", LayoutOptions(), 2)
     ]
     assert titles == ["Pressure", "PSU · Voltage"]
+
+
+@pytest.mark.parametrize(("screen", "columns"), [(1920, 4), (2560, 5), (1366, 3)])
+def test_layout_fills_the_screen(screen, columns):
+    """Columns and section width are worked out to fill the screen width."""
+    opts = LayoutOptions(screen_width_px=screen)
+    assert opts.columns == columns
+    assert opts.section_width_px >= opts.min_section_px
+    used = (opts.left + opts.page_width) * opts.tile_size + opts.gap_px
+    assert screen - opts.scrollbar_px - 2 <= used <= screen - opts.scrollbar_px + 2
+
+
+def test_explicit_columns_still_fill():
+    """A fixed column count gets wider sections rather than empty space."""
+    opts = LayoutOptions(columns=3, screen_width_px=1920)
+    assert opts.columns == 3
+    assert opts.section_width_px > 550

@@ -206,7 +206,7 @@ library of whichever account you upload as, and survive tearing minikube down.
 | --- | --- |
 | `ska-taranta init` | Adds the Taranta subcharts and values, writes `taranta.mk` and includes it from the `Makefile`, records config in `pyproject.toml`. Idempotent: never overwrites anything you've set. `--dry-run` shows what would change. |
 | `ska-taranta discover` | Finds your devices and records their full interfaces in `taranta/devices.json`. `--live` queries running devices instead. |
-| `ska-taranta generate` | Writes the linked dashboards: `<project>-overview.wj`, one `<project>-subsystem-<name>.wj` per subsystem and one `.wj` per device. `--no-device-pages` skips the per-device pages; `-d REGEX` limits it to some devices; `--columns N` sets the layout width. |
+| `ska-taranta generate` | Writes the linked dashboards: `<project>-overview.wj`, one `<project>-subsystem-<name>.wj` per subsystem and one `.wj` per device. `--no-device-pages` skips the per-device pages; `-d REGEX` limits it to some devices; `--screen-width PX` fills a different screen width; `--columns N` fixes the column count. |
 | `ska-taranta preview` | Draws wireframes of the dashboards into an HTML page, so you can check a layout without deploying. |
 | `ska-taranta attributes` | Lists every attribute of every device class: the section and widget(s) it gets, and for the ones left out, why. Use it to choose what to exclude. `-d REGEX` limits it; `--hidden` shows only what's left out. |
 | `ska-taranta upload` | Logs in to a running Taranta and creates or updates the generated dashboards (matched by name), printing a link to each. Hand-made `.wj` files in the same folder are skipped unless named as arguments. `--user`, `--token`: see [Which account](#which-account-do-dashboards-go-to). |
@@ -278,7 +278,10 @@ except an "umbrella" device whose children all have pages of their own (the
 controller above), which goes on the overview. Define them yourself with
 `[[tool.ska-taranta-setup.subsystems]]` (see below).
 
-**Look and layout.** Every page starts with the standard **SKAO banner**: the
+**Look and layout.** Pages fill the screen width: Taranta places widgets at
+fixed pixel positions, so the layout is computed for `screen_width_px`
+(1920 by default; set your own, or pass `generate --screen-width`). Every
+page starts with the standard **SKAO banner**: the
 circular SKAO logo and the page title on SKAO Blueshift Navy, the navigation
 buttons, and the Redshift Magenta-to-navy brand stripe beneath. Colours and
 the heading font (Noto Sans, where installed) follow the SKA brand guidelines
@@ -323,7 +326,7 @@ appended and breaks the links, whereas `ska-taranta upload` updates in place.
 | numeric array | spectrum plot |
 | other array | value display (JSON) |
 | `healthInfo` | logger |
-| commands (not `Init`/`State`/`Status`) | command button; "testing" and `EXPERT` ones go to an Expert section |
+| commands (not `State`/`Status`) | command button (`Init`, to re-initialise the device, first); "testing" and `EXPERT` ones go to an Expert section |
 
 Sections (each one a Taranta BOX, so it moves as one unit):
 
@@ -417,8 +420,9 @@ detail = "full"
 
 # Sizes, in pixels.
 [tool.ska-taranta-setup.layout]
-columns = 4
-section_width_px = 440
+screen_width_px = 1920          # the screen to fill; set to yours (e.g. 2560)
+columns = 0                     # 0: as many as fit the screen (min 400px each)
+section_width_px = 0            # 0: stretch the columns to fill the screen
 row_px = 38
 gap_px = 24
 dials_per_row = 2               # gauges per row, each captioned with name and unit
@@ -429,7 +433,6 @@ plot_span = 2                   # grid columns per trend plot
 inset_px = 10                   # padding inside each box
 heading_px = 32                 # section heading strip height
 header_gap_px = 20              # space under title bars
-screen_width_px = 1920          # pages are centred on this width
 menu_max_items = 5              # dropdown menu items to make room for
 banner = true                   # the SKAO banner on every page
 logo = ""                       # banner logo: path to an SVG/PNG (default: SKAO mark)

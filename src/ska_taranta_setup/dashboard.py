@@ -53,8 +53,13 @@ class LayoutOptions:
     """
 
     tile_size: int = 10
-    columns: int = 4
-    section_width_px: float = 440
+    #: Grid columns and their width; 0 = fit the screen (as many columns of
+    #: at least ``min_section_px`` as fit, stretched to fill it).
+    columns: int = 0
+    section_width_px: float = 0
+    min_section_px: float = 400
+    #: Room left for the browser's vertical scrollbar.
+    scrollbar_px: float = 20
     gap_px: float = 24
     row_px: float = 38
     #: Rows for "big" widgets kept inside sections (the health-info logger).
@@ -95,6 +100,21 @@ class LayoutOptions:
     logo_px: int = 34
     banner_px: float = 58
     stripe_px: float = 6
+
+    def __post_init__(self) -> None:
+        """Work out automatic columns and section width for the screen."""
+        self.fit()
+
+    def fit(self) -> LayoutOptions:
+        """Fill in ``columns`` / ``section_width_px`` left at 0 (automatic)."""
+        usable = self.screen_width_px - self.scrollbar_px - 2 * self.gap_px
+        if not self.columns:
+            per = self.section_width_px or self.min_section_px
+            self.columns = max(1, int((usable + self.gap_px) // (per + self.gap_px)))
+        if not self.section_width_px:
+            gaps = (self.columns - 1) * self.gap_px
+            self.section_width_px = round((usable - gaps) / self.columns, 1)
+        return self
 
     def units(self, px: float) -> float:
         """Pixels to grid units."""
@@ -142,8 +162,8 @@ class LayoutOptions:
 
     @property
     def left(self) -> float:
-        """Left edge of the page, centring it on the screen."""
-        spare = self.units(self.screen_width_px) - self.page_width
+        """Left edge of the page, centring it on the screen (beside the scrollbar)."""
+        spare = self.units(self.screen_width_px - self.scrollbar_px) - self.page_width
         return round(max(self.gap, spare / 2), 2)
 
     @property
@@ -329,10 +349,13 @@ def _position_children(box: dict[str, Any], opts: LayoutOptions) -> None:
     elif all("width" in child for child in children):
         # Children with their own widths (gauge rows): Taranta's custom width.
         x = box["x"] + border
-        for child in children:
+        right = box["x"] + box["width"] - border
+        for i, child in enumerate(children):
             child["x"] = round(x, 2)
             child["y"] = round(box["y"] + border, 2)
-            child["width"] = round(child["width"], 2)
+            # The last child takes what's left, so rounding can't overflow.
+            last = i == len(children) - 1
+            child["width"] = round(right - x if last else child["width"], 2)
             child["height"] = round(box["height"] - 2 * border, 2)
             child["percentage"] = CUSTOM_WIDTH
             x += child["width"]
