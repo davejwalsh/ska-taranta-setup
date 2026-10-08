@@ -20,11 +20,19 @@ re-uploading replaces the previous version instead of making copies.
 from __future__ import annotations
 
 import json
+import time
+from collections.abc import Callable
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
 import requests
+
+#: Gateway errors from the proxy in front of the shared SKAO dashboard
+#: service are usually transient; retry them.
+RETRY_STATUSES = {502, 503, 504}
+RETRIES = 3
+RETRY_DELAY_S = 3.0
 
 #: The default user baked into the taranta-auth image's users.json.
 DEFAULT_USER = "user1"
@@ -104,6 +112,20 @@ class TarantaClient:
             raise UploadError(f"listing dashboards failed ({resp.status_code})")
         return {d["name"]: d.get("id") or d.get("_id") for d in resp.json()}
 
+    def _post_with_retries(self, url: str, body: dict[str, Any]) -> Any:
+        """POST, retrying gateway errors and timeouts from the shared service."""
+        for attempt in range(RETRIES + 1):
+            try:
+                resp = self.session.post(url, json=body, timeout=120)
+            except requests.exceptions.RequestException:
+                if attempt == RETRIES:
+                    raise
+            else:
+                if resp.status_code not in RETRY_STATUSES or attempt == RETRIES:
+                    return resp
+            time.sleep(RETRY_DELAY_S * (attempt + 1))
+        raise AssertionError("unreachable")  # pragma: no cover
+
     def save(self, dashboard: dict[str, Any], dashboard_id: str = "") -> dict[str, Any]:
         """Create or update a dashboard from the contents of a ``.wj`` file."""
         body = {
@@ -115,7 +137,7 @@ class TarantaClient:
             "filters": dashboard.get("filters", []),
             "tangoDB": self.tango_db,
         }
-        resp = self.session.post(f"{self.base}/dashboards/", json=body, timeout=60)
+        resp = self._post_with_retries(f"{self.base}/dashboards/", body)
         if resp.status_code != 200:
             raise UploadError(
                 f"saving {dashboard['name']!r} failed "
@@ -170,31 +192,39 @@ def resolve_links(dashboard: dict[str, Any], ids: dict[str, str]) -> bool:
     return changed
 
 
-def upload_files(client: TarantaClient, files: list[Path]) -> list[UploadResult]:
+def upload_files(
+    client: TarantaClient,
+    files: list[Path],
+    progress: Callable[[UploadResult], None] | None = None,
+) -> list[UploadResult]:
     """
     Upload ``.wj`` files, updating dashboards that already have the same name.
 
-    Then fill the saved dashboards' ids into the links between them (a second
-    save of the dashboards with links), so links survive renames in Taranta.
+    Links between dashboards get the target's id filled in before saving, from
+    the dashboards already in the library, so each dashboard is normally saved
+    once. Only links to dashboards created by this upload need a second save,
+    after those exist. ``progress`` is called as each dashboard is saved.
     """
     existing = client.list_dashboards()
     results = []
-    saved: list[tuple[dict[str, Any], str]] = []
+    pending: list[tuple[dict[str, Any], str]] = []
     for path in files:
         dashboard = json.loads(path.read_text())
+        resolve_links(dashboard, existing)
         dashboard_id = existing.get(dashboard["name"], "")
         result = client.save(dashboard, dashboard_id)
         existing[dashboard["name"]] = result["id"]
-        saved.append((dashboard, result["id"]))
-        results.append(
-            UploadResult(
-                name=dashboard["name"],
-                file=path.name,
-                created=bool(result.get("created")),
-                url=client.dashboard_url(result["id"]),
-            )
+        pending.append((dashboard, result["id"]))
+        outcome = UploadResult(
+            name=dashboard["name"],
+            file=path.name,
+            created=bool(result.get("created")),
+            url=client.dashboard_url(result["id"]),
         )
-    for dashboard, dashboard_id in saved:
+        results.append(outcome)
+        if progress is not None:
+            progress(outcome)
+    for dashboard, dashboard_id in pending:
         if resolve_links(dashboard, existing):
             client.save(dashboard, dashboard_id)
     return results

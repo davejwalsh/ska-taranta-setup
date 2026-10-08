@@ -66,22 +66,62 @@ def test_upload_creates_and_updates(tmp_path):
     assert bodies["New"]["tangoDB"] == "taranta"
 
 
-def test_upload_fills_link_ids(tmp_path):
-    """After saving, links between the uploaded dashboards get the real ids."""
+def _linking(name, target):
     link = {
         "type": "DASHLINK",
-        "inputs": {"DefaultDashboard": json.dumps({"name": "Old", "id": ""})},
+        "inputs": {"DefaultDashboard": json.dumps({"name": target, "id": ""})},
     }
-    (tmp_path / "a.wj").write_text(
-        json.dumps({"name": "New", "widget": [{"type": "BOX", "innerWidgets": [link]}]})
-    )
+    return {"name": name, "widget": [{"type": "BOX", "innerWidgets": [link]}]}
+
+
+def _target(body):
+    raw = body["widgets"][0]["innerWidgets"][0]["inputs"]["DefaultDashboard"]
+    return json.loads(raw)
+
+
+def test_links_to_existing_dashboards_need_one_save(tmp_path):
+    """A link to a dashboard already in the library is resolved before saving."""
+    (tmp_path / "a.wj").write_text(json.dumps(_linking("New", "Old")))
     session = FakeSession()
-    client = TarantaClient(base="http://h/ns", session=session)
-    upload_files(client, [tmp_path / "a.wj"])
-    _, second = session.posts  # saved, then re-saved with the link resolved
-    assert second[1]["id"] == "new"
-    target = second[1]["widgets"][0]["innerWidgets"][0]["inputs"]["DefaultDashboard"]
-    assert json.loads(target) == {"name": "Old", "id": "abc"}
+    upload_files(
+        TarantaClient(base="http://h/ns", session=session), [tmp_path / "a.wj"]
+    )
+    ((_, body),) = session.posts  # saved once, link already filled in
+    assert _target(body) == {"name": "Old", "id": "abc"}
+
+
+def test_links_to_new_dashboards_are_filled_after(tmp_path):
+    """A link to a dashboard created in the same upload gets a second save."""
+    (tmp_path / "1.wj").write_text(json.dumps(_linking("A", "B")))
+    (tmp_path / "2.wj").write_text(json.dumps({"name": "B", "widget": []}))
+    session = FakeSession()
+    seen = []
+    upload_files(
+        TarantaClient(base="http://h/ns", session=session),
+        [tmp_path / "1.wj", tmp_path / "2.wj"],
+        progress=lambda r: seen.append(r.name),
+    )
+    assert seen == ["A", "B"]
+    assert [body["name"] for _, body in session.posts] == ["A", "B", "A"]
+    assert _target(session.posts[-1][1])["id"] == "new"
+
+
+def test_gateway_errors_are_retried(monkeypatch):
+    """A transient 502 from the shared service doesn't fail the upload."""
+    monkeypatch.setattr("ska_taranta_setup.upload.RETRY_DELAY_S", 0)
+
+    class FlakySession(FakeSession):
+        calls = 0
+
+        def post(self, url, json=None, timeout=None):
+            FlakySession.calls += 1
+            if FlakySession.calls == 1:
+                return FakeResponse(502, {"error": "bad gateway"})
+            return super().post(url, json=json, timeout=timeout)
+
+    client = TarantaClient(base="http://h/ns", session=FlakySession())
+    assert client.save({"name": "X", "widget": []})["id"] == "new"
+    assert FlakySession.calls == 2
 
 
 def test_html_response_is_an_error():

@@ -391,6 +391,10 @@ section_width_px = 440
 row_px = 38
 gap_px = 30
 dials_per_row = 3
+inset_px = 8                    # padding inside each box
+header_gap_px = 20              # space under title bars
+screen_width_px = 1920          # pages are centred on this width; sections fill
+                                # the middle columns first and grow outwards
 ```
 
 ## Development

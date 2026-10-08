@@ -64,6 +64,12 @@ class LayoutOptions:
     #: Height of one item in a dropdown's menu, and the menu's own padding.
     menu_item_px: float = 32
     menu_padding_px: float = 16
+    #: Padding inside each box, between its frame and its contents.
+    inset_px: int = 8
+    #: Space between a title bar and what's below it.
+    header_gap_px: float = 20
+    #: Screen width the page is centred on.
+    screen_width_px: float = 1920
 
     def units(self, px: float) -> float:
         """Pixels to grid units."""
@@ -111,9 +117,25 @@ class LayoutOptions:
         return self.units(self.link_px)
 
     @property
-    def border(self) -> float:
-        """A 1px BOX border in units."""
-        return 1 / self.tile_size
+    def inset(self) -> float:
+        """Padding inside each box, in units."""
+        return self.units(self.inset_px)
+
+    @property
+    def header_gap(self) -> float:
+        """Space below a title bar, in units."""
+        return self.units(self.header_gap_px)
+
+    @property
+    def left(self) -> float:
+        """Left edge of the page, centring it on the screen."""
+        spare = self.units(self.screen_width_px) - self.page_width
+        return round(max(self.gap, spare / 2), 2)
+
+    def box_height(self, content: float, titled: bool) -> float:
+        """A box's height for ``content`` units of children, in units."""
+        title = self.title_height if titled else 0
+        return round(title + content + self.margin + 2 * self.inset, 2)
 
 
 #: Taranta's "custom height" marker for a BOX child (shared/utils/canvas.js).
@@ -122,7 +144,8 @@ CUSTOM_HEIGHT = -1
 
 def _height(widget: dict[str, Any], opts: LayoutOptions) -> float:
     """A widget's height in a vertical box, in units."""
-    slots = opts.big_slots if widget["type"] in w.BIG_WIDGETS else 1
+    big = widget["type"] in w.BIG_WIDGETS
+    slots = opts.big_slots if big else widget.get(w.ROWS, 1)
     rows = widget.get(w.MENU_ROWS, 0)
     menu = rows * opts.menu_item_px + (opts.menu_padding_px if rows else 0)
     return round(slots * opts.row_height + opts.units(menu), 2)
@@ -136,7 +159,8 @@ def _dial_rows(section: Section, opts: LayoutOptions) -> list[dict[str, Any]]:
                 "",
                 section.dials[start : start + opts.dials_per_row],
                 layout="horizontal",
-                border=0,
+                inset=0,
+                frame=False,
             )
         )
     return rows
@@ -152,12 +176,15 @@ def section_box(
         *trend_plots(section, device, max_plots),
     ]
     box = w.box(
-        section.title, children, big_slot=opts.big_slots, padding=opts.title_padding
+        section.title,
+        children,
+        big_slot=opts.big_slots,
+        padding=opts.title_padding,
+        inset=opts.inset_px,
     )
-    title = opts.title_height if section.title else 0
     box["width"] = opts.section_width
-    box["height"] = round(
-        title + sum(_height(child, opts) for child in children) + opts.margin, 2
+    box["height"] = opts.box_height(
+        sum(_height(child, opts) for child in children), bool(section.title)
     )
     return box
 
@@ -194,16 +221,31 @@ def _position_children(box: dict[str, Any], opts: LayoutOptions) -> None:
             _position_children(child, opts)
 
 
+def _centre_out(count_: int) -> list[int]:
+    """Column indexes from the middle outwards, e.g. 4 -> [1, 2, 0, 3]."""
+    middle = (count_ - 1) / 2
+    return sorted(range(count_), key=lambda c: (abs(c - middle), c))
+
+
 def pack(
     boxes: list[dict[str, Any]], opts: LayoutOptions, top: float
 ) -> list[dict[str, Any]]:
-    """Place boxes in columns, each into the currently shortest column."""
-    columns = max(1, opts.columns)
+    """
+    Place boxes in columns, each into the currently shortest column.
+
+    Only as many columns as there are boxes are used, centred on the page, and
+    ties go to the middle columns first, so layouts grow outwards from the
+    centre of the screen.
+    """
+    columns = max(1, min(opts.columns, len(boxes)))
+    block = columns * (opts.section_width + opts.gap) - opts.gap
+    x0 = opts.left + (opts.page_width - block) / 2
+    rank = {c: i for i, c in enumerate(_centre_out(columns))}
     heights = [top] * columns
     for box in boxes:
-        col = heights.index(min(heights))
-        box["x"] = opts.gap + col * (opts.section_width + opts.gap)
-        box["y"] = heights[col]
+        col = min(range(columns), key=lambda c: (round(heights[c], 2), rank[c]))
+        box["x"] = round(x0 + col * (opts.section_width + opts.gap), 2)
+        box["y"] = round(heights[col], 2)
         heights[col] += box["height"] + opts.gap
         _position_children(box, opts)
     return boxes
@@ -219,6 +261,7 @@ def _finalise(widgets_: list[dict[str, Any]]) -> list[dict[str, Any]]:
         widget["order"] = order
         widget["valid"] = 1
         widget.pop(w.MENU_ROWS, None)
+        widget.pop(w.ROWS, None)
         for i, child in enumerate(widget.get("innerWidgets", [])):
             visit(child, i)
         return widget
@@ -273,8 +316,8 @@ def header(
     link_space = len(links) * (opts.link_width + opts.gap / 2)
     title = w.label(text, size=size, background=background)
     title["inputs"]["customCss"] = w.css(padding="0 12px", box_sizing="border-box")
-    widgets_ = [_place(title, opts.gap, top, opts.page_width - link_space, height)]
-    x = opts.gap + opts.page_width - link_space + opts.gap / 2
+    widgets_ = [_place(title, opts.left, top, opts.page_width - link_space, height)]
+    x = opts.left + opts.page_width - link_space + opts.gap / 2
     for name, label in links:
         link = w.dashboard_link(name, label)
         widgets_.append(_place(link, x, top, opts.link_width, height))
@@ -345,19 +388,24 @@ def status_bar(
     per_row = max(1, ctx.options.status_bar_columns)
     width = (opts.page_width - (per_row - 1) * opts.gap / 2) / per_row
     slots = max(len(widgets_) for _, widgets_ in contents)
-    height = round(opts.title_height + slots * opts.row_height + opts.margin, 2)
+    height = opts.box_height(slots * opts.row_height, titled=True)
+    used = min(per_row, len(contents))
+    x0 = opts.left + (opts.page_width - used * width - (used - 1) * opts.gap / 2) / 2
     cells = []
     for i, (device, widgets_) in enumerate(contents):
         padding = [
             w.label("", background="#ffffff") for _ in range(slots - len(widgets_))
         ]
         cell = w.box(
-            short_name(device.trl), widgets_ + padding, padding=opts.title_padding
+            short_name(device.trl),
+            widgets_ + padding,
+            padding=opts.title_padding,
+            inset=opts.inset_px,
         )
         row, col = divmod(i, per_row)
         _place(
             cell,
-            opts.gap + col * (width + opts.gap / 2),
+            x0 + col * (width + opts.gap / 2),
             top + row * (height + opts.gap / 2),
             width,
             height,
@@ -402,7 +450,7 @@ def device_band(
     boxes = [
         section_box(s, trl, opts, ctx.options.max_plots_per_section) for s in sections
     ]
-    return band + pack(boxes, opts, bottom(band) + opts.gap / 2)
+    return band + pack(boxes, opts, bottom(band) + opts.header_gap)
 
 
 def _sections(ctx: Context, device: DeviceInstance) -> list[Section]:
@@ -433,7 +481,8 @@ def device_dashboard(ctx: Context, device: DeviceInstance) -> dict[str, Any] | N
         section_box(s, trl, opts, ctx.options.max_plots_per_section) for s in sections
     ]
     return dashboard_file(
-        ctx.name(device.trl), [*top, *pack(boxes, opts, opts.header_height)]
+        ctx.name(device.trl),
+        [*top, *pack(boxes, opts, bottom(top) + opts.header_gap)],
     )
 
 
@@ -443,7 +492,7 @@ def subsystem_dashboard(ctx: Context, subsystem: Subsystem) -> dict[str, Any]:
     widgets_ = header(
         f"{ctx.title} — {subsystem.name}", opts, [(ctx.overview_name, "Overview")]
     )
-    widgets_ += status_bar(ctx, subsystem.devices, bottom(widgets_) + opts.gap / 2)
+    widgets_ += status_bar(ctx, subsystem.devices, bottom(widgets_) + opts.header_gap)
     for device in subsystem.devices:
         sections = _sections(ctx, device)
         if not sections:
@@ -465,7 +514,7 @@ def overview_dashboard(ctx: Context, devices: list[DeviceInstance]) -> dict[str,
     """A status bar for everything, then a tile per subsystem and device."""
     opts = ctx.layout
     widgets_ = header(f"{ctx.title} — Overview", opts)
-    widgets_ += status_bar(ctx, devices, bottom(widgets_) + opts.gap / 2)
+    widgets_ += status_bar(ctx, devices, bottom(widgets_) + opts.header_gap)
 
     def links(targets: list[tuple[str, str]]) -> list[dict[str, Any]]:
         return [w.dashboard_link(name, text) for name, text in targets]

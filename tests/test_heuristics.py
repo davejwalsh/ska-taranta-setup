@@ -193,6 +193,7 @@ def test_device_sections_groups_families_and_commands():
     commands = sections[3].widgets
     assert [c["inputs"]["command"]["command"] for c in commands] == ["Reset"]
     assert {w["inputs"].get("buttonText") for w in sections[4].widgets} >= {"Poke"}
+    assert {w["inputs"]["title"] for w in commands_widgets(sections)} == {""}
 
 
 def test_plots_capped_and_dial_free_first():
@@ -248,3 +249,8 @@ def test_enum_setter_shows_value_and_has_room_for_its_menu():
         {"title": "Monitor And Control", "value": "2"},
     ]
     assert setter["_menu_rows"] == 3
+
+
+def commands_widgets(sections):
+    """All COMMAND widgets in some sections."""
+    return [x for s in sections for x in s.widgets if x["type"] == "COMMAND"]

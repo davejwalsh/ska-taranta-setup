@@ -377,6 +377,7 @@ def upload(
         DEFAULT_USER,
         TarantaClient,
         UploadError,
+        UploadResult,
         upload_files,
     )
 
@@ -405,13 +406,15 @@ def upload(
         click.echo(
             f"Uploading {len(paths)} dashboard(s) as {username} via {client.base}"
         )
-        results = upload_files(client, paths)
+
+        def report(result: UploadResult) -> None:
+            action = "created" if result.created else "updated"
+            click.echo(f"  {action}: {result.name}")
+            click.echo(f"           {result.url}")
+
+        upload_files(client, paths, progress=report)
     except (UploadError, OSError) as exc:
         raise click.ClickException(str(exc)) from exc
-    for result in results:
-        action = "created" if result.created else "updated"
-        click.echo(f"  {action}: {result.name}")
-        click.echo(f"           {result.url}")
     click.echo(
         f"\nThey're in {username}'s dashboard library: log in to Taranta as "
         f"{username} to see them"

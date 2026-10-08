@@ -24,7 +24,7 @@
         "linkTo": "",
         "customCss": "padding: 0 12px\nbox-sizing: border-box"
       },
-      "x": 3.0,
+      "x": 3.5,
       "y": 1.5,
       "id": "1",
       "canvas": "0",
@@ -44,7 +44,7 @@
         "ButtonCss": "width: 100%\nfont-weight: bold",
         "CustomCss": "padding: 0 4px\nbox-sizing: border-box"
       },
-      "x": 171.0,
+      "x": 171.5,
       "y": 1.5,
       "id": "2",
       "canvas": "0",
@@ -54,27 +54,27 @@
     {
       "type": "BOX",
       "width": 29.58,
-      "height": 23.4,
+      "height": 25.0,
       "inputs": {
         "title": "utc/ci",
         "bigWidget": 5,
         "smallWidget": 1,
         "textColor": "#1a1a1a",
         "backgroundColor": "#ffffff",
-        "borderColor": "#c3cad4",
-        "borderWidth": 1,
+        "borderColor": "#ffffff",
+        "borderWidth": 8,
         "borderStyle": "solid",
         "textSize": 1,
         "fontFamily": "Helvetica",
         "layout": "vertical",
         "alignment": "Left",
         "padding": 0.25,
-        "customCss": "font-weight: bold"
+        "customCss": "outline: 1px solid #c3cad4\noutline-offset: -1px\nfont-weight: bold"
       },
       "innerWidgets": [
         {
           "type": "DEVICE_STATUS",
-          "width": 29.38,
+          "width": 27.98,
           "height": 3.8,
           "inputs": {
             "device": "taranta://low-sat/utc/ci",
@@ -94,8 +94,8 @@
             "linkTo": "",
             "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 3.1,
-          "y": 10.2,
+          "x": 50.92,
+          "y": 11.4,
           "percentage": -1,
           "id": "4",
           "canvas": "0",
@@ -104,7 +104,7 @@
         },
         {
           "type": "LED_DISPLAY",
-          "width": 29.38,
+          "width": 27.98,
           "height": 3.8,
           "inputs": {
             "attribute": {
@@ -126,8 +126,8 @@
             "alignValueRight": true,
             "customCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 3.1,
-          "y": 14.0,
+          "x": 50.92,
+          "y": 15.2,
           "percentage": -1,
           "id": "5",
           "canvas": "0",
@@ -136,7 +136,7 @@
         },
         {
           "type": "LABEL",
-          "width": 29.38,
+          "width": 27.98,
           "height": 3.8,
           "inputs": {
             "text": "",
@@ -150,8 +150,8 @@
             "linkTo": "",
             "customCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 3.1,
-          "y": 17.8,
+          "x": 50.92,
+          "y": 19.0,
           "percentage": -1,
           "id": "6",
           "canvas": "0",
@@ -160,7 +160,7 @@
         },
         {
           "type": "LABEL",
-          "width": 29.38,
+          "width": 27.98,
           "height": 3.8,
           "inputs": {
             "text": "",
@@ -174,8 +174,8 @@
             "linkTo": "",
             "customCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 3.1,
-          "y": 21.6,
+          "x": 50.92,
+          "y": 22.8,
           "percentage": -1,
           "id": "7",
           "canvas": "0",
@@ -184,7 +184,7 @@
         },
         {
           "type": "LABEL",
-          "width": 29.38,
+          "width": 27.98,
           "height": 3.8,
           "inputs": {
             "text": "",
@@ -198,8 +198,8 @@
             "linkTo": "",
             "customCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 3.1,
-          "y": 25.4,
+          "x": 50.92,
+          "y": 26.6,
           "percentage": -1,
           "id": "8",
           "canvas": "0",
@@ -207,8 +207,8 @@
           "valid": 1
         }
       ],
-      "x": 3.0,
-      "y": 7.1,
+      "x": 50.12,
+      "y": 7.6,
       "id": "3",
       "canvas": "0",
       "order": 2,
@@ -217,27 +217,27 @@
     {
       "type": "BOX",
       "width": 29.58,
-      "height": 23.4,
+      "height": 25.0,
       "inputs": {
         "title": "endnode/ci-1",
         "bigWidget": 5,
         "smallWidget": 1,
         "textColor": "#1a1a1a",
         "backgroundColor": "#ffffff",
-        "borderColor": "#c3cad4",
-        "borderWidth": 1,
+        "borderColor": "#ffffff",
+        "borderWidth": 8,
         "borderStyle": "solid",
         "textSize": 1,
         "fontFamily": "Helvetica",
         "layout": "vertical",
         "alignment": "Left",
         "padding": 0.25,
-        "customCss": "font-weight: bold"
+        "customCss": "outline: 1px solid #c3cad4\noutline-offset: -1px\nfont-weight: bold"
       },
       "innerWidgets": [
         {
           "type": "DEVICE_STATUS",
-          "width": 29.38,
+          "width": 27.98,
           "height": 3.8,
           "inputs": {
             "device": "taranta://low-sat/endnode/ci-1",
@@ -257,8 +257,8 @@
             "linkTo": "",
             "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 34.18,
-          "y": 10.2,
+          "x": 82.01,
+          "y": 11.4,
           "percentage": -1,
           "id": "10",
           "canvas": "0",
@@ -267,7 +267,7 @@
         },
         {
           "type": "LED_DISPLAY",
-          "width": 29.38,
+          "width": 27.98,
           "height": 3.8,
           "inputs": {
             "attribute": {
@@ -289,8 +289,8 @@
             "alignValueRight": true,
             "customCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 34.18,
-          "y": 14.0,
+          "x": 82.01,
+          "y": 15.2,
           "percentage": -1,
           "id": "11",
           "canvas": "0",
@@ -299,7 +299,7 @@
         },
         {
           "type": "LED_DISPLAY",
-          "width": 29.38,
+          "width": 27.98,
           "height": 3.8,
           "inputs": {
             "attribute": {
@@ -321,8 +321,8 @@
             "alignValueRight": true,
             "customCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 34.18,
-          "y": 17.8,
+          "x": 82.01,
+          "y": 19.0,
           "percentage": -1,
           "id": "12",
           "canvas": "0",
@@ -331,7 +331,7 @@
         },
         {
           "type": "LED_DISPLAY",
-          "width": 29.38,
+          "width": 27.98,
           "height": 3.8,
           "inputs": {
             "attribute": {
@@ -353,8 +353,8 @@
             "alignValueRight": true,
             "customCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 34.18,
-          "y": 21.6,
+          "x": 82.01,
+          "y": 22.8,
           "percentage": -1,
           "id": "13",
           "canvas": "0",
@@ -363,7 +363,7 @@
         },
         {
           "type": "LED_DISPLAY",
-          "width": 29.38,
+          "width": 27.98,
           "height": 3.8,
           "inputs": {
             "attribute": {
@@ -385,8 +385,8 @@
             "alignValueRight": true,
             "customCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 34.18,
-          "y": 25.4,
+          "x": 82.01,
+          "y": 26.6,
           "percentage": -1,
           "id": "14",
           "canvas": "0",
@@ -394,8 +394,8 @@
           "valid": 1
         }
       ],
-      "x": 34.08,
-      "y": 7.1,
+      "x": 81.21,
+      "y": 7.6,
       "id": "9",
       "canvas": "0",
       "order": 3,
@@ -404,27 +404,27 @@
     {
       "type": "BOX",
       "width": 29.58,
-      "height": 23.4,
+      "height": 25.0,
       "inputs": {
         "title": "grandmaster/1",
         "bigWidget": 5,
         "smallWidget": 1,
         "textColor": "#1a1a1a",
         "backgroundColor": "#ffffff",
-        "borderColor": "#c3cad4",
-        "borderWidth": 1,
+        "borderColor": "#ffffff",
+        "borderWidth": 8,
         "borderStyle": "solid",
         "textSize": 1,
         "fontFamily": "Helvetica",
         "layout": "vertical",
         "alignment": "Left",
         "padding": 0.25,
-        "customCss": "font-weight: bold"
+        "customCss": "outline: 1px solid #c3cad4\noutline-offset: -1px\nfont-weight: bold"
       },
       "innerWidgets": [
         {
           "type": "DEVICE_STATUS",
-          "width": 29.38,
+          "width": 27.98,
           "height": 3.8,
           "inputs": {
             "device": "taranta://low-sat/grandmaster/1",
@@ -444,8 +444,8 @@
             "linkTo": "",
             "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 65.27,
-          "y": 10.2,
+          "x": 113.09,
+          "y": 11.4,
           "percentage": -1,
           "id": "16",
           "canvas": "0",
@@ -454,7 +454,7 @@
         },
         {
           "type": "LED_DISPLAY",
-          "width": 29.38,
+          "width": 27.98,
           "height": 3.8,
           "inputs": {
             "attribute": {
@@ -476,8 +476,8 @@
             "alignValueRight": true,
             "customCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 65.27,
-          "y": 14.0,
+          "x": 113.09,
+          "y": 15.2,
           "percentage": -1,
           "id": "17",
           "canvas": "0",
@@ -486,7 +486,7 @@
         },
         {
           "type": "LED_DISPLAY",
-          "width": 29.38,
+          "width": 27.98,
           "height": 3.8,
           "inputs": {
             "attribute": {
@@ -508,8 +508,8 @@
             "alignValueRight": true,
             "customCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 65.27,
-          "y": 17.8,
+          "x": 113.09,
+          "y": 19.0,
           "percentage": -1,
           "id": "18",
           "canvas": "0",
@@ -518,7 +518,7 @@
         },
         {
           "type": "LED_DISPLAY",
-          "width": 29.38,
+          "width": 27.98,
           "height": 3.8,
           "inputs": {
             "attribute": {
@@ -540,8 +540,8 @@
             "alignValueRight": true,
             "customCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 65.27,
-          "y": 21.6,
+          "x": 113.09,
+          "y": 22.8,
           "percentage": -1,
           "id": "19",
           "canvas": "0",
@@ -550,7 +550,7 @@
         },
         {
           "type": "LED_DISPLAY",
-          "width": 29.38,
+          "width": 27.98,
           "height": 3.8,
           "inputs": {
             "attribute": {
@@ -572,8 +572,8 @@
             "alignValueRight": true,
             "customCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 65.27,
-          "y": 25.4,
+          "x": 113.09,
+          "y": 26.6,
           "percentage": -1,
           "id": "20",
           "canvas": "0",
@@ -581,8 +581,8 @@
           "valid": 1
         }
       ],
-      "x": 65.17,
-      "y": 7.1,
+      "x": 112.29,
+      "y": 7.6,
       "id": "15",
       "canvas": "0",
       "order": 4,
@@ -604,8 +604,8 @@
         "linkTo": "",
         "customCss": "padding: 0 12px\nbox-sizing: border-box"
       },
-      "x": 3.0,
-      "y": 33.5,
+      "x": 3.5,
+      "y": 35.6,
       "id": "21",
       "canvas": "0",
       "order": 5,
@@ -624,8 +624,8 @@
         "ButtonCss": "width: 100%\nfont-weight: bold",
         "CustomCss": "padding: 0 4px\nbox-sizing: border-box"
       },
-      "x": 171.0,
-      "y": 33.5,
+      "x": 171.5,
+      "y": 35.6,
       "id": "22",
       "canvas": "0",
       "order": 6,
@@ -634,27 +634,27 @@
     {
       "type": "BOX",
       "width": 44.0,
-      "height": 50.2,
+      "height": 51.8,
       "inputs": {
         "title": "Device",
         "bigWidget": 5,
         "smallWidget": 1,
         "textColor": "#1a1a1a",
         "backgroundColor": "#ffffff",
-        "borderColor": "#c3cad4",
-        "borderWidth": 1,
+        "borderColor": "#ffffff",
+        "borderWidth": 8,
         "borderStyle": "solid",
         "textSize": 1,
         "fontFamily": "Helvetica",
         "layout": "vertical",
         "alignment": "Left",
         "padding": 0.25,
-        "customCss": "font-weight: bold"
+        "customCss": "outline: 1px solid #c3cad4\noutline-offset: -1px\nfont-weight: bold"
       },
       "innerWidgets": [
         {
           "type": "DEVICE_STATUS",
-          "width": 43.8,
+          "width": 42.4,
           "height": 3.8,
           "inputs": {
             "device": "taranta://low-sat/utc/ci",
@@ -674,8 +674,8 @@
             "linkTo": "",
             "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 3.1,
-          "y": 42.2,
+          "x": 74.8,
+          "y": 45.5,
           "percentage": -1,
           "id": "24",
           "canvas": "0",
@@ -684,7 +684,7 @@
         },
         {
           "type": "LED_DISPLAY",
-          "width": 43.8,
+          "width": 42.4,
           "height": 3.8,
           "inputs": {
             "attribute": {
@@ -706,8 +706,8 @@
             "alignValueRight": true,
             "customCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 3.1,
-          "y": 46.0,
+          "x": 74.8,
+          "y": 49.3,
           "percentage": -1,
           "id": "25",
           "canvas": "0",
@@ -716,7 +716,7 @@
         },
         {
           "type": "ATTRIBUTE_DISPLAY",
-          "width": 43.8,
+          "width": 42.4,
           "height": 3.8,
           "inputs": {
             "attribute": {
@@ -740,10 +740,10 @@
             "backgroundColor": "#ffffff",
             "size": 1,
             "font": "Helvetica",
-            "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
+            "widgetCss": "padding: 0 10px\nbox-sizing: border-box\noverflow: hidden"
           },
-          "x": 3.1,
-          "y": 49.8,
+          "x": 74.8,
+          "y": 53.1,
           "percentage": -1,
           "id": "26",
           "canvas": "0",
@@ -752,7 +752,7 @@
         },
         {
           "type": "ATTRIBUTE_DISPLAY",
-          "width": 43.8,
+          "width": 42.4,
           "height": 3.8,
           "inputs": {
             "attribute": {
@@ -776,10 +776,10 @@
             "backgroundColor": "#ffffff",
             "size": 1,
             "font": "Helvetica",
-            "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
+            "widgetCss": "padding: 0 10px\nbox-sizing: border-box\noverflow: hidden"
           },
-          "x": 3.1,
-          "y": 53.6,
+          "x": 74.8,
+          "y": 56.9,
           "percentage": -1,
           "id": "27",
           "canvas": "0",
@@ -788,7 +788,7 @@
         },
         {
           "type": "ATTRIBUTE WRITER DROPDOWN",
-          "width": 43.8,
+          "width": 42.4,
           "height": 11.8,
           "inputs": {
             "attribute": {
@@ -824,8 +824,8 @@
             "submitButtonCss": "",
             "customCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 3.1,
-          "y": 57.4,
+          "x": 74.8,
+          "y": 60.7,
           "percentage": -1,
           "id": "28",
           "canvas": "0",
@@ -834,7 +834,7 @@
         },
         {
           "type": "ATTRIBUTE_DISPLAY",
-          "width": 43.8,
+          "width": 42.4,
           "height": 3.8,
           "inputs": {
             "attribute": {
@@ -858,10 +858,10 @@
             "backgroundColor": "#ffffff",
             "size": 1,
             "font": "Helvetica",
-            "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
+            "widgetCss": "padding: 0 10px\nbox-sizing: border-box\noverflow: hidden"
           },
-          "x": 3.1,
-          "y": 69.2,
+          "x": 74.8,
+          "y": 72.5,
           "percentage": -1,
           "id": "29",
           "canvas": "0",
@@ -870,7 +870,7 @@
         },
         {
           "type": "ATTRIBUTE WRITER DROPDOWN",
-          "width": 43.8,
+          "width": 42.4,
           "height": 15.0,
           "inputs": {
             "attribute": {
@@ -910,8 +910,8 @@
             "submitButtonCss": "",
             "customCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 3.1,
-          "y": 73.0,
+          "x": 74.8,
+          "y": 76.3,
           "percentage": -1,
           "id": "30",
           "canvas": "0",
@@ -919,8 +919,8 @@
           "valid": 1
         }
       ],
-      "x": 3.0,
-      "y": 39.1,
+      "x": 74.0,
+      "y": 41.7,
       "id": "23",
       "canvas": "0",
       "order": 7,
@@ -942,8 +942,8 @@
         "linkTo": "",
         "customCss": "padding: 0 12px\nbox-sizing: border-box"
       },
-      "x": 3.0,
-      "y": 92.3,
+      "x": 3.5,
+      "y": 96.5,
       "id": "31",
       "canvas": "0",
       "order": 8,
@@ -962,8 +962,8 @@
         "ButtonCss": "width: 100%\nfont-weight: bold",
         "CustomCss": "padding: 0 4px\nbox-sizing: border-box"
       },
-      "x": 171.0,
-      "y": 92.3,
+      "x": 171.5,
+      "y": 96.5,
       "id": "32",
       "canvas": "0",
       "order": 9,
@@ -972,27 +972,27 @@
     {
       "type": "BOX",
       "width": 44.0,
-      "height": 50.2,
+      "height": 51.8,
       "inputs": {
         "title": "Device",
         "bigWidget": 5,
         "smallWidget": 1,
         "textColor": "#1a1a1a",
         "backgroundColor": "#ffffff",
-        "borderColor": "#c3cad4",
-        "borderWidth": 1,
+        "borderColor": "#ffffff",
+        "borderWidth": 8,
         "borderStyle": "solid",
         "textSize": 1,
         "fontFamily": "Helvetica",
         "layout": "vertical",
         "alignment": "Left",
         "padding": 0.25,
-        "customCss": "font-weight: bold"
+        "customCss": "outline: 1px solid #c3cad4\noutline-offset: -1px\nfont-weight: bold"
       },
       "innerWidgets": [
         {
           "type": "DEVICE_STATUS",
-          "width": 43.8,
+          "width": 42.4,
           "height": 3.8,
           "inputs": {
             "device": "taranta://low-sat/endnode/ci-1",
@@ -1012,8 +1012,8 @@
             "linkTo": "",
             "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 3.1,
-          "y": 101.0,
+          "x": 51.3,
+          "y": 106.4,
           "percentage": -1,
           "id": "34",
           "canvas": "0",
@@ -1022,7 +1022,7 @@
         },
         {
           "type": "LED_DISPLAY",
-          "width": 43.8,
+          "width": 42.4,
           "height": 3.8,
           "inputs": {
             "attribute": {
@@ -1044,8 +1044,8 @@
             "alignValueRight": true,
             "customCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 3.1,
-          "y": 104.8,
+          "x": 51.3,
+          "y": 110.2,
           "percentage": -1,
           "id": "35",
           "canvas": "0",
@@ -1054,7 +1054,7 @@
         },
         {
           "type": "ATTRIBUTE_DISPLAY",
-          "width": 43.8,
+          "width": 42.4,
           "height": 3.8,
           "inputs": {
             "attribute": {
@@ -1078,10 +1078,10 @@
             "backgroundColor": "#ffffff",
             "size": 1,
             "font": "Helvetica",
-            "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
+            "widgetCss": "padding: 0 10px\nbox-sizing: border-box\noverflow: hidden"
           },
-          "x": 3.1,
-          "y": 108.6,
+          "x": 51.3,
+          "y": 114.0,
           "percentage": -1,
           "id": "36",
           "canvas": "0",
@@ -1090,7 +1090,7 @@
         },
         {
           "type": "ATTRIBUTE_DISPLAY",
-          "width": 43.8,
+          "width": 42.4,
           "height": 3.8,
           "inputs": {
             "attribute": {
@@ -1114,10 +1114,10 @@
             "backgroundColor": "#ffffff",
             "size": 1,
             "font": "Helvetica",
-            "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
+            "widgetCss": "padding: 0 10px\nbox-sizing: border-box\noverflow: hidden"
           },
-          "x": 3.1,
-          "y": 112.4,
+          "x": 51.3,
+          "y": 117.8,
           "percentage": -1,
           "id": "37",
           "canvas": "0",
@@ -1126,7 +1126,7 @@
         },
         {
           "type": "ATTRIBUTE WRITER DROPDOWN",
-          "width": 43.8,
+          "width": 42.4,
           "height": 11.8,
           "inputs": {
             "attribute": {
@@ -1162,8 +1162,8 @@
             "submitButtonCss": "",
             "customCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 3.1,
-          "y": 116.2,
+          "x": 51.3,
+          "y": 121.6,
           "percentage": -1,
           "id": "38",
           "canvas": "0",
@@ -1172,7 +1172,7 @@
         },
         {
           "type": "ATTRIBUTE_DISPLAY",
-          "width": 43.8,
+          "width": 42.4,
           "height": 3.8,
           "inputs": {
             "attribute": {
@@ -1196,10 +1196,10 @@
             "backgroundColor": "#ffffff",
             "size": 1,
             "font": "Helvetica",
-            "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
+            "widgetCss": "padding: 0 10px\nbox-sizing: border-box\noverflow: hidden"
           },
-          "x": 3.1,
-          "y": 128.0,
+          "x": 51.3,
+          "y": 133.4,
           "percentage": -1,
           "id": "39",
           "canvas": "0",
@@ -1208,7 +1208,7 @@
         },
         {
           "type": "ATTRIBUTE WRITER DROPDOWN",
-          "width": 43.8,
+          "width": 42.4,
           "height": 15.0,
           "inputs": {
             "attribute": {
@@ -1248,8 +1248,8 @@
             "submitButtonCss": "",
             "customCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 3.1,
-          "y": 131.8,
+          "x": 51.3,
+          "y": 137.2,
           "percentage": -1,
           "id": "40",
           "canvas": "0",
@@ -1257,8 +1257,8 @@
           "valid": 1
         }
       ],
-      "x": 3.0,
-      "y": 97.89999999999999,
+      "x": 50.5,
+      "y": 102.6,
       "id": "33",
       "canvas": "0",
       "order": 10,
@@ -1267,27 +1267,27 @@
     {
       "type": "BOX",
       "width": 44.0,
-      "height": 23.4,
+      "height": 25.0,
       "inputs": {
         "title": "Status",
         "bigWidget": 5,
         "smallWidget": 1,
         "textColor": "#1a1a1a",
         "backgroundColor": "#ffffff",
-        "borderColor": "#c3cad4",
-        "borderWidth": 1,
+        "borderColor": "#ffffff",
+        "borderWidth": 8,
         "borderStyle": "solid",
         "textSize": 1,
         "fontFamily": "Helvetica",
         "layout": "vertical",
         "alignment": "Left",
         "padding": 0.25,
-        "customCss": "font-weight: bold"
+        "customCss": "outline: 1px solid #c3cad4\noutline-offset: -1px\nfont-weight: bold"
       },
       "innerWidgets": [
         {
           "type": "LED_DISPLAY",
-          "width": 43.8,
+          "width": 42.4,
           "height": 3.8,
           "inputs": {
             "attribute": {
@@ -1309,8 +1309,8 @@
             "alignValueRight": true,
             "customCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 50.1,
-          "y": 101.0,
+          "x": 98.3,
+          "y": 106.4,
           "percentage": -1,
           "id": "42",
           "canvas": "0",
@@ -1319,7 +1319,7 @@
         },
         {
           "type": "LED_DISPLAY",
-          "width": 43.8,
+          "width": 42.4,
           "height": 3.8,
           "inputs": {
             "attribute": {
@@ -1341,8 +1341,8 @@
             "alignValueRight": true,
             "customCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 50.1,
-          "y": 104.8,
+          "x": 98.3,
+          "y": 110.2,
           "percentage": -1,
           "id": "43",
           "canvas": "0",
@@ -1351,7 +1351,7 @@
         },
         {
           "type": "LED_DISPLAY",
-          "width": 43.8,
+          "width": 42.4,
           "height": 3.8,
           "inputs": {
             "attribute": {
@@ -1373,8 +1373,8 @@
             "alignValueRight": true,
             "customCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 50.1,
-          "y": 108.6,
+          "x": 98.3,
+          "y": 114.0,
           "percentage": -1,
           "id": "44",
           "canvas": "0",
@@ -1383,7 +1383,7 @@
         },
         {
           "type": "LED_DISPLAY",
-          "width": 43.8,
+          "width": 42.4,
           "height": 3.8,
           "inputs": {
             "attribute": {
@@ -1405,8 +1405,8 @@
             "alignValueRight": true,
             "customCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 50.1,
-          "y": 112.4,
+          "x": 98.3,
+          "y": 117.8,
           "percentage": -1,
           "id": "45",
           "canvas": "0",
@@ -1415,7 +1415,7 @@
         },
         {
           "type": "LED_DISPLAY",
-          "width": 43.8,
+          "width": 42.4,
           "height": 3.8,
           "inputs": {
             "attribute": {
@@ -1437,8 +1437,8 @@
             "alignValueRight": true,
             "customCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 50.1,
-          "y": 116.2,
+          "x": 98.3,
+          "y": 121.6,
           "percentage": -1,
           "id": "46",
           "canvas": "0",
@@ -1446,8 +1446,8 @@
           "valid": 1
         }
       ],
-      "x": 50.0,
-      "y": 97.89999999999999,
+      "x": 97.5,
+      "y": 102.6,
       "id": "41",
       "canvas": "0",
       "order": 11,
@@ -1456,27 +1456,27 @@
     {
       "type": "BOX",
       "width": 44.0,
-      "height": 118.4,
+      "height": 120.0,
       "inputs": {
         "title": "NET",
         "bigWidget": 5,
         "smallWidget": 1,
         "textColor": "#1a1a1a",
         "backgroundColor": "#ffffff",
-        "borderColor": "#c3cad4",
-        "borderWidth": 1,
+        "borderColor": "#ffffff",
+        "borderWidth": 8,
         "borderStyle": "solid",
         "textSize": 1,
         "fontFamily": "Helvetica",
         "layout": "vertical",
         "alignment": "Left",
         "padding": 0.25,
-        "customCss": "font-weight: bold"
+        "customCss": "outline: 1px solid #c3cad4\noutline-offset: -1px\nfont-weight: bold"
       },
       "innerWidgets": [
         {
           "type": "LED_DISPLAY",
-          "width": 43.8,
+          "width": 42.4,
           "height": 3.8,
           "inputs": {
             "attribute": {
@@ -1498,8 +1498,8 @@
             "alignValueRight": true,
             "customCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 97.1,
-          "y": 101.0,
+          "x": 4.3,
+          "y": 106.4,
           "percentage": -1,
           "id": "48",
           "canvas": "0",
@@ -1508,7 +1508,7 @@
         },
         {
           "type": "ATTRIBUTE_DISPLAY",
-          "width": 43.8,
+          "width": 42.4,
           "height": 3.8,
           "inputs": {
             "attribute": {
@@ -1532,10 +1532,10 @@
             "backgroundColor": "#ffffff",
             "size": 1,
             "font": "Helvetica",
-            "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
+            "widgetCss": "padding: 0 10px\nbox-sizing: border-box\noverflow: hidden"
           },
-          "x": 97.1,
-          "y": 104.8,
+          "x": 4.3,
+          "y": 110.2,
           "percentage": -1,
           "id": "49",
           "canvas": "0",
@@ -1544,7 +1544,7 @@
         },
         {
           "type": "ATTRIBUTE_DISPLAY",
-          "width": 43.8,
+          "width": 42.4,
           "height": 3.8,
           "inputs": {
             "attribute": {
@@ -1568,10 +1568,10 @@
             "backgroundColor": "#ffffff",
             "size": 1,
             "font": "Helvetica",
-            "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
+            "widgetCss": "padding: 0 10px\nbox-sizing: border-box\noverflow: hidden"
           },
-          "x": 97.1,
-          "y": 108.6,
+          "x": 4.3,
+          "y": 114.0,
           "percentage": -1,
           "id": "50",
           "canvas": "0",
@@ -1580,7 +1580,7 @@
         },
         {
           "type": "ATTRIBUTE_DISPLAY",
-          "width": 43.8,
+          "width": 42.4,
           "height": 3.8,
           "inputs": {
             "attribute": {
@@ -1604,10 +1604,10 @@
             "backgroundColor": "#ffffff",
             "size": 1,
             "font": "Helvetica",
-            "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
+            "widgetCss": "padding: 0 10px\nbox-sizing: border-box\noverflow: hidden"
           },
-          "x": 97.1,
-          "y": 112.4,
+          "x": 4.3,
+          "y": 117.8,
           "percentage": -1,
           "id": "51",
           "canvas": "0",
@@ -1616,7 +1616,7 @@
         },
         {
           "type": "ATTRIBUTE_DISPLAY",
-          "width": 43.8,
+          "width": 42.4,
           "height": 3.8,
           "inputs": {
             "attribute": {
@@ -1640,10 +1640,10 @@
             "backgroundColor": "#ffffff",
             "size": 1,
             "font": "Helvetica",
-            "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
+            "widgetCss": "padding: 0 10px\nbox-sizing: border-box\noverflow: hidden"
           },
-          "x": 97.1,
-          "y": 116.2,
+          "x": 4.3,
+          "y": 121.6,
           "percentage": -1,
           "id": "52",
           "canvas": "0",
@@ -1652,7 +1652,7 @@
         },
         {
           "type": "ATTRIBUTE_DISPLAY",
-          "width": 43.8,
+          "width": 42.4,
           "height": 3.8,
           "inputs": {
             "attribute": {
@@ -1676,10 +1676,10 @@
             "backgroundColor": "#ffffff",
             "size": 1,
             "font": "Helvetica",
-            "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
+            "widgetCss": "padding: 0 10px\nbox-sizing: border-box\noverflow: hidden"
           },
-          "x": 97.1,
-          "y": 120.0,
+          "x": 4.3,
+          "y": 125.4,
           "percentage": -1,
           "id": "53",
           "canvas": "0",
@@ -1688,7 +1688,7 @@
         },
         {
           "type": "ATTRIBUTE_DISPLAY",
-          "width": 43.8,
+          "width": 42.4,
           "height": 3.8,
           "inputs": {
             "attribute": {
@@ -1712,10 +1712,10 @@
             "backgroundColor": "#ffffff",
             "size": 1,
             "font": "Helvetica",
-            "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
+            "widgetCss": "padding: 0 10px\nbox-sizing: border-box\noverflow: hidden"
           },
-          "x": 97.1,
-          "y": 123.8,
+          "x": 4.3,
+          "y": 129.2,
           "percentage": -1,
           "id": "54",
           "canvas": "0",
@@ -1724,7 +1724,7 @@
         },
         {
           "type": "ATTRIBUTE_DISPLAY",
-          "width": 43.8,
+          "width": 42.4,
           "height": 3.8,
           "inputs": {
             "attribute": {
@@ -1748,10 +1748,10 @@
             "backgroundColor": "#ffffff",
             "size": 1,
             "font": "Helvetica",
-            "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
+            "widgetCss": "padding: 0 10px\nbox-sizing: border-box\noverflow: hidden"
           },
-          "x": 97.1,
-          "y": 127.6,
+          "x": 4.3,
+          "y": 133.0,
           "percentage": -1,
           "id": "55",
           "canvas": "0",
@@ -1760,7 +1760,7 @@
         },
         {
           "type": "ATTRIBUTE_DISPLAY",
-          "width": 43.8,
+          "width": 42.4,
           "height": 3.8,
           "inputs": {
             "attribute": {
@@ -1784,10 +1784,10 @@
             "backgroundColor": "#ffffff",
             "size": 1,
             "font": "Helvetica",
-            "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
+            "widgetCss": "padding: 0 10px\nbox-sizing: border-box\noverflow: hidden"
           },
-          "x": 97.1,
-          "y": 131.4,
+          "x": 4.3,
+          "y": 136.8,
           "percentage": -1,
           "id": "56",
           "canvas": "0",
@@ -1796,7 +1796,7 @@
         },
         {
           "type": "ATTRIBUTE_DISPLAY",
-          "width": 43.8,
+          "width": 42.4,
           "height": 3.8,
           "inputs": {
             "attribute": {
@@ -1820,10 +1820,10 @@
             "backgroundColor": "#ffffff",
             "size": 1,
             "font": "Helvetica",
-            "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
+            "widgetCss": "padding: 0 10px\nbox-sizing: border-box\noverflow: hidden"
           },
-          "x": 97.1,
-          "y": 135.2,
+          "x": 4.3,
+          "y": 140.6,
           "percentage": -1,
           "id": "57",
           "canvas": "0",
@@ -1832,7 +1832,7 @@
         },
         {
           "type": "ATTRIBUTE_DISPLAY",
-          "width": 43.8,
+          "width": 42.4,
           "height": 3.8,
           "inputs": {
             "attribute": {
@@ -1856,10 +1856,10 @@
             "backgroundColor": "#ffffff",
             "size": 1,
             "font": "Helvetica",
-            "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
+            "widgetCss": "padding: 0 10px\nbox-sizing: border-box\noverflow: hidden"
           },
-          "x": 97.1,
-          "y": 139.0,
+          "x": 4.3,
+          "y": 144.4,
           "percentage": -1,
           "id": "58",
           "canvas": "0",
@@ -1868,7 +1868,7 @@
         },
         {
           "type": "LED_DISPLAY",
-          "width": 43.8,
+          "width": 42.4,
           "height": 3.8,
           "inputs": {
             "attribute": {
@@ -1890,8 +1890,8 @@
             "alignValueRight": true,
             "customCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 97.1,
-          "y": 142.8,
+          "x": 4.3,
+          "y": 148.2,
           "percentage": -1,
           "id": "59",
           "canvas": "0",
@@ -1900,7 +1900,7 @@
         },
         {
           "type": "ATTRIBUTE_DISPLAY",
-          "width": 43.8,
+          "width": 42.4,
           "height": 3.8,
           "inputs": {
             "attribute": {
@@ -1924,10 +1924,10 @@
             "backgroundColor": "#ffffff",
             "size": 1,
             "font": "Helvetica",
-            "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
+            "widgetCss": "padding: 0 10px\nbox-sizing: border-box\noverflow: hidden"
           },
-          "x": 97.1,
-          "y": 146.6,
+          "x": 4.3,
+          "y": 152.0,
           "percentage": -1,
           "id": "60",
           "canvas": "0",
@@ -1936,7 +1936,7 @@
         },
         {
           "type": "ATTRIBUTE_DISPLAY",
-          "width": 43.8,
+          "width": 42.4,
           "height": 3.8,
           "inputs": {
             "attribute": {
@@ -1960,10 +1960,10 @@
             "backgroundColor": "#ffffff",
             "size": 1,
             "font": "Helvetica",
-            "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
+            "widgetCss": "padding: 0 10px\nbox-sizing: border-box\noverflow: hidden"
           },
-          "x": 97.1,
-          "y": 150.4,
+          "x": 4.3,
+          "y": 155.8,
           "percentage": -1,
           "id": "61",
           "canvas": "0",
@@ -1972,7 +1972,7 @@
         },
         {
           "type": "ATTRIBUTE_DISPLAY",
-          "width": 43.8,
+          "width": 42.4,
           "height": 3.8,
           "inputs": {
             "attribute": {
@@ -1996,10 +1996,10 @@
             "backgroundColor": "#ffffff",
             "size": 1,
             "font": "Helvetica",
-            "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
+            "widgetCss": "padding: 0 10px\nbox-sizing: border-box\noverflow: hidden"
           },
-          "x": 97.1,
-          "y": 154.2,
+          "x": 4.3,
+          "y": 159.6,
           "percentage": -1,
           "id": "62",
           "canvas": "0",
@@ -2008,7 +2008,7 @@
         },
         {
           "type": "BOX",
-          "width": 43.8,
+          "width": 42.4,
           "height": 19.0,
           "inputs": {
             "title": "",
@@ -2016,7 +2016,7 @@
             "smallWidget": 1,
             "textColor": "#1a1a1a",
             "backgroundColor": "#ffffff",
-            "borderColor": "#c3cad4",
+            "borderColor": "#ffffff",
             "borderWidth": 0,
             "borderStyle": "solid",
             "textSize": 1,
@@ -2029,7 +2029,7 @@
           "innerWidgets": [
             {
               "type": "ATTRIBUTE_DIAL",
-              "width": 14.6,
+              "width": 14.13,
               "height": 19.0,
               "inputs": {
                 "attribute": {
@@ -2044,8 +2044,8 @@
                 "showTangoDB": false,
                 "widgetCss": ""
               },
-              "x": 97.1,
-              "y": 158.0,
+              "x": 4.3,
+              "y": 163.4,
               "id": "64",
               "canvas": "0",
               "order": 0,
@@ -2053,7 +2053,7 @@
             },
             {
               "type": "ATTRIBUTE_DIAL",
-              "width": 14.6,
+              "width": 14.14,
               "height": 19.0,
               "inputs": {
                 "attribute": {
@@ -2068,8 +2068,8 @@
                 "showTangoDB": false,
                 "widgetCss": ""
               },
-              "x": 111.7,
-              "y": 158.0,
+              "x": 18.43,
+              "y": 163.4,
               "id": "65",
               "canvas": "0",
               "order": 1,
@@ -2077,7 +2077,7 @@
             },
             {
               "type": "ATTRIBUTE_DIAL",
-              "width": 14.6,
+              "width": 14.13,
               "height": 19.0,
               "inputs": {
                 "attribute": {
@@ -2092,16 +2092,16 @@
                 "showTangoDB": false,
                 "widgetCss": ""
               },
-              "x": 126.3,
-              "y": 158.0,
+              "x": 32.57,
+              "y": 163.4,
               "id": "66",
               "canvas": "0",
               "order": 2,
               "valid": 1
             }
           ],
-          "x": 97.1,
-          "y": 158.0,
+          "x": 4.3,
+          "y": 163.4,
           "percentage": -1,
           "id": "63",
           "canvas": "0",
@@ -2110,7 +2110,7 @@
         },
         {
           "type": "ATTRIBUTE_PLOT",
-          "width": 43.8,
+          "width": 42.4,
           "height": 19.0,
           "inputs": {
             "timeWindow": 600,
@@ -2135,8 +2135,8 @@
             "textColor": "#000000",
             "backgroundColor": "#ffffff"
           },
-          "x": 97.1,
-          "y": 177.0,
+          "x": 4.3,
+          "y": 182.4,
           "percentage": -1,
           "id": "67",
           "canvas": "0",
@@ -2145,7 +2145,7 @@
         },
         {
           "type": "ATTRIBUTE_PLOT",
-          "width": 43.8,
+          "width": 42.4,
           "height": 19.0,
           "inputs": {
             "timeWindow": 600,
@@ -2180,8 +2180,8 @@
             "textColor": "#000000",
             "backgroundColor": "#ffffff"
           },
-          "x": 97.1,
-          "y": 196.0,
+          "x": 4.3,
+          "y": 201.4,
           "percentage": -1,
           "id": "68",
           "canvas": "0",
@@ -2189,8 +2189,8 @@
           "valid": 1
         }
       ],
-      "x": 97.0,
-      "y": 97.89999999999999,
+      "x": 3.5,
+      "y": 102.6,
       "id": "47",
       "canvas": "0",
       "order": 12,
@@ -2199,27 +2199,27 @@
     {
       "type": "BOX",
       "width": 44.0,
-      "height": 84.2,
+      "height": 85.8,
       "inputs": {
         "title": "Measurements",
         "bigWidget": 5,
         "smallWidget": 1,
         "textColor": "#1a1a1a",
         "backgroundColor": "#ffffff",
-        "borderColor": "#c3cad4",
-        "borderWidth": 1,
+        "borderColor": "#ffffff",
+        "borderWidth": 8,
         "borderStyle": "solid",
         "textSize": 1,
         "fontFamily": "Helvetica",
         "layout": "vertical",
         "alignment": "Left",
         "padding": 0.25,
-        "customCss": "font-weight: bold"
+        "customCss": "outline: 1px solid #c3cad4\noutline-offset: -1px\nfont-weight: bold"
       },
       "innerWidgets": [
         {
           "type": "ATTRIBUTE_DISPLAY",
-          "width": 43.8,
+          "width": 42.4,
           "height": 3.8,
           "inputs": {
             "attribute": {
@@ -2243,10 +2243,10 @@
             "backgroundColor": "#ffffff",
             "size": 1,
             "font": "Helvetica",
-            "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
+            "widgetCss": "padding: 0 10px\nbox-sizing: border-box\noverflow: hidden"
           },
-          "x": 144.1,
-          "y": 101.0,
+          "x": 145.3,
+          "y": 106.4,
           "percentage": -1,
           "id": "70",
           "canvas": "0",
@@ -2255,7 +2255,7 @@
         },
         {
           "type": "ATTRIBUTE_DISPLAY",
-          "width": 43.8,
+          "width": 42.4,
           "height": 3.8,
           "inputs": {
             "attribute": {
@@ -2279,10 +2279,10 @@
             "backgroundColor": "#ffffff",
             "size": 1,
             "font": "Helvetica",
-            "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
+            "widgetCss": "padding: 0 10px\nbox-sizing: border-box\noverflow: hidden"
           },
-          "x": 144.1,
-          "y": 104.8,
+          "x": 145.3,
+          "y": 110.2,
           "percentage": -1,
           "id": "71",
           "canvas": "0",
@@ -2291,7 +2291,7 @@
         },
         {
           "type": "ATTRIBUTE_DISPLAY",
-          "width": 43.8,
+          "width": 42.4,
           "height": 3.8,
           "inputs": {
             "attribute": {
@@ -2315,10 +2315,10 @@
             "backgroundColor": "#ffffff",
             "size": 1,
             "font": "Helvetica",
-            "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
+            "widgetCss": "padding: 0 10px\nbox-sizing: border-box\noverflow: hidden"
           },
-          "x": 144.1,
-          "y": 108.6,
+          "x": 145.3,
+          "y": 114.0,
           "percentage": -1,
           "id": "72",
           "canvas": "0",
@@ -2327,7 +2327,7 @@
         },
         {
           "type": "ATTRIBUTE_DISPLAY",
-          "width": 43.8,
+          "width": 42.4,
           "height": 3.8,
           "inputs": {
             "attribute": {
@@ -2351,10 +2351,10 @@
             "backgroundColor": "#ffffff",
             "size": 1,
             "font": "Helvetica",
-            "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
+            "widgetCss": "padding: 0 10px\nbox-sizing: border-box\noverflow: hidden"
           },
-          "x": 144.1,
-          "y": 112.4,
+          "x": 145.3,
+          "y": 117.8,
           "percentage": -1,
           "id": "73",
           "canvas": "0",
@@ -2363,7 +2363,7 @@
         },
         {
           "type": "ATTRIBUTE_DISPLAY",
-          "width": 43.8,
+          "width": 42.4,
           "height": 3.8,
           "inputs": {
             "attribute": {
@@ -2387,10 +2387,10 @@
             "backgroundColor": "#ffffff",
             "size": 1,
             "font": "Helvetica",
-            "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
+            "widgetCss": "padding: 0 10px\nbox-sizing: border-box\noverflow: hidden"
           },
-          "x": 144.1,
-          "y": 116.2,
+          "x": 145.3,
+          "y": 121.6,
           "percentage": -1,
           "id": "74",
           "canvas": "0",
@@ -2399,7 +2399,7 @@
         },
         {
           "type": "ATTRIBUTE_DISPLAY",
-          "width": 43.8,
+          "width": 42.4,
           "height": 3.8,
           "inputs": {
             "attribute": {
@@ -2423,10 +2423,10 @@
             "backgroundColor": "#ffffff",
             "size": 1,
             "font": "Helvetica",
-            "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
+            "widgetCss": "padding: 0 10px\nbox-sizing: border-box\noverflow: hidden"
           },
-          "x": 144.1,
-          "y": 120.0,
+          "x": 145.3,
+          "y": 125.4,
           "percentage": -1,
           "id": "75",
           "canvas": "0",
@@ -2435,7 +2435,7 @@
         },
         {
           "type": "BOX",
-          "width": 43.8,
+          "width": 42.4,
           "height": 19.0,
           "inputs": {
             "title": "",
@@ -2443,7 +2443,7 @@
             "smallWidget": 1,
             "textColor": "#1a1a1a",
             "backgroundColor": "#ffffff",
-            "borderColor": "#c3cad4",
+            "borderColor": "#ffffff",
             "borderWidth": 0,
             "borderStyle": "solid",
             "textSize": 1,
@@ -2456,7 +2456,7 @@
           "innerWidgets": [
             {
               "type": "ATTRIBUTE_DIAL",
-              "width": 14.6,
+              "width": 14.13,
               "height": 19.0,
               "inputs": {
                 "attribute": {
@@ -2471,8 +2471,8 @@
                 "showTangoDB": false,
                 "widgetCss": ""
               },
-              "x": 144.1,
-              "y": 123.8,
+              "x": 145.3,
+              "y": 129.2,
               "id": "77",
               "canvas": "0",
               "order": 0,
@@ -2480,7 +2480,7 @@
             },
             {
               "type": "ATTRIBUTE_DIAL",
-              "width": 14.6,
+              "width": 14.14,
               "height": 19.0,
               "inputs": {
                 "attribute": {
@@ -2495,8 +2495,8 @@
                 "showTangoDB": false,
                 "widgetCss": ""
               },
-              "x": 158.7,
-              "y": 123.8,
+              "x": 159.43,
+              "y": 129.2,
               "id": "78",
               "canvas": "0",
               "order": 1,
@@ -2504,7 +2504,7 @@
             },
             {
               "type": "ATTRIBUTE_DIAL",
-              "width": 14.6,
+              "width": 14.13,
               "height": 19.0,
               "inputs": {
                 "attribute": {
@@ -2519,16 +2519,16 @@
                 "showTangoDB": false,
                 "widgetCss": ""
               },
-              "x": 173.3,
-              "y": 123.8,
+              "x": 173.57,
+              "y": 129.2,
               "id": "79",
               "canvas": "0",
               "order": 2,
               "valid": 1
             }
           ],
-          "x": 144.1,
-          "y": 123.8,
+          "x": 145.3,
+          "y": 129.2,
           "percentage": -1,
           "id": "76",
           "canvas": "0",
@@ -2537,7 +2537,7 @@
         },
         {
           "type": "ATTRIBUTE_PLOT",
-          "width": 43.8,
+          "width": 42.4,
           "height": 19.0,
           "inputs": {
             "timeWindow": 600,
@@ -2582,8 +2582,8 @@
             "textColor": "#000000",
             "backgroundColor": "#ffffff"
           },
-          "x": 144.1,
-          "y": 142.8,
+          "x": 145.3,
+          "y": 148.2,
           "percentage": -1,
           "id": "80",
           "canvas": "0",
@@ -2592,7 +2592,7 @@
         },
         {
           "type": "ATTRIBUTE_PLOT",
-          "width": 43.8,
+          "width": 42.4,
           "height": 19.0,
           "inputs": {
             "timeWindow": 600,
@@ -2627,8 +2627,8 @@
             "textColor": "#000000",
             "backgroundColor": "#ffffff"
           },
-          "x": 144.1,
-          "y": 161.8,
+          "x": 145.3,
+          "y": 167.2,
           "percentage": -1,
           "id": "81",
           "canvas": "0",
@@ -2636,8 +2636,8 @@
           "valid": 1
         }
       ],
-      "x": 144.0,
-      "y": 97.89999999999999,
+      "x": 144.5,
+      "y": 102.6,
       "id": "69",
       "canvas": "0",
       "order": 13,
@@ -2659,8 +2659,8 @@
         "linkTo": "",
         "customCss": "padding: 0 12px\nbox-sizing: border-box"
       },
-      "x": 3.0,
-      "y": 219.3,
+      "x": 3.5,
+      "y": 225.6,
       "id": "82",
       "canvas": "0",
       "order": 14,
@@ -2679,8 +2679,8 @@
         "ButtonCss": "width: 100%\nfont-weight: bold",
         "CustomCss": "padding: 0 4px\nbox-sizing: border-box"
       },
-      "x": 171.0,
-      "y": 219.3,
+      "x": 171.5,
+      "y": 225.6,
       "id": "83",
       "canvas": "0",
       "order": 15,
@@ -2689,27 +2689,27 @@
     {
       "type": "BOX",
       "width": 44.0,
-      "height": 50.2,
+      "height": 51.8,
       "inputs": {
         "title": "Device",
         "bigWidget": 5,
         "smallWidget": 1,
         "textColor": "#1a1a1a",
         "backgroundColor": "#ffffff",
-        "borderColor": "#c3cad4",
-        "borderWidth": 1,
+        "borderColor": "#ffffff",
+        "borderWidth": 8,
         "borderStyle": "solid",
         "textSize": 1,
         "fontFamily": "Helvetica",
         "layout": "vertical",
         "alignment": "Left",
         "padding": 0.25,
-        "customCss": "font-weight: bold"
+        "customCss": "outline: 1px solid #c3cad4\noutline-offset: -1px\nfont-weight: bold"
       },
       "innerWidgets": [
         {
           "type": "DEVICE_STATUS",
-          "width": 43.8,
+          "width": 42.4,
           "height": 3.8,
           "inputs": {
             "device": "taranta://low-sat/grandmaster/1",
@@ -2729,8 +2729,8 @@
             "linkTo": "",
             "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 3.1,
-          "y": 228.0,
+          "x": 51.3,
+          "y": 235.5,
           "percentage": -1,
           "id": "85",
           "canvas": "0",
@@ -2739,7 +2739,7 @@
         },
         {
           "type": "LED_DISPLAY",
-          "width": 43.8,
+          "width": 42.4,
           "height": 3.8,
           "inputs": {
             "attribute": {
@@ -2761,8 +2761,8 @@
             "alignValueRight": true,
             "customCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 3.1,
-          "y": 231.8,
+          "x": 51.3,
+          "y": 239.3,
           "percentage": -1,
           "id": "86",
           "canvas": "0",
@@ -2771,7 +2771,7 @@
         },
         {
           "type": "ATTRIBUTE_DISPLAY",
-          "width": 43.8,
+          "width": 42.4,
           "height": 3.8,
           "inputs": {
             "attribute": {
@@ -2795,10 +2795,10 @@
             "backgroundColor": "#ffffff",
             "size": 1,
             "font": "Helvetica",
-            "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
+            "widgetCss": "padding: 0 10px\nbox-sizing: border-box\noverflow: hidden"
           },
-          "x": 3.1,
-          "y": 235.6,
+          "x": 51.3,
+          "y": 243.1,
           "percentage": -1,
           "id": "87",
           "canvas": "0",
@@ -2807,7 +2807,7 @@
         },
         {
           "type": "ATTRIBUTE_DISPLAY",
-          "width": 43.8,
+          "width": 42.4,
           "height": 3.8,
           "inputs": {
             "attribute": {
@@ -2831,10 +2831,10 @@
             "backgroundColor": "#ffffff",
             "size": 1,
             "font": "Helvetica",
-            "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
+            "widgetCss": "padding: 0 10px\nbox-sizing: border-box\noverflow: hidden"
           },
-          "x": 3.1,
-          "y": 239.4,
+          "x": 51.3,
+          "y": 246.9,
           "percentage": -1,
           "id": "88",
           "canvas": "0",
@@ -2843,7 +2843,7 @@
         },
         {
           "type": "ATTRIBUTE WRITER DROPDOWN",
-          "width": 43.8,
+          "width": 42.4,
           "height": 11.8,
           "inputs": {
             "attribute": {
@@ -2879,8 +2879,8 @@
             "submitButtonCss": "",
             "customCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 3.1,
-          "y": 243.2,
+          "x": 51.3,
+          "y": 250.7,
           "percentage": -1,
           "id": "89",
           "canvas": "0",
@@ -2889,7 +2889,7 @@
         },
         {
           "type": "ATTRIBUTE_DISPLAY",
-          "width": 43.8,
+          "width": 42.4,
           "height": 3.8,
           "inputs": {
             "attribute": {
@@ -2913,10 +2913,10 @@
             "backgroundColor": "#ffffff",
             "size": 1,
             "font": "Helvetica",
-            "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
+            "widgetCss": "padding: 0 10px\nbox-sizing: border-box\noverflow: hidden"
           },
-          "x": 3.1,
-          "y": 255.0,
+          "x": 51.3,
+          "y": 262.5,
           "percentage": -1,
           "id": "90",
           "canvas": "0",
@@ -2925,7 +2925,7 @@
         },
         {
           "type": "ATTRIBUTE WRITER DROPDOWN",
-          "width": 43.8,
+          "width": 42.4,
           "height": 15.0,
           "inputs": {
             "attribute": {
@@ -2965,8 +2965,8 @@
             "submitButtonCss": "",
             "customCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 3.1,
-          "y": 258.8,
+          "x": 51.3,
+          "y": 266.3,
           "percentage": -1,
           "id": "91",
           "canvas": "0",
@@ -2974,8 +2974,8 @@
           "valid": 1
         }
       ],
-      "x": 3.0,
-      "y": 224.9,
+      "x": 50.5,
+      "y": 231.7,
       "id": "84",
       "canvas": "0",
       "order": 16,
@@ -2984,27 +2984,27 @@
     {
       "type": "BOX",
       "width": 44.0,
-      "height": 38.6,
+      "height": 40.2,
       "inputs": {
         "title": "Status",
         "bigWidget": 5,
         "smallWidget": 1,
         "textColor": "#1a1a1a",
         "backgroundColor": "#ffffff",
-        "borderColor": "#c3cad4",
-        "borderWidth": 1,
+        "borderColor": "#ffffff",
+        "borderWidth": 8,
         "borderStyle": "solid",
         "textSize": 1,
         "fontFamily": "Helvetica",
         "layout": "vertical",
         "alignment": "Left",
         "padding": 0.25,
-        "customCss": "font-weight: bold"
+        "customCss": "outline: 1px solid #c3cad4\noutline-offset: -1px\nfont-weight: bold"
       },
       "innerWidgets": [
         {
           "type": "LED_DISPLAY",
-          "width": 43.8,
+          "width": 42.4,
           "height": 3.8,
           "inputs": {
             "attribute": {
@@ -3026,8 +3026,8 @@
             "alignValueRight": true,
             "customCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 50.1,
-          "y": 228.0,
+          "x": 98.3,
+          "y": 235.5,
           "percentage": -1,
           "id": "93",
           "canvas": "0",
@@ -3036,7 +3036,7 @@
         },
         {
           "type": "LED_DISPLAY",
-          "width": 43.8,
+          "width": 42.4,
           "height": 3.8,
           "inputs": {
             "attribute": {
@@ -3058,8 +3058,8 @@
             "alignValueRight": true,
             "customCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 50.1,
-          "y": 231.8,
+          "x": 98.3,
+          "y": 239.3,
           "percentage": -1,
           "id": "94",
           "canvas": "0",
@@ -3068,7 +3068,7 @@
         },
         {
           "type": "LED_DISPLAY",
-          "width": 43.8,
+          "width": 42.4,
           "height": 3.8,
           "inputs": {
             "attribute": {
@@ -3090,8 +3090,8 @@
             "alignValueRight": true,
             "customCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 50.1,
-          "y": 235.6,
+          "x": 98.3,
+          "y": 243.1,
           "percentage": -1,
           "id": "95",
           "canvas": "0",
@@ -3100,7 +3100,7 @@
         },
         {
           "type": "LED_DISPLAY",
-          "width": 43.8,
+          "width": 42.4,
           "height": 3.8,
           "inputs": {
             "attribute": {
@@ -3122,8 +3122,8 @@
             "alignValueRight": true,
             "customCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 50.1,
-          "y": 239.4,
+          "x": 98.3,
+          "y": 246.9,
           "percentage": -1,
           "id": "96",
           "canvas": "0",
@@ -3132,7 +3132,7 @@
         },
         {
           "type": "LED_DISPLAY",
-          "width": 43.8,
+          "width": 42.4,
           "height": 3.8,
           "inputs": {
             "attribute": {
@@ -3154,8 +3154,8 @@
             "alignValueRight": true,
             "customCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 50.1,
-          "y": 243.2,
+          "x": 98.3,
+          "y": 250.7,
           "percentage": -1,
           "id": "97",
           "canvas": "0",
@@ -3164,7 +3164,7 @@
         },
         {
           "type": "LED_DISPLAY",
-          "width": 43.8,
+          "width": 42.4,
           "height": 3.8,
           "inputs": {
             "attribute": {
@@ -3186,8 +3186,8 @@
             "alignValueRight": true,
             "customCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 50.1,
-          "y": 247.0,
+          "x": 98.3,
+          "y": 254.5,
           "percentage": -1,
           "id": "98",
           "canvas": "0",
@@ -3196,7 +3196,7 @@
         },
         {
           "type": "LED_DISPLAY",
-          "width": 43.8,
+          "width": 42.4,
           "height": 3.8,
           "inputs": {
             "attribute": {
@@ -3218,8 +3218,8 @@
             "alignValueRight": true,
             "customCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 50.1,
-          "y": 250.8,
+          "x": 98.3,
+          "y": 258.3,
           "percentage": -1,
           "id": "99",
           "canvas": "0",
@@ -3228,7 +3228,7 @@
         },
         {
           "type": "LED_DISPLAY",
-          "width": 43.8,
+          "width": 42.4,
           "height": 3.8,
           "inputs": {
             "attribute": {
@@ -3250,8 +3250,8 @@
             "alignValueRight": true,
             "customCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 50.1,
-          "y": 254.6,
+          "x": 98.3,
+          "y": 262.1,
           "percentage": -1,
           "id": "100",
           "canvas": "0",
@@ -3260,7 +3260,7 @@
         },
         {
           "type": "LED_DISPLAY",
-          "width": 43.8,
+          "width": 42.4,
           "height": 3.8,
           "inputs": {
             "attribute": {
@@ -3282,8 +3282,8 @@
             "alignValueRight": true,
             "customCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 50.1,
-          "y": 258.4,
+          "x": 98.3,
+          "y": 265.9,
           "percentage": -1,
           "id": "101",
           "canvas": "0",
@@ -3291,8 +3291,8 @@
           "valid": 1
         }
       ],
-      "x": 50.0,
-      "y": 224.9,
+      "x": 97.5,
+      "y": 231.7,
       "id": "92",
       "canvas": "0",
       "order": 17,
@@ -3301,27 +3301,27 @@
     {
       "type": "BOX",
       "width": 44.0,
-      "height": 80.4,
+      "height": 82.0,
       "inputs": {
         "title": "PWSL",
         "bigWidget": 5,
         "smallWidget": 1,
         "textColor": "#1a1a1a",
         "backgroundColor": "#ffffff",
-        "borderColor": "#c3cad4",
-        "borderWidth": 1,
+        "borderColor": "#ffffff",
+        "borderWidth": 8,
         "borderStyle": "solid",
         "textSize": 1,
         "fontFamily": "Helvetica",
         "layout": "vertical",
         "alignment": "Left",
         "padding": 0.25,
-        "customCss": "font-weight: bold"
+        "customCss": "outline: 1px solid #c3cad4\noutline-offset: -1px\nfont-weight: bold"
       },
       "innerWidgets": [
         {
           "type": "LED_DISPLAY",
-          "width": 43.8,
+          "width": 42.4,
           "height": 3.8,
           "inputs": {
             "attribute": {
@@ -3343,8 +3343,8 @@
             "alignValueRight": true,
             "customCss": "padding: 0 10px\nbox-sizing: border-box"
           },
-          "x": 97.1,
-          "y": 228.0,
+          "x": 4.3,
+          "y": 235.5,
           "percentage": -1,
           "id": "103",
           "canvas": "0",
@@ -3353,7 +3353,7 @@
         },
         {
           "type": "ATTRIBUTE_DISPLAY",
-          "width": 43.8,
+          "width": 42.4,
           "height": 3.8,
           "inputs": {
             "attribute": {
@@ -3377,10 +3377,10 @@
             "backgroundColor": "#ffffff",
             "size": 1,
             "font": "Helvetica",
-            "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
+            "widgetCss": "padding: 0 10px\nbox-sizing: border-box\noverflow: hidden"
           },
-          "x": 97.1,
-          "y": 231.8,
+          "x": 4.3,
+          "y": 239.3,
           "percentage": -1,
           "id": "104",
           "canvas": "0",
@@ -3389,7 +3389,7 @@
         },
         {
           "type": "ATTRIBUTE_DISPLAY",
-          "width": 43.8,
+          "width": 42.4,
           "height": 3.8,
           "inputs": {
             "attribute": {
@@ -3413,10 +3413,10 @@
             "backgroundColor": "#ffffff",
             "size": 1,
             "font": "Helvetica",
-            "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
+            "widgetCss": "padding: 0 10px\nbox-sizing: border-box\noverflow: hidden"
           },
-          "x": 97.1,
-          "y": 235.6,
+          "x": 4.3,
+          "y": 243.1,
           "percentage": -1,
           "id": "105",
           "canvas": "0",
@@ -3425,7 +3425,7 @@
         },
         {
           "type": "ATTRIBUTE_DISPLAY",
-          "width": 43.8,
+          "width": 42.4,
           "height": 3.8,
           "inputs": {
             "attribute": {
@@ -3449,10 +3449,10 @@
             "backgroundColor": "#ffffff",
             "size": 1,
             "font": "Helvetica",
-            "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
+            "widgetCss": "padding: 0 10px\nbox-sizing: border-box\noverflow: hidden"
           },
-          "x": 97.1,
-          "y": 239.4,
+          "x": 4.3,
+          "y": 246.9,
           "percentage": -1,
           "id": "106",
           "canvas": "0",
@@ -3461,7 +3461,7 @@
         },
         {
           "type": "ATTRIBUTE_DISPLAY",
-          "width": 43.8,
+          "width": 42.4,
           "height": 3.8,
           "inputs": {
             "attribute": {
@@ -3485,10 +3485,10 @@
             "backgroundColor": "#ffffff",
             "size": 1,
             "font": "Helvetica",
-            "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
+            "widgetCss": "padding: 0 10px\nbox-sizing: border-box\noverflow: hidden"
           },
-          "x": 97.1,
-          "y": 243.2,
+          "x": 4.3,
+          "y": 250.7,
           "percentage": -1,
           "id": "107",
           "canvas": "0",
@@ -3497,7 +3497,7 @@
         },
         {
           "type": "BOX",
-          "width": 43.8,
+          "width": 42.4,
           "height": 19.0,
           "inputs": {
             "title": "",
@@ -3505,7 +3505,7 @@
             "smallWidget": 1,
             "textColor": "#1a1a1a",
             "backgroundColor": "#ffffff",
-            "borderColor": "#c3cad4",
+            "borderColor": "#ffffff",
             "borderWidth": 0,
             "borderStyle": "solid",
             "textSize": 1,
@@ -3518,7 +3518,7 @@
           "innerWidgets": [
             {
               "type": "ATTRIBUTE_DIAL",
-              "width": 43.8,
+              "width": 42.4,
               "height": 19.0,
               "inputs": {
                 "attribute": {
@@ -3533,16 +3533,16 @@
                 "showTangoDB": false,
                 "widgetCss": ""
               },
-              "x": 97.1,
-              "y": 247.0,
+              "x": 4.3,
+              "y": 254.5,
               "id": "109",
               "canvas": "0",
               "order": 0,
               "valid": 1
             }
           ],
-          "x": 97.1,
-          "y": 247.0,
+          "x": 4.3,
+          "y": 254.5,
           "percentage": -1,
           "id": "108",
           "canvas": "0",
@@ -3551,7 +3551,7 @@
         },
         {
           "type": "ATTRIBUTE_PLOT",
-          "width": 43.8,
+          "width": 42.4,
           "height": 19.0,
           "inputs": {
             "timeWindow": 600,
@@ -3586,8 +3586,8 @@
             "textColor": "#000000",
             "backgroundColor": "#ffffff"
           },
-          "x": 97.1,
-          "y": 266.0,
+          "x": 4.3,
+          "y": 273.5,
           "percentage": -1,
           "id": "110",
           "canvas": "0",
@@ -3596,7 +3596,7 @@
         },
         {
           "type": "ATTRIBUTE_PLOT",
-          "width": 43.8,
+          "width": 42.4,
           "height": 19.0,
           "inputs": {
             "timeWindow": 600,
@@ -3631,8 +3631,8 @@
             "textColor": "#000000",
             "backgroundColor": "#ffffff"
           },
-          "x": 97.1,
-          "y": 285.0,
+          "x": 4.3,
+          "y": 292.5,
           "percentage": -1,
           "id": "111",
           "canvas": "0",
@@ -3640,8 +3640,8 @@
           "valid": 1
         }
       ],
-      "x": 97.0,
-      "y": 224.9,
+      "x": 3.5,
+      "y": 231.7,
       "id": "102",
       "canvas": "0",
       "order": 18,
@@ -3650,27 +3650,27 @@
     {
       "type": "BOX",
       "width": 44.0,
-      "height": 72.8,
+      "height": 74.4,
       "inputs": {
         "title": "Measurements",
         "bigWidget": 5,
         "smallWidget": 1,
         "textColor": "#1a1a1a",
         "backgroundColor": "#ffffff",
-        "borderColor": "#c3cad4",
-        "borderWidth": 1,
+        "borderColor": "#ffffff",
+        "borderWidth": 8,
         "borderStyle": "solid",
         "textSize": 1,
         "fontFamily": "Helvetica",
         "layout": "vertical",
         "alignment": "Left",
         "padding": 0.25,
-        "customCss": "font-weight: bold"
+        "customCss": "outline: 1px solid #c3cad4\noutline-offset: -1px\nfont-weight: bold"
       },
       "innerWidgets": [
         {
           "type": "ATTRIBUTE_DISPLAY",
-          "width": 43.8,
+          "width": 42.4,
           "height": 3.8,
           "inputs": {
             "attribute": {
@@ -3694,10 +3694,10 @@
             "backgroundColor": "#ffffff",
             "size": 1,
             "font": "Helvetica",
-            "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
+            "widgetCss": "padding: 0 10px\nbox-sizing: border-box\noverflow: hidden"
           },
-          "x": 144.1,
-          "y": 228.0,
+          "x": 145.3,
+          "y": 235.5,
           "percentage": -1,
           "id": "113",
           "canvas": "0",
@@ -3706,7 +3706,7 @@
         },
         {
           "type": "ATTRIBUTE_DISPLAY",
-          "width": 43.8,
+          "width": 42.4,
           "height": 3.8,
           "inputs": {
             "attribute": {
@@ -3730,10 +3730,10 @@
             "backgroundColor": "#ffffff",
             "size": 1,
             "font": "Helvetica",
-            "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
+            "widgetCss": "padding: 0 10px\nbox-sizing: border-box\noverflow: hidden"
           },
-          "x": 144.1,
-          "y": 231.8,
+          "x": 145.3,
+          "y": 239.3,
           "percentage": -1,
           "id": "114",
           "canvas": "0",
@@ -3742,7 +3742,7 @@
         },
         {
           "type": "ATTRIBUTE_DISPLAY",
-          "width": 43.8,
+          "width": 42.4,
           "height": 3.8,
           "inputs": {
             "attribute": {
@@ -3766,10 +3766,10 @@
             "backgroundColor": "#ffffff",
             "size": 1,
             "font": "Helvetica",
-            "widgetCss": "padding: 0 10px\nbox-sizing: border-box"
+            "widgetCss": "padding: 0 10px\nbox-sizing: border-box\noverflow: hidden"
           },
-          "x": 144.1,
-          "y": 235.6,
+          "x": 145.3,
+          "y": 243.1,
           "percentage": -1,
           "id": "115",
           "canvas": "0",
@@ -3778,7 +3778,7 @@
         },
         {
           "type": "BOX",
-          "width": 43.8,
+          "width": 42.4,
           "height": 19.0,
           "inputs": {
             "title": "",
@@ -3786,7 +3786,7 @@
             "smallWidget": 1,
             "textColor": "#1a1a1a",
             "backgroundColor": "#ffffff",
-            "borderColor": "#c3cad4",
+            "borderColor": "#ffffff",
             "borderWidth": 0,
             "borderStyle": "solid",
             "textSize": 1,
@@ -3799,7 +3799,7 @@
           "innerWidgets": [
             {
               "type": "ATTRIBUTE_DIAL",
-              "width": 14.6,
+              "width": 14.13,
               "height": 19.0,
               "inputs": {
                 "attribute": {
@@ -3814,8 +3814,8 @@
                 "showTangoDB": false,
                 "widgetCss": ""
               },
-              "x": 144.1,
-              "y": 239.4,
+              "x": 145.3,
+              "y": 246.9,
               "id": "117",
               "canvas": "0",
               "order": 0,
@@ -3823,7 +3823,7 @@
             },
             {
               "type": "ATTRIBUTE_DIAL",
-              "width": 14.6,
+              "width": 14.14,
               "height": 19.0,
               "inputs": {
                 "attribute": {
@@ -3838,8 +3838,8 @@
                 "showTangoDB": false,
                 "widgetCss": ""
               },
-              "x": 158.7,
-              "y": 239.4,
+              "x": 159.43,
+              "y": 246.9,
               "id": "118",
               "canvas": "0",
               "order": 1,
@@ -3847,7 +3847,7 @@
             },
             {
               "type": "ATTRIBUTE_DIAL",
-              "width": 14.6,
+              "width": 14.13,
               "height": 19.0,
               "inputs": {
                 "attribute": {
@@ -3862,16 +3862,16 @@
                 "showTangoDB": false,
                 "widgetCss": ""
               },
-              "x": 173.3,
-              "y": 239.4,
+              "x": 173.57,
+              "y": 246.9,
               "id": "119",
               "canvas": "0",
               "order": 2,
               "valid": 1
             }
           ],
-          "x": 144.1,
-          "y": 239.4,
+          "x": 145.3,
+          "y": 246.9,
           "percentage": -1,
           "id": "116",
           "canvas": "0",
@@ -3880,7 +3880,7 @@
         },
         {
           "type": "ATTRIBUTE_PLOT",
-          "width": 43.8,
+          "width": 42.4,
           "height": 19.0,
           "inputs": {
             "timeWindow": 600,
@@ -3915,8 +3915,8 @@
             "textColor": "#000000",
             "backgroundColor": "#ffffff"
           },
-          "x": 144.1,
-          "y": 258.4,
+          "x": 145.3,
+          "y": 265.9,
           "percentage": -1,
           "id": "120",
           "canvas": "0",
@@ -3925,7 +3925,7 @@
         },
         {
           "type": "ATTRIBUTE_PLOT",
-          "width": 43.8,
+          "width": 42.4,
           "height": 19.0,
           "inputs": {
             "timeWindow": 600,
@@ -3950,8 +3950,8 @@
             "textColor": "#000000",
             "backgroundColor": "#ffffff"
           },
-          "x": 144.1,
-          "y": 277.4,
+          "x": 145.3,
+          "y": 284.9,
           "percentage": -1,
           "id": "121",
           "canvas": "0",
@@ -3959,8 +3959,8 @@
           "valid": 1
         }
       ],
-      "x": 144.0,
-      "y": 224.9,
+      "x": 144.5,
+      "y": 231.7,
       "id": "112",
       "canvas": "0",
       "order": 19,

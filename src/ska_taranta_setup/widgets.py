@@ -49,6 +49,9 @@ def css(**declarations: str) -> str:
 
 #: Applied to every row widget so labels and values don't touch the box edge.
 ROW_CSS = css(padding="0 10px", box_sizing="border-box")
+#: Value displays also clip, so an unexpectedly long value can't spill over
+#: the row below.
+DISPLAY_CSS = css(padding="0 10px", box_sizing="border-box", overflow="hidden")
 PLOT_COLOURS = ["#1f77b4", "#ff7f0e", "#2ca02c", "#d62728", "#9467bd", "#8c564b"]
 
 
@@ -91,16 +94,32 @@ def label(text: str, size: float = 1.0, background: str = "#ffffff") -> dict[str
     )
 
 
+FRAME_COLOUR = "#c3cad4"
+
+
 def box(
     title: str,
     children: list[dict[str, Any]],
     layout: str = "vertical",
     big_slot: int = 5,
     small_slot: int = 1,
-    border: int = 1,
+    inset: int = 8,
     padding: float = 0,
+    frame: bool = True,
 ) -> dict[str, Any]:
-    """A BOX that arranges ``children`` itself (vertically or horizontally)."""
+    """
+    A BOX that arranges ``children`` itself (vertically or horizontally).
+
+    Taranta places a box's children at the inside of its border and stretches
+    them to fill it, so the border is the only way to pad them. ``inset`` px
+    of white border does that, and an outline draws the visible 1px frame at
+    the outer edge.
+    """
+    declarations = {}
+    if frame:
+        declarations.update(outline=f"1px solid {FRAME_COLOUR}", outline_offset="-1px")
+    if title:
+        declarations["font_weight"] = "bold"
     result = widget(
         "BOX",
         {
@@ -109,15 +128,15 @@ def box(
             "smallWidget": small_slot,
             "textColor": "#1a1a1a",
             "backgroundColor": "#ffffff",
-            "borderColor": "#c3cad4",
-            "borderWidth": border,
+            "borderColor": "#ffffff",
+            "borderWidth": inset,
             "borderStyle": "solid",
             "textSize": 1,
             "fontFamily": "Helvetica",
             "layout": layout,
             "alignment": "Left",
             "padding": padding if title else 0,
-            "customCss": css(font_weight="bold") if title else "",
+            "customCss": css(**declarations),
         },
     )
     result["innerWidgets"] = children
@@ -148,7 +167,7 @@ def device_status(device: str, show_name: bool = True) -> dict[str, Any]:
 
 def attribute_display(device: str, attr: AttributeInfo, text: str) -> dict[str, Any]:
     """Read-only value display (scalars, enums with labels, arrays as JSON)."""
-    return widget(
+    result = widget(
         "ATTRIBUTE_DISPLAY",
         {
             "attribute": attribute_ref(device, attr, text),
@@ -168,9 +187,12 @@ def attribute_display(device: str, attr: AttributeInfo, text: str) -> dict[str, 
             "backgroundColor": "#ffffff",
             "size": 1,
             "font": "Helvetica",
-            "widgetCss": ROW_CSS,
+            "widgetCss": DISPLAY_CSS,
         },
     )
+    if attr.name.lower() in LONG_TEXT:
+        result[ROWS] = 2
+    return result
 
 
 def led(
@@ -226,6 +248,10 @@ def dial(
 #: below it, e.g. for a dropdown's menu. Taranta clips anything that overflows a
 #: widget (its wrapper is ``overflow: auto``), so the menu has to fit inside.
 MENU_ROWS = "_menu_rows"
+#: Layout hint (stripped before saving): rows of height a widget needs.
+ROWS = "_rows"
+#: Attributes whose values are usually long enough to wrap onto two lines.
+LONG_TEXT = {"buildstate", "versioninfo", "description"}
 
 
 def dropdown_writer(
@@ -367,13 +393,18 @@ def spectrum(device: str, attr: AttributeInfo, text: str) -> dict[str, Any]:
     )
 
 
-def command(device: str, cmd: CommandInfo, title: str) -> dict[str, Any]:
-    """A button (with an input box if the command takes an argument)."""
-    return widget(
+def command(device: str, cmd: CommandInfo, label: str) -> dict[str, Any]:
+    """
+    A button (with an input box if the command takes an argument).
+
+    The readable name goes on the button rather than in a separate title,
+    which wrapped and was cut off in a single row next to the input box.
+    """
+    result = widget(
         "COMMAND",
         {
-            "title": title,
-            "buttonText": cmd.name,
+            "title": "",
+            "buttonText": label,
             "command": {
                 "device": device,
                 "command": cmd.name,
@@ -399,6 +430,9 @@ def command(device: str, cmd: CommandInfo, title: str) -> dict[str, Any]:
             "widgetCss": ROW_CSS,
         },
     )
+    # A second row for the command's output, shown under the button.
+    result[ROWS] = 2
+    return result
 
 
 def dashboard_link(dashboard_name: str, text: str) -> dict[str, Any]:
