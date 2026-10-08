@@ -180,3 +180,17 @@ def test_explicit_columns_still_fill():
     opts = LayoutOptions(columns=3, screen_width_px=1920)
     assert opts.columns == 3
     assert opts.section_width_px > 550
+
+
+def test_gap_under_section_headings(tmp_path, sat_lmc_snapshot):
+    """Each section's heading strip is followed by a small blank gap."""
+    devices = [d for d in sat_lmc_snapshot.devices if d.interface]
+    path = write_dashboards("S", devices, sat_lmc_snapshot, tmp_path, "t")[-1]
+    opts = LayoutOptions()
+    for box in json.loads(path.read_text())["widget"]:
+        kids = box.get("innerWidgets") or []
+        if box["type"] == "BOX" and kids and kids[0]["type"] == "LABEL":
+            gap = kids[1]
+            assert gap["type"] == "LABEL" and gap["inputs"]["text"] == ""
+            assert gap["height"] == opts.units(opts.heading_gap_px)
+            assert kids[2]["y"] == round(gap["y"] + gap["height"], 2)

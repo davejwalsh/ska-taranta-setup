@@ -75,8 +75,9 @@ class LayoutOptions:
     #: Gauge card: caption height and the padding round the dial.
     caption_px: float = 24
     card_inset_px: int = 6
-    #: Height of a section's heading strip.
+    #: Height of a section's heading strip, and the space under it.
     heading_px: float = 32
+    heading_gap_px: float = 8
     #: Trend plots: height, and how many grid columns each one spans.
     plot_px: float = 320
     plot_span: int = 2
@@ -261,7 +262,12 @@ def themed_box(
     title: str, kind: str, children: list[dict[str, Any]], opts: LayoutOptions
 ) -> dict[str, Any]:
     """A section box: heading strip, then ``children``; sized, not positioned."""
-    contents = ([_heading(title, kind, opts)] if title else []) + children
+    head: list[dict[str, Any]] = []
+    if title:
+        gap = w.spacer()
+        gap[PX] = opts.heading_gap_px
+        head = [_heading(title, kind, opts), gap]
+    contents = head + children
     box = w.box("", contents, big_slot=opts.big_slots, inset=opts.inset_px, kind=kind)
     box["width"] = opts.section_width
     box["height"] = opts.box_height(sum(_height(c, opts) for c in contents))

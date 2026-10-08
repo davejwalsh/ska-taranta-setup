@@ -432,6 +432,7 @@ plot_px = 320                   # trend plot height
 plot_span = 2                   # grid columns per trend plot
 inset_px = 10                   # padding inside each box
 heading_px = 32                 # section heading strip height
+heading_gap_px = 8              # space under a heading strip
 header_gap_px = 20              # space under title bars
 menu_max_items = 5              # dropdown menu items to make room for
 banner = true                   # the SKAO banner on every page
