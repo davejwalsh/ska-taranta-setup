@@ -10,7 +10,7 @@ from pathlib import Path
 
 import click
 
-from ska_taranta_setup.config import Config, load_config
+from ska_taranta_setup.config import SETTINGS_FILE, Config, load_config
 from ska_taranta_setup.dashboard import LayoutOptions, slugify, write_dashboards
 from ska_taranta_setup.model import DeviceInstance, Snapshot
 from ska_taranta_setup.options import OptionsError, build
@@ -117,7 +117,7 @@ def _discover(
         click.echo(
             "Starting each device locally (no Tango DB) to read its interface..."
         )
-        snapshot, errors = introspect_local(config, devices)
+        snapshot, errors = introspect_local(config, devices, report=click.echo)
     return snapshot, errors
 
 
@@ -376,10 +376,19 @@ def attributes(ctx: click.Context, devices: tuple[str, ...], hidden: bool) -> No
             click.secho("  Left out", fg="yellow")
             for plan in left_out:
                 click.echo(f"    {plan.name:<{width}}{plan.hidden}")
+    example = next(iter(by_interface.values()), [None])[0]
+    class_name = example.class_name if example else "MyDevice"
+    if (config.root / "pyproject.toml").is_file():
+        where, table = (
+            "pyproject.toml",
+            "[tool.ska-taranta-setup.generate.exclude_attributes_by_class]",
+        )
+    else:
+        where, table = SETTINGS_FILE, "[generate.exclude_attributes_by_class]"
     click.echo(
-        "\nTo leave attributes out, add regexes (any case) to pyproject.toml:\n\n"
-        "  [tool.ska-taranta-setup.generate.exclude_attributes_by_class]\n"
-        '  SatWhiteRabbit = ["net_wr1[0-5]_.*", "hdd.*"]\n\n'
+        f"\nTo leave attributes out, add regexes (any case) to {where}:\n\n"
+        f"  {table}\n"
+        f'  {class_name} = ["someAttribute", "prefix_.*"]\n\n'
         "then run `ska-taranta generate`."
     )
 

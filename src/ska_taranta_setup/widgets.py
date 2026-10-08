@@ -16,7 +16,7 @@ from __future__ import annotations
 import json
 from typing import Any
 
-from ska_taranta_setup.model import AttributeInfo, CommandInfo
+from ska_taranta_setup.model import AttributeInfo, CommandInfo, prettify
 
 #: Widget types Taranta gives ``bigWidget`` slots to inside a BOX.
 BIG_WIDGETS = {
@@ -532,6 +532,38 @@ def plot(device: str, attrs: list[AttributeInfo], labels: list[str]) -> dict[str
             "xLogarithmicScale": False,
             "yLogarithmicScale": False,
             "showTangoDB": False,
+            "textColor": "#000000",
+            "backgroundColor": "#ffffff",
+        },
+    )
+
+
+def spectrum_2d(
+    device: str,
+    x_axis: AttributeInfo,
+    attrs: list[AttributeInfo],
+    labels: list[str],
+) -> dict[str, Any]:
+    """Several spectra plotted against an X-axis spectrum (e.g. frequency)."""
+    return widget(
+        "SPECTRUM_2D",
+        {
+            "attributeX": attribute_ref(device, x_axis, prettify(x_axis.name)),
+            "attributes": [
+                {
+                    "attribute": attribute_ref(device, attr, text),
+                    "lineColor": PLOT_COLOURS[i % len(PLOT_COLOURS)],
+                }
+                for i, (attr, text) in enumerate(zip(attrs, labels, strict=True))
+            ],
+            "showAttribute": "Label",
+            "showTitle": True,
+            "showTangoDB": False,
+            "xScientificNotation": False,
+            "yScientificNotation": False,
+            "xLogarithmicScale": False,
+            "yLogarithmicScale": False,
+            "plotStyling": "lines",
             "textColor": "#000000",
             "backgroundColor": "#ffffff",
         },

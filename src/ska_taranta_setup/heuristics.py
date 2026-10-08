@@ -143,6 +143,13 @@ DEVICE_SECTION_ORDER = [
     "buildstate",
     "logginglevel",
 ]
+#: Names of spectrum attributes that are an X axis for the others.
+X_AXIS_NAMES = {
+    "x", "xvalues", "xaxis", "frequencies", "frequency", "freqs", "freq",
+    "frequencyaxis", "freqaxis", "timebase", "times", "timestamps",
+}  # fmt: skip
+MAX_CHART_LINES = 6
+
 #: Attributes not shown at all (covered elsewhere or of no use on a dashboard).
 HIDDEN_ATTRIBUTES = {"state", "loggingtargets"}
 HIDDEN_COMMANDS = {"state", "status"}  # shown by the device status widget
@@ -169,10 +176,17 @@ class Section:
     trends: dict[str, list[tuple[AttributeInfo, str]]] = field(default_factory=dict)
     #: Dials, laid out in rows rather than one per line.
     dials: list[dict[str, Any]] = field(default_factory=list)
+    #: Wide charts (spectra against frequency), shown in the Trends area.
+    charts: list[tuple[str, dict[str, Any]]] = field(default_factory=list)
 
     def is_empty(self) -> bool:
         """Whether there is nothing to show."""
-        return not (self.widgets or self.trends or self.dials)
+        return not (self.widgets or self.trends or self.dials or self.charts)
+
+    @property
+    def has_box(self) -> bool:
+        """Whether the section has anything for a box (charts go elsewhere)."""
+        return bool(self.widgets or self.dials)
 
 
 # --------------------------------------------------------------------------
@@ -306,6 +320,9 @@ def family_key(name: str) -> str:
     words = split_words(name)
     if not words:
         return name
+    if len(words[0]) == 1 and not (len(words) > 1 and words[1].isdigit()):
+        # A one-letter prefix (fStartHz, bEnabled) isn't a family.
+        return name.lower()
     for i, word in enumerate(words[1:3], start=1):
         if word.isdigit():
             return "_".join([*words[: i - 1], words[i - 1] + word])
@@ -500,6 +517,28 @@ def device_sections(
     def place(target: Section, attr: AttributeInfo, family: str | None = None) -> None:
         place_attribute(target, device, attr, family, options)
 
+    # Spectra against an X axis (e.g. an RFI monitor's traces against
+    # frequency) go on one chart instead of each against its index.
+    spectrum = Section("Spectrum", kind="measurements")
+    numeric_spectra = [a for a in attrs if a.is_spectrum and a.is_numeric]
+    axis = next(
+        (a for a in numeric_spectra if "".join(split_words(a.name)) in X_AXIS_NAMES),
+        None,
+    )
+    if axis is not None and len(numeric_spectra) > 1:
+        traces = [
+            a
+            for a in numeric_spectra
+            if a is not axis and options.widget_override(a.name) != "hide"
+        ][:MAX_CHART_LINES]
+        if traces:
+            chart = w.spectrum_2d(
+                device, axis, traces, [short_label(a, None) for a in traces]
+            )
+            spectrum.charts.append((f"vs {prettify(axis.name)}", chart))
+            charted = {axis.name.lower(), *(a.name.lower() for a in traces)}
+            attrs = [a for a in attrs if a.name.lower() not in charted]
+
     by_name = {a.name.lower(): a for a in attrs}
     for name in DEVICE_SECTION_ORDER:
         if name in by_name:
@@ -557,6 +596,7 @@ def device_sections(
         status,
         *family_sections,
         measurements,
+        spectrum,
         information,
         settings,
         commands,
@@ -738,6 +778,11 @@ def attribute_plan(
         for series in section.trends.values():
             for attr, _ in series:
                 note(attr.name.lower(), section, "plot")
+        for _, chart in section.charts:
+            x_name = chart["inputs"]["attributeX"]["attribute"]
+            note(x_name, section, "chart X axis")
+            for line in chart["inputs"]["attributes"]:
+                note(line["attribute"]["attribute"], section, f"chart vs {x_name}")
     for key, plan in plans.items():
         if plan.widgets:
             continue

@@ -27,7 +27,7 @@ import tomlkit
 from ruamel.yaml import YAML
 from ruamel.yaml.comments import CommentedMap
 
-from ska_taranta_setup.config import TOOL_KEY, Config
+from ska_taranta_setup.config import SETTINGS_FILE, TOOL_KEY, Config
 
 SKAO_HELM_REPO = "https://artefact.skao.int/repository/helm-internal"
 MAKE_INCLUDE = "-include taranta.mk"
@@ -278,17 +278,8 @@ def guess_helmfile_env(root: Path) -> dict[str, str]:
     return env
 
 
-def update_pyproject(config: Config, report: Report, dry_run: bool) -> None:
-    """Record the guessed configuration in ``[tool.ska-taranta-setup]``."""
-    path = config.root / "pyproject.toml"
-    if not path.is_file():
-        report.warnings.append("No pyproject.toml; using defaults.")
-        return
-    doc = tomlkit.parse(path.read_text())
-    tool = doc.setdefault("tool", tomlkit.table())
-    if TOOL_KEY in tool:
-        report.skipped.append(f"pyproject.toml: [tool.{TOOL_KEY}] already present")
-        return
+def _settings_table(config: Config) -> tomlkit.items.Table:
+    """The guessed settings, as written by ``init``."""
     table = tomlkit.table()
     table.add(
         tomlkit.comment(
@@ -306,7 +297,35 @@ def update_pyproject(config: Config, report: Report, dry_run: bool) -> None:
     table["exclude_classes"] = config.exclude_classes
     table["tango_db"] = config.tango_db
     table.add(tomlkit.nl())  # keep a blank line before the next table
-    tool[TOOL_KEY] = table
+    return table
+
+
+def update_pyproject(config: Config, report: Report, dry_run: bool) -> None:
+    """
+    Record the guessed configuration.
+
+    In ``[tool.ska-taranta-setup]`` of ``pyproject.toml`` for Python projects,
+    or in ``ska-taranta.toml`` for others (e.g. C++ with CMake).
+    """
+    path = config.root / "pyproject.toml"
+    if not path.is_file():
+        standalone = config.root / SETTINGS_FILE
+        if standalone.is_file():
+            report.skipped.append(f"{SETTINGS_FILE}: already present")
+            return
+        doc = tomlkit.document()
+        for key, value in _settings_table(config).items():
+            doc[key] = value
+        report.changes.append(f"{SETTINGS_FILE}: written (no pyproject.toml)")
+        if not dry_run:
+            standalone.write_text(tomlkit.dumps(doc))
+        return
+    doc = tomlkit.parse(path.read_text())
+    tool = doc.setdefault("tool", tomlkit.table())
+    if TOOL_KEY in tool:
+        report.skipped.append(f"pyproject.toml: [tool.{TOOL_KEY}] already present")
+        return
+    tool[TOOL_KEY] = _settings_table(config)
     report.changes.append(f"pyproject.toml: added [tool.{TOOL_KEY}]")
     if not dry_run:
         path.write_text(tomlkit.dumps(doc))

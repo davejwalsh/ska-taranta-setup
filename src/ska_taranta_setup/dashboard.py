@@ -81,6 +81,9 @@ class LayoutOptions:
     #: Trend plots: height, and how many grid columns each one spans.
     plot_px: float = 320
     plot_span: int = 2
+    #: Spectrum charts (traces against frequency): height and span.
+    chart_px: float = 420
+    chart_span: int = 4
     #: Width of a navigation button.
     link_px: float = 170
     #: Height of one item in a dropdown's menu, and the menu's own padding.
@@ -295,6 +298,12 @@ def trend_boxes(
     swamp the page.
     """
     boxes = []
+    for section in sections:
+        for subtitle, chart in section.charts:
+            chart[PX] = opts.chart_px
+            box = themed_box(f"{section.title} {subtitle}", "trends", [chart], opts)
+            box["width"] = opts.span_width(min(opts.chart_span, opts.columns))
+            boxes.append(box)
     repeated = repeated_blocks(sections)
     for section in [s for s in sections if s.title not in repeated]:
         for quantity, plot in trend_plots(section, device, max_plots):
@@ -323,7 +332,7 @@ def arrange(sections: list[Section], opts: LayoutOptions) -> list[dict[str, Any]
     and Expert close, and everything between goes tallest first; the tallest
     of those share the first row with Device, which is usually tall too.
     """
-    boxes = [(s, section_box(s, opts)) for s in sections]
+    boxes = [(s, section_box(s, opts)) for s in sections if s.has_box]
     head = [b for s, b in boxes if s.kind in HEAD_KINDS]
     tail = sorted(
         ((s, b) for s, b in boxes if s.kind in TAIL_KINDS),

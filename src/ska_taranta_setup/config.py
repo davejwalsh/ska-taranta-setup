@@ -18,6 +18,9 @@ from typing import Any
 from ska_taranta_setup.options import GenerateOptions, SubsystemSpec, build
 
 TOOL_KEY = "ska-taranta-setup"
+#: Settings file for projects without a pyproject.toml (e.g. C++ with CMake):
+#: the same keys as ``[tool.ska-taranta-setup]``, at the top level.
+SETTINGS_FILE = "ska-taranta.toml"
 #: Tango's own classes, which come with the ska-tango-base chart rather than
 #: the project (e.g. TangoTest's sys/tg_test/1): never put on dashboards.
 TANGO_SYSTEM_CLASSES = {
@@ -71,6 +74,14 @@ class Config:
     tango_host: str = ""
     #: Seconds to wait for each device server to start when introspecting.
     startup_timeout: float = 20.0
+    #: C++ (compiled) servers: where to look for built executables, and how
+    #: long to wait for them; servers run from a container image get longer,
+    #: as the image may need pulling.
+    cpp_build_dirs: list[str] = field(
+        default_factory=lambda: ["build", "cmake-build-*", "out/build"]
+    )
+    cpp_startup_timeout: float = 90.0
+    container_startup_timeout: float = 240.0
     #: Taranta helm chart versions to add to the umbrella chart.
     taranta_version: str = "2.18.9"
     taranta_auth_version: str = "0.3.1"
@@ -133,6 +144,10 @@ def load_config(root: Path | str = ".") -> Config:
     project_name = pyproject.get("project", {}).get("name", "") or root.name
     tool = pyproject.get("tool", {})
     raw: dict[str, Any] = dict(tool.get(TOOL_KEY, {}))
+    standalone = root / SETTINGS_FILE
+    if not raw and standalone.is_file():
+        with standalone.open("rb") as fh:
+            raw = tomllib.load(fh)
 
     # Reuse ska-tango-difdoc's per-class properties so a project that already
     # documents its devices with ``tangodocgen --auto`` needs no extra config.

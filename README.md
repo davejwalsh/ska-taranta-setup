@@ -149,6 +149,42 @@ You can import `dashboards/*.wj` through the Taranta UI instead, but don't
 re-import a name that already exists: see
 [Troubleshooting](#troubleshooting).
 
+### C++ (CMake) projects
+
+The same commands work for C++ device servers, e.g. ska-low-rfi-monitor.
+`ska-taranta` detects what each device class is:
+
+* a **Python** class in the project is run directly, as above;
+* otherwise it's a compiled server: `discover` uses a **built executable**
+  named after the server (e.g. `RFIMonitor`) under `build/`,
+  `cmake-build-*/` or `out/build/` if there is one;
+* otherwise it runs the server from its **container image**, the one the
+  chart deploys (image, executable and environment are read from the
+  rendered chart). This needs Docker, but no C++ toolchain or matching
+  cppTango, and is usually the most reliable.
+
+As with Python, the server starts with no Tango database, from a property
+file; hosts and IP addresses in its properties and environment (e.g. the RFI
+monitor's `device_ip`, a real instrument) are pointed at `127.0.0.1`, so no
+hardware is contacted.
+
+A C++ repository has no Python environment of its own, so install
+`ska-taranta` as a tool, with pytango:
+
+```bash
+uv tool install --editable /path/to/ska-taranta-setup --with pytango
+```
+
+(or `uv tool install "ska-taranta-setup[tango]"` once published). Then run the
+same steps in the project: `ska-taranta setup`, `make taranta-upload`. With no
+`pyproject.toml`, `init` keeps its settings in **`ska-taranta.toml`** at the
+repository root: the same keys as `[tool.ska-taranta-setup]`, at the top
+level (`[generate]`, `[layout]`, `[[subsystems]]`).
+
+`difdoc` (`ska-tango-difdoc`) only documents C++ devices that are already
+running (`tangodocgen --device`); `ska-taranta discover --live` does the same
+against a deployment, for any language.
+
 ### Day to day
 
 | When | Run |
@@ -324,6 +360,7 @@ appended and breaks the links, whereas `ska-taranta upload` updates in place.
 | counters, identifiers, other numbers and strings | value display |
 | writable number or string | writer |
 | numeric array | spectrum plot |
+| numeric arrays plus an X-axis array (`xValues`, `frequencies`, …) | one chart of the arrays against it, full width in Trends (e.g. an RFI monitor's traces against frequency) |
 | other array | value display (JSON) |
 | `healthInfo` | logger |
 | commands (not `State`/`Status`) | command button (`Init`, to re-initialise the device, first); "testing" and `EXPERT` ones go to an Expert section |
@@ -360,6 +397,11 @@ exclude_devices = []                   # regexes on TRL
 interface_key_properties = ["Model"]
 tango_db = "taranta"                   # URL segment before /taranta: /<ns>/<tango_db>/...
 startup_timeout = 20.0
+# C++ servers: where to find built executables, and how long to wait for them
+# (a server run from its container image may first need pulling).
+cpp_build_dirs = ["build", "cmake-build-*", "out/build"]
+cpp_startup_timeout = 90.0
+container_startup_timeout = 240.0
 # Explicit devices, instead of reading helm:
 # devices = { MyDevice = ["my/device/1", "my/device/2"] }
 

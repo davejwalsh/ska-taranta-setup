@@ -23,11 +23,13 @@ import json
 import logging
 import os
 import re
+import shutil
 import socket
 import subprocess
 import sys
 import tempfile
 import time
+from collections.abc import Callable
 from dataclasses import asdict, dataclass
 from pathlib import Path
 from typing import Any
@@ -186,10 +188,15 @@ def _format_property(value: Any) -> str:
 
 
 def write_property_file(
-    path: Path, class_name: str, trl: str, properties: dict[str, Any]
+    path: Path,
+    class_name: str,
+    trl: str,
+    properties: dict[str, Any],
+    server: str | None = None,
 ) -> None:
-    """Write a Tango property file declaring one device."""
-    lines = [f'{class_name}/introspect/DEVICE/{class_name}: "{trl}"', ""]
+    """Write a Tango property file declaring one device of ``server``."""
+    server = server or class_name
+    lines = [f'{server}/introspect/DEVICE/{class_name}: "{trl}"', ""]
     for key, value in properties.items():
         if value is None:
             continue
@@ -205,6 +212,8 @@ class _Server:
     port: int
     process: subprocess.Popen[str]
     log_path: Path
+    timeout: float = 20.0
+    container: str = ""  # docker container name, when run from an image
 
     def log(self) -> str:
         try:
@@ -228,6 +237,13 @@ class _Server:
         )
 
     def stop(self) -> None:
+        if self.container:
+            subprocess.run(
+                ["docker", "rm", "-f", self.container],
+                capture_output=True,
+                check=False,
+            )
+            self.container = ""
         if self.process.poll() is None:
             self.process.terminate()
             try:
@@ -265,6 +281,131 @@ def sanitise_properties(properties: dict[str, Any]) -> dict[str, Any]:
     return kept
 
 
+IP_ADDRESS = re.compile(r"^\d{1,3}(\.\d{1,3}){3}$")
+
+
+def sanitise_env(env: dict[str, str]) -> dict[str, str]:
+    """
+    A deployment's environment, made safe for an offline start.
+
+    Tango's own variables (TANGO_HOST, ports) are dropped, as the server runs
+    with no database on a port of our choosing. Hosts and IP addresses (e.g.
+    the RFI monitor's ``device_ip``, a real instrument) point at localhost, so
+    nothing is contacted.
+    """
+    safe = {}
+    for key, value in env.items():
+        if key.upper().startswith("TANGO_"):
+            continue
+        hosty = HOST_PROPERTY.fullmatch(key) or IP_ADDRESS.match(value)
+        safe[key] = "127.0.0.1" if hosty and value else value
+    return safe
+
+
+def find_executable(root: Path, name: str, build_dirs: list[str]) -> Path | None:
+    """A built executable called ``name`` under the project's build directories."""
+    for pattern in build_dirs:
+        for build in sorted(root.glob(pattern)):
+            if not build.is_dir():
+                continue
+            for path in sorted(build.rglob(name)):
+                if path.is_file() and os.access(path, os.X_OK):
+                    return path
+    return None
+
+
+def docker_available() -> bool:
+    """Whether a Docker daemon is reachable."""
+    if shutil.which("docker") is None:
+        return False
+    probe = subprocess.run(
+        ["docker", "info", "--format", "{{.ServerVersion}}"],
+        capture_output=True,
+        check=False,
+    )
+    return probe.returncode == 0
+
+
+@dataclass
+class _Launch:
+    """How to start one device server for introspection."""
+
+    how: str  # "python", "executable" or "image"
+    cmd: list[str]
+    env: dict[str, str]
+    server: str  # server name, for the property file
+    timeout: float
+    container: str = ""
+    prop_dir: str = ""  # where the property file is, as the server sees it
+
+
+def plan_launch(
+    config: Config,
+    device: DeviceInstance,
+    modules: dict[str, str],
+    port: int,
+    tag: str,
+) -> _Launch:
+    """
+    Decide how to start a device's server.
+
+    In order: its Python class, a built executable, or the deployment's
+    container image.
+    """
+    class_name = device.class_name
+    module = modules.get(class_name)
+    if module is not None:
+        return _Launch(
+            "python",
+            [sys.executable, "-m", "ska_taranta_setup._serve", module, class_name],
+            {**os.environ, "PYTHONUNBUFFERED": "1"},
+            class_name,
+            config.startup_timeout,
+        )
+    server = device.server or Path(device.launch.get("executable", "")).name
+    server = server or class_name
+    env = sanitise_env(device.launch.get("env", {}))
+    executable = find_executable(config.root, server, config.cpp_build_dirs)
+    if executable is not None:
+        return _Launch(
+            "executable",
+            [str(executable)],
+            {**os.environ, **env},
+            executable.name,
+            config.cpp_startup_timeout,
+        )
+    image = device.launch.get("image")
+    if image and docker_available():
+        container = f"ska-taranta-introspect-{tag}"
+        entrypoint = device.launch.get("executable") or f"/app/bin/{server}"
+        cmd = ["docker", "run", "--rm", "-t", "--name", container]
+        cmd += ["--entrypoint", entrypoint, "-p", f"127.0.0.1:{port}:{port}"]
+        cmd += ["-v", "{workdir}:/ska-taranta:ro"]
+        for key, value in env.items():
+            cmd += ["-e", f"{key}={value}"]
+        cmd.append(image)
+        return _Launch(
+            "image",
+            cmd,
+            dict(os.environ),
+            Path(entrypoint).name,
+            config.container_startup_timeout,
+            container=container,
+            prop_dir="/ska-taranta",
+        )
+    reasons = [f"no Python class {class_name} in the project"]
+    reasons.append(
+        f"no built executable '{server}' under {', '.join(config.cpp_build_dirs)}"
+    )
+    if image:
+        reasons.append(f"Docker isn't available to run {image}")
+    else:
+        reasons.append("no container image for it in the chart")
+    raise IntrospectionError(
+        "; ".join(reasons) + ". Build it, start Docker, or use `discover --live`."
+    )
+
+
 def _group_key(config: Config, device: DeviceInstance) -> tuple[str, ...]:
     return (
         device.class_name,
@@ -273,10 +414,18 @@ def _group_key(config: Config, device: DeviceInstance) -> tuple[str, ...]:
 
 
 def introspect_local(
-    config: Config, devices: list[DeviceInstance]
+    config: Config,
+    devices: list[DeviceInstance],
+    report: Callable[[str], None] | None = None,
 ) -> tuple[Snapshot, list[str]]:
-    """Start each distinct device locally and read its interface."""
+    """
+    Start each distinct device locally and read its interface.
+
+    Python device classes are imported and run; C++ (or other compiled)
+    servers run from a built executable or from their container image.
+    """
     tango = _import_tango()
+    report = report or logger.info
     modules = find_class_modules(config.root)
     errors: list[str] = []
     snapshot = Snapshot(devices=devices)
@@ -286,14 +435,18 @@ def introspect_local(
         groups.setdefault(_group_key(config, device), []).append(device)
 
     workdir = Path(tempfile.mkdtemp(prefix="ska-taranta-"))
+    workdir.chmod(0o755)  # readable from inside a container
     servers: list[_Server] = []
     try:
         for key, members in groups.items():
             representative = members[0]
             class_name = representative.class_name
-            module = modules.get(class_name)
-            if module is None:
-                errors.append(f"{class_name}: no Python class found in the project")
+            port = _free_port()
+            tag = f"{os.getpid()}-{len(servers)}"
+            try:
+                launch = plan_launch(config, representative, modules, port, tag)
+            except IntrospectionError as exc:
+                errors.append(f"{class_name}: {exc}")
                 continue
             # Overrides (e.g. Host=127.0.0.1) apply, but never to the properties
             # that select the interface: those must come from the deployment.
@@ -306,39 +459,61 @@ def introspect_local(
                     if k in representative.properties
                 },
             }
-            prop_file = workdir / f"{class_name}-{len(servers)}.prop"
-            write_property_file(prop_file, class_name, representative.trl, props)
-            port = _free_port()
+            prop_name = f"{class_name}-{len(servers)}.prop"
+            prop_file = workdir / prop_name
+            write_property_file(
+                prop_file, class_name, representative.trl, props, launch.server
+            )
+            prop_file.chmod(0o644)
             log_path = workdir / f"{class_name}-{len(servers)}.log"
             log = log_path.open("w")
-            cmd = [
-                sys.executable,
-                "-m",
-                "ska_taranta_setup._serve",
-                module,
-                class_name,
-                "introspect",
-                f"-file={prop_file}",
-                "-ORBendPoint",
-                f"giop:tcp:127.0.0.1:{port}",
-            ]
-            logger.info("Starting %s (%s)", representative.trl, class_name)
+            if launch.how == "image":
+                cmd = [part.replace("{workdir}", str(workdir)) for part in launch.cmd]
+                cmd += [
+                    "introspect",
+                    f"-file={launch.prop_dir}/{prop_name}",
+                    "-ORBendPoint",
+                    f"giop:tcp::{port}",
+                    "-ORBendPointPublish",
+                    f"giop:tcp:127.0.0.1:{port}",
+                ]
+                where = representative.launch["image"]
+            else:
+                cmd = [
+                    *launch.cmd,
+                    "introspect",
+                    f"-file={prop_file}",
+                    "-ORBendPoint",
+                    f"giop:tcp:127.0.0.1:{port}",
+                ]
+                where = "Python" if launch.how == "python" else launch.cmd[0]
+            report(f"  starting {representative.trl} ({class_name}) from {where}")
             process = subprocess.Popen(
                 cmd,
                 stdout=log,
                 stderr=subprocess.STDOUT,
+                stdin=subprocess.DEVNULL,
                 text=True,
                 cwd=config.root,
-                env={**os.environ, "PYTHONUNBUFFERED": "1"},
+                env=launch.env,
                 start_new_session=True,
             )
             servers.append(
-                _Server(key, representative.trl, class_name, port, process, log_path)
+                _Server(
+                    key,
+                    representative.trl,
+                    class_name,
+                    port,
+                    process,
+                    log_path,
+                    launch.timeout,
+                    launch.container,
+                )
             )
 
         for server in servers:
             try:
-                server.wait_ready(config.startup_timeout)
+                server.wait_ready(server.timeout)
                 proxy = tango.DeviceProxy(
                     f"tango://127.0.0.1:{server.port}/{server.trl}#dbase=no"
                 )

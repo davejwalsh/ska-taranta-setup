@@ -111,6 +111,7 @@ def _merge(instances: list[DeviceInstance]) -> list[DeviceInstance]:
     for inst in instances:
         if inst.trl in merged:
             merged[inst.trl].properties.update(inst.properties)
+            merged[inst.trl].launch = merged[inst.trl].launch or inst.launch
         else:
             merged[inst.trl] = inst
     return sorted(merged.values(), key=lambda d: (d.class_name, d.trl))
@@ -196,8 +197,8 @@ def _unwrap(value: Any) -> Any:
 def from_dsconfig(configuration: dict[str, Any]) -> list[DeviceInstance]:
     """Devices from a dsconfig JSON: servers -> instance -> class -> device."""
     found = []
-    for instances in (configuration.get("servers") or {}).values():
-        for classes in (instances or {}).values():
+    for server, instances in (configuration.get("servers") or {}).items():
+        for instance, classes in (instances or {}).items():
             for class_name, devices in (classes or {}).items():
                 for trl, spec in (devices or {}).items():
                     if not _looks_like_trl(trl):
@@ -208,8 +209,41 @@ def from_dsconfig(configuration: dict[str, Any]) -> list[DeviceInstance]:
                             trl=trl.lower(),
                             class_name=class_name,
                             properties={k: _unwrap(v) for k, v in props.items()},
+                            server=server,
+                            instance=instance,
                         )
                     )
+    return found
+
+
+def _launches(docs: list[dict[str, Any]]) -> dict[tuple[str, str], dict[str, Any]]:
+    """
+    How each device server runs, from the chart's StatefulSets/Deployments.
+
+    Keyed by (server, instance): ska-tango-util starts a server as
+    ``<executable> <instance> -ORBendPoint ...``, and the server's name is
+    the executable's file name.
+    """
+    found = {}
+    for doc in docs:
+        if doc.get("kind") not in {"StatefulSet", "Deployment"}:
+            continue
+        pod = ((doc.get("spec") or {}).get("template") or {}).get("spec") or {}
+        for container in pod.get("containers") or []:
+            argv = [*(container.get("command") or []), *(container.get("args") or [])]
+            if len(argv) < 2 or not container.get("image"):
+                continue
+            server = Path(argv[0]).name
+            env = {
+                e["name"]: str(e["value"])
+                for e in container.get("env") or []
+                if "value" in e
+            }
+            found[(server, argv[1])] = {
+                "image": container["image"],
+                "executable": argv[0],
+                "env": env,
+            }
     return found
 
 
@@ -239,8 +273,9 @@ def from_rendered_chart(config: Config) -> list[DeviceInstance]:
         )
         return []
     instances: list[DeviceInstance] = []
-    for doc in yaml.safe_load_all(proc.stdout):
-        if not isinstance(doc, dict) or doc.get("kind") != "ConfigMap":
+    docs = [d for d in yaml.safe_load_all(proc.stdout) if isinstance(d, dict)]
+    for doc in docs:
+        if doc.get("kind") != "ConfigMap":
             continue
         for key, value in (doc.get("data") or {}).items():
             if not key.endswith(".json") or '"servers"' not in str(value):
@@ -249,6 +284,9 @@ def from_rendered_chart(config: Config) -> list[DeviceInstance]:
                 instances.extend(from_dsconfig(json.loads(value)))
             except (ValueError, AttributeError):
                 continue
+    launches = _launches(docs)
+    for device in instances:
+        device.launch = launches.get((device.server, device.instance), {})
     return instances
 
 

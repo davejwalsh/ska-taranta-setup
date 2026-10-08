@@ -186,6 +186,13 @@ class DeviceInstance:
     class_name: str
     properties: dict[str, Any] = field(default_factory=dict)
     interface: str | None = None  # key into Snapshot.interfaces
+    #: Device server name and instance (e.g. ``RFIMonitor`` / ``m1``), if known.
+    server: str = ""
+    instance: str = ""
+    #: How the deployment runs the server, from its rendered chart:
+    #: ``{"image": ..., "executable": ..., "env": {...}}``. Used to start a
+    #: C++ server from its own image for introspection.
+    launch: dict[str, Any] = field(default_factory=dict)
 
     @classmethod
     def from_dict(cls, data: dict[str, Any]) -> DeviceInstance:
