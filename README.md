@@ -19,6 +19,26 @@ Add it as a dev dependency, run one command, and you get:
 The dashboards are a starting point: import them, then move and delete things
 in Taranta's editor as usual.
 
+## Installing
+
+You don't need to download or clone anything: uv (or poetry) installs it
+straight from GitHub.
+
+**Python projects** add it as a dev dependency:
+
+```bash
+uv add --dev "ska-taranta-setup @ git+https://github.com/davejwalsh/ska-taranta-setup.git"
+```
+
+**C++ projects** (no Python environment of their own) install the
+`ska-taranta` command as a uv tool, with pytango:
+
+```bash
+uv tool install "ska-taranta-setup[tango] @ git+https://github.com/davejwalsh/ska-taranta-setup.git"
+```
+
+Then follow the [step by step](#step-by-step) guide.
+
 ## Step by step
 
 These steps work for any SKA Tango project that deploys with Helm (via
@@ -46,21 +66,31 @@ The submodule step matters if your helmfile templates live in a submodule
 
 ### 2. Add ska-taranta-setup as a dev dependency
 
-Once the package is published to the SKAO package index:
+It installs straight from GitHub; there's nothing to download first:
 
 ```bash
-uv add --dev ska-taranta-setup
+uv add --dev "ska-taranta-setup @ git+https://github.com/davejwalsh/ska-taranta-setup.git"
 ```
 
-or with poetry: `poetry add --group dev ska-taranta-setup`. Until then, or to
-try a local checkout, clone this repository next to your project and run:
+This records the Git URL in `pyproject.toml` (under `[tool.uv.sources]`) and
+the exact commit in `uv.lock`, so everyone on the project, and CI, gets the
+same version. With poetry:
 
 ```bash
-uv add --dev --editable ../ska-taranta-setup
+poetry add --group dev git+https://github.com/davejwalsh/ska-taranta-setup.git
 ```
 
-That writes a local path into `pyproject.toml`, which CI can't resolve, so
-don't merge it.
+To pin a particular commit (or, once releases are tagged, a tag) rather than
+the latest `main`, add `--rev <commit>` or `--tag <tag>` to the `uv add`
+command (with poetry, append `#<commit or tag>` to the URL).
+
+**Updating** to the latest version later:
+
+```bash
+uv lock --upgrade-package ska-taranta-setup && uv sync
+```
+
+(with poetry: `poetry update ska-taranta-setup`).
 
 ### 3. Set up Taranta and generate the dashboards
 
@@ -169,14 +199,18 @@ monitor's `device_ip`, a real instrument) are pointed at `127.0.0.1`, so no
 hardware is contacted.
 
 A C++ repository has no Python environment of its own, so install
-`ska-taranta` as a tool, with pytango:
+`ska-taranta` as a tool, with pytango (the `[tango]` extra), straight from
+GitHub:
 
 ```bash
-uv tool install --editable /path/to/ska-taranta-setup --with pytango
+uv tool install "ska-taranta-setup[tango] @ git+https://github.com/davejwalsh/ska-taranta-setup.git"
 ```
 
-(or `uv tool install "ska-taranta-setup[tango]"` once published). Then run the
-same steps in the project: `ska-taranta setup`, `make taranta-upload`. With no
+This puts `ska-taranta` on your `PATH`; update it later with
+`uv tool upgrade ska-taranta-setup`. To try it without installing, prefix
+each command with `uvx --from "ska-taranta-setup[tango] @ git+https://github.com/davejwalsh/ska-taranta-setup.git"`.
+Then run the same steps in the project: `ska-taranta setup`,
+`make taranta-upload`. With no
 `pyproject.toml`, `init` keeps its settings in **`ska-taranta.toml`** at the
 repository root: the same keys as `[tool.ska-taranta-setup]`, at the top
 level (`[generate]`, `[layout]`, `[[subsystems]]`).
@@ -500,10 +534,23 @@ Everything is shown to begin with. To trim a dashboard:
 ## Development
 
 ```bash
+git clone https://github.com/davejwalsh/ska-taranta-setup.git && cd ska-taranta-setup
 uv sync
 uv run pytest --doctest-modules src tests
 uv run ruff check src tests && uv run ruff format --check src tests
 ```
+
+To try your changes in a real project, install your checkout there in
+editable mode, so every `ska-taranta` run uses your working copy:
+
+```bash
+uv add --dev --editable ../ska-taranta-setup
+```
+
+That writes a local path into the project's `pyproject.toml`, which CI can't
+resolve, so switch back to the Git URL (see [Installing](#installing))
+before merging. For C++ projects, `uv tool install --editable
+../ska-taranta-setup --with pytango` does the same.
 
 `tests/fixtures/sat-lmc-devices.json` is a real snapshot from ska-sat-lmc,
 used to test generation end to end.

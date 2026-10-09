@@ -16,6 +16,9 @@ dependencies = [
     "requests>=2.28.0",
 ]
 
+[project.urls]
+Repository = "https://github.com/davejwalsh/ska-taranta-setup"
+
 [project.optional-dependencies]
 # Needed by `discover` to introspect device interfaces. Tango projects already
 # depend on pytango, so this is usually satisfied by the host project.
