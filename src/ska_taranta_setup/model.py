@@ -135,6 +135,9 @@ class CommandInfo:
     doc_in: str = ""
     doc_out: str = ""
     disp_level: str = "OPERATOR"
+    #: For a DevEnum argument: its ``[label, value]`` choices, when they can be
+    #: found in the project's source (Tango doesn't publish them for commands).
+    in_enum: list[list[Any]] = field(default_factory=list)
 
     @property
     def takes_argument(self) -> bool:
@@ -269,7 +272,7 @@ def split_words(name: str) -> list[str]:
 
 _ACRONYMS = {
     "ip", "ipv", "mac", "utc", "ntp", "ptp", "gps", "cpu", "psu", "id",
-    "irq", "snmp", "wr", "rx", "tx", "pps", "fpga", "sfp", "tai", "dns", "ok",
+    "irq", "snmp", "wr", "rx", "tx", "pps", "fpga", "sfp", "tai", "dns", "ok", "iq",
 }  # fmt: skip
 
 

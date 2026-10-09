@@ -601,6 +601,18 @@ def command(device: str, cmd: CommandInfo, label: str) -> dict[str, Any]:
     The readable name goes on the button rather than in a separate title,
     which wrapped and was cut off in a single row next to the input box.
     """
+    # Taranta's command widget has no input handling for DevEnum (every value
+    # is rejected), but an enum argument is a short integer on the wire and the
+    # server converts it; so offer DevEnum as DevShort, with the enum's labels
+    # as a dropdown when they were found in the source.
+    accepted = "DevShort" if cmd.in_type == "DevEnum" else cmd.in_type
+    choices = [
+        {"name": prettify(str(name)), "value": str(value), "isDefault": i == 0}
+        for i, (name, value) in enumerate(cmd.in_enum)
+    ]
+    hint = cmd.doc_in
+    if cmd.in_type == "DevEnum" and not choices:
+        hint = f"{cmd.doc_in or 'value'} (enum: enter its number)"
     result = widget(
         "COMMAND",
         {
@@ -609,20 +621,20 @@ def command(device: str, cmd: CommandInfo, label: str) -> dict[str, Any]:
             "command": {
                 "device": device,
                 "command": cmd.name,
-                "acceptedType": cmd.in_type,
-                "intypedesc": cmd.doc_in,
+                "acceptedType": accepted,
+                "intypedesc": hint,
                 "outtypedesc": cmd.doc_out,
                 "outtype": cmd.out_type,
                 "tag": "0",
             },
-            "commandArgs": [],
+            "commandArgs": choices,
             "showDevice": False,
             "showTangoDB": False,
             "showCommand": False,
             "requireConfirmation": True,
             "displayOutput": True,
             "alignButtonRight": True,
-            "placeholder": "intype",
+            "placeholder": "intypedesc" if accepted != cmd.in_type else "intype",
             "textColor": "#000000",
             "backgroundColor": CLEAR,
             "size": 1,

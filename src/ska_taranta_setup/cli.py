@@ -155,6 +155,9 @@ def discover(
     """Find the project's devices and record their interfaces."""
     config = _config(ctx)
     snapshot, errors = _discover(config, live, tango_host)
+    from ska_taranta_setup.enums import annotate_command_enums
+
+    annotate_command_enums(snapshot, config.root)
     path = output or config.snapshot_path
     snapshot.save(path)
     _print_summary(snapshot)
@@ -283,9 +286,11 @@ def generate(
         raise click.ClickException(
             f"{path} not found; run `ska-taranta discover` first."
         )
-    written = _generate(
-        config, Snapshot.load(path), devices, output_dir, columns, screen_width
-    )
+    from ska_taranta_setup.enums import annotate_command_enums
+
+    snapshot = Snapshot.load(path)
+    annotate_command_enums(snapshot, config.root)  # older snapshots lack them
+    written = _generate(config, snapshot, devices, output_dir, columns, screen_width)
     for file in written:
         click.echo(f"  wrote {_rel(config, file)}")
     click.echo(
