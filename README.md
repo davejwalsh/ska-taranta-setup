@@ -37,12 +37,18 @@ uv add --dev "ska-taranta-setup @ git+https://github.com/davejwalsh/ska-taranta-
 uv tool install "ska-taranta-setup[tango] @ git+https://github.com/davejwalsh/ska-taranta-setup.git"
 ```
 
+That's all a C++ project needs: don't run `uv add` or `uv lock` there, as they
+need a `pyproject.toml`. Run the command directly, e.g. `ska-taranta setup`.
+
 Then follow the [step by step](#step-by-step) guide.
 
 ## Step by step
 
 These steps work for any SKA Tango project that deploys with Helm (via
-`make k8s-install-chart`, with or without helmfile). `<project>` is your
+`make k8s-install-chart`, with or without helmfile). They're written for a
+Python project; in a **C++ project**, skip step 2 (you installed the tool in
+[Installing](#installing)) and run `ska-taranta …` without the `uv run`
+prefix. See also [C++ (CMake) projects](#c-cmake-projects). `<project>` is your
 repository; `<namespace>` is the Kubernetes namespace it deploys to
 (`KUBE_NAMESPACE`, usually the project name).
 
@@ -64,7 +70,9 @@ cd <project> && git switch -c <ticket>-taranta && git submodule update --init
 The submodule step matters if your helmfile templates live in a submodule
 (e.g. `helmfile.d/.deploy`): device discovery renders them.
 
-### 2. Add ska-taranta-setup as a dev dependency
+### 2. Add ska-taranta-setup as a dev dependency (Python projects)
+
+C++ projects: skip this step.
 
 It installs straight from GitHub; there's nothing to download first:
 
