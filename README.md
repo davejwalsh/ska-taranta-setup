@@ -21,7 +21,7 @@ in Taranta's editor as usual.
 
 ## Installing
 
-You don't need to download or clone anything: uv (or poetry) installs it
+You don't need to download or clone anything: uv installs it
 straight from GitHub.
 
 **Python projects** add it as a dev dependency:
@@ -49,7 +49,7 @@ repository; `<namespace>` is the Kubernetes namespace it deploys to
 ### 0. Prerequisites
 
 * minikube, kubectl and helm (and helmfile, if your project uses it);
-* the project's own Python environment, with uv or poetry. `ska-taranta`
+* the project's own Python environment, managed with uv. `ska-taranta`
   runs inside it so it can import your device classes; pytango comes with
   your project;
 * a Taranta account, or the shared dev account (see
@@ -74,23 +74,17 @@ uv add --dev "ska-taranta-setup @ git+https://github.com/davejwalsh/ska-taranta-
 
 This records the Git URL in `pyproject.toml` (under `[tool.uv.sources]`) and
 the exact commit in `uv.lock`, so everyone on the project, and CI, gets the
-same version. With poetry:
-
-```bash
-poetry add --group dev git+https://github.com/davejwalsh/ska-taranta-setup.git
-```
+same version.
 
 To pin a particular commit (or, once releases are tagged, a tag) rather than
 the latest `main`, add `--rev <commit>` or `--tag <tag>` to the `uv add`
-command (with poetry, append `#<commit or tag>` to the URL).
+command.
 
 **Updating** to the latest version later:
 
 ```bash
 uv lock --upgrade-package ska-taranta-setup && uv sync
 ```
-
-(with poetry: `poetry update ska-taranta-setup`).
 
 ### 3. Set up Taranta and generate the dashboards
 
