@@ -200,7 +200,9 @@ def _generate(
     ]
     if not selected:
         raise click.ClickException(
-            "No introspected devices to generate dashboards for."
+            f"No introspected devices to generate dashboards for in "
+            f"{_rel(config, config.snapshot_path)}: every device's interface is "
+            "missing. Run `ska-taranta discover` and fix the failures it reports."
         )
     try:
         opts = build(LayoutOptions, config.layout, "tool.ska-taranta-setup.layout")

@@ -22,9 +22,11 @@ TOOL_KEY = "ska-taranta-setup"
 #: the same keys as ``[tool.ska-taranta-setup]``, at the top level.
 SETTINGS_FILE = "ska-taranta.toml"
 #: Tango's own classes, which come with the ska-tango-base chart rather than
-#: the project (e.g. TangoTest's sys/tg_test/1): never put on dashboards.
+#: the project (e.g. TangoTest's sys/tg_test/1), and the HDB++ archiver's
+#: (ska-tango-archiver): never put on dashboards.
 TANGO_SYSTEM_CLASSES = {
     "TangoTest", "DataBase", "DataBaseds", "DServer", "Starter", "TangoAccessControl",
+    "HdbConfigurationManager", "HdbEventSubscriber",
 }  # fmt: skip
 
 

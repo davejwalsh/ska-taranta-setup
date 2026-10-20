@@ -104,6 +104,32 @@ def test_sanitise_properties():
     }
 
 
+def test_sanitise_urls_and_container_paths(tmp_path):
+    """URL hosts point at localhost; mounted config files at the project's copy."""
+    (tmp_path / "config").mkdir()
+    (tmp_path / "config" / "rpf.yaml").write_text("")
+    props = {
+        "OpcUaEndpoint": "opc.tcp://bms-sim-rpf-s8:4840",
+        "ConfigFile": "/app/config/rpf.yaml",
+        "Missing": "/app/config/nope.yaml",
+        "Mode": "MONITOR_NO_CONTROL",
+    }
+    assert sanitise_properties(props, tmp_path) == {
+        "OpcUaEndpoint": "opc.tcp://127.0.0.1:4840",
+        "ConfigFile": str(tmp_path / "config" / "rpf.yaml"),
+        "Missing": "/app/config/nope.yaml",
+        "Mode": "MONITOR_NO_CONTROL",
+    }
+
+
+def test_hdb_archiver_is_excluded(tmp_path):
+    """HDB++ devices from ska-tango-archiver never get dashboards."""
+    config = load_config(tmp_path)
+    assert config.is_excluded("HdbEventSubscriber", "hdb/es/1")
+    assert config.is_excluded("HdbConfigurationManager", "hdb/cm/1")
+    assert not config.is_excluded("BmsFacility", "low-infra/bms/tcpf")
+
+
 def test_property_file(tmp_path):
     """Property files declare the device under its real TRL."""
     path = tmp_path / "p"

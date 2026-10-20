@@ -260,24 +260,58 @@ def _is_trl(value: Any) -> bool:
 HOST_PROPERTY = re.compile(r"(?i).*(host|hostname|address|ip)$")
 
 
-def sanitise_properties(properties: dict[str, Any]) -> dict[str, Any]:
+URL_HOST = re.compile(r"^([a-z][a-z0-9+.\-]*://)([^/:@\s]+)", re.IGNORECASE)
+
+
+def local_path(value: str, root: Path) -> str:
+    """
+    The project's copy of a file the deployment mounts in the container.
+
+    ``/app/config/rpf_s8.yaml`` becomes ``<root>/config/rpf_s8.yaml`` if that
+    exists (the longest tail of the path that does). Anything else is
+    returned unchanged.
+    """
+    path = Path(value)
+    if not path.is_absolute() or path.exists():
+        return value
+    parts = path.parts[1:]
+    for i in range(len(parts) - 1):
+        candidate = root.joinpath(*parts[i:])
+        if candidate.is_file():
+            return str(candidate)
+    return value
+
+
+def sanitise_properties(
+    properties: dict[str, Any], root: Path | None = None
+) -> dict[str, Any]:
     """
     Make deployment properties safe to use for a local, offline start.
 
     * Properties naming other devices are dropped. Aggregating devices
       (controllers, rollups) connect to their sub-devices in ``init_device``;
       with no database that fails and the server exits.
-    * Host/address properties point at localhost. In-cluster names like
-      ``wrsimulator-grandmaster-snmp`` don't resolve outside k8s and the
-      device hangs in ``init_device``; nothing is ever contacted.
+    * Host/address properties, and the host in URLs (``opc.tcp://bms-sim:4840``),
+      point at localhost. In-cluster names like ``wrsimulator-grandmaster-snmp``
+      don't resolve outside k8s and the device hangs in ``init_device``;
+      nothing is ever contacted.
+    * Paths to files mounted in the container (``/app/config/x.yaml``) point
+      at the project's own copy, given the project ``root``.
     """
     kept = {}
     for key, value in properties.items():
         items = value if isinstance(value, (list, tuple)) else [value]
         if items and all(_is_trl(v) for v in items):
             continue
-        is_host = HOST_PROPERTY.fullmatch(key) and isinstance(value, str) and value
-        kept[key] = "127.0.0.1" if is_host else value
+        safe = value
+        if isinstance(value, str) and value:
+            if HOST_PROPERTY.fullmatch(key):
+                safe = "127.0.0.1"
+            else:
+                safe = URL_HOST.sub(r"\g<1>127.0.0.1", value)
+                if root is not None:
+                    safe = local_path(safe, root)
+        kept[key] = safe
     return kept
 
 
@@ -451,7 +485,7 @@ def introspect_local(
             # Overrides (e.g. Host=127.0.0.1) apply, but never to the properties
             # that select the interface: those must come from the deployment.
             props = {
-                **sanitise_properties(representative.properties),
+                **sanitise_properties(representative.properties, config.root),
                 **config.properties.get(class_name, {}),
                 **{
                     k: representative.properties[k]
@@ -476,6 +510,7 @@ def introspect_local(
                     f"giop:tcp::{port}",
                     "-ORBendPointPublish",
                     f"giop:tcp:127.0.0.1:{port}",
+                    "-v1",
                 ]
                 where = representative.launch["image"]
             else:
@@ -485,6 +520,7 @@ def introspect_local(
                     f"-file={prop_file}",
                     "-ORBendPoint",
                     f"giop:tcp:127.0.0.1:{port}",
+                    "-v1",  # without it, a failing init_device exits silently
                 ]
                 where = "Python" if launch.how == "python" else launch.cmd[0]
             report(f"  starting {representative.trl} ({class_name}) from {where}")
