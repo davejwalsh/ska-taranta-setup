@@ -6,6 +6,7 @@ Read from ``pyproject.toml``::
     [tool.ska - taranta - setup.generate]  # GenerateOptions
     [tool.ska - taranta - setup.layout]  # dashboard.LayoutOptions
     [[tool.ska - taranta - setup.subsystems]]  # SubsystemSpec, repeatable
+    [tool.ska - taranta - setup.archiver]  # ArchiverOptions
 
 Unknown keys are an error, so a typo doesn't silently do nothing.
 """
@@ -155,3 +156,60 @@ class SubsystemSpec:
             raise OptionsError(
                 f"subsystem {self.name!r}: detail must be 'summary' or 'full'"
             )
+
+
+ARCHIVE_GROUPING = {"unit", "attribute"}
+
+
+@dataclass
+class ArchiverOptions:
+    """``[tool.ska-taranta-setup.archiver]``: the Grafana archive dashboard."""
+
+    #: Dashboard title (default: "<title> archive").
+    title: str = ""
+    #: Where the dashboard JSON is written (default: ``grafana/`` in the helm
+    #: chart, where ``init --archiver`` provisions it from, else ``grafana/``).
+    output_dir: str = ""
+    #: Where the scan of the archive is cached.
+    snapshot: str = "taranta/archive.json"
+    #: Kubernetes namespace of the archive database (default: the Makefile's
+    #: ``KUBE_NAMESPACE``, else the project name).
+    namespace: str = ""
+    #: Default time range and refresh interval.
+    time_from: str = "now-6h"
+    refresh: str = "30s"
+    #: Numeric plots: one per unit (``"unit"``: e.g. all temperatures in
+    #: degC together) or one per attribute (``"attribute"``).
+    group_by: str = "unit"
+    #: Most lines on one plot; bigger groups are split.
+    max_series_per_panel: int = 6
+    #: Plots side by side in a device's section (Grafana's grid is 24 wide).
+    columns: int = 2
+    #: Panel height, in Grafana grid rows (30 px each).
+    panel_height: int = 8
+    #: Start with the per-device sections collapsed (they load when opened).
+    collapse_devices: bool = True
+    #: Archived attributes / devices to leave out (case-insensitive regexes on
+    #: the attribute name, or on ``domain/family/member``).
+    exclude_attributes: list[str] = field(default_factory=list)
+    exclude_devices: list[str] = field(default_factory=list)
+    #: Grafana chart version added by ``init --archiver``.
+    grafana_chart_version: str = "14.0.1"
+
+    def __post_init__(self) -> None:
+        """Validate choices."""
+        if self.group_by not in ARCHIVE_GROUPING:
+            raise OptionsError(
+                "archiver.group_by must be 'unit' or 'attribute', "
+                f"not {self.group_by!r}"
+            )
+        if not 1 <= self.columns <= 4:
+            raise OptionsError("archiver.columns must be between 1 and 4")
+        for pattern in (*self.exclude_attributes, *self.exclude_devices):
+            re.compile(pattern)
+
+    def excluded(self, device: str, attribute: str) -> bool:
+        """Whether an archived attribute is left off the dashboard."""
+        return any(
+            re.fullmatch(p, attribute, re.IGNORECASE) for p in self.exclude_attributes
+        ) or any(re.fullmatch(p, device, re.IGNORECASE) for p in self.exclude_devices)

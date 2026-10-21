@@ -59,15 +59,25 @@ def main(ctx: click.Context, project: Path, verbose: bool) -> None:
 @click.option(
     "--no-helm-update", is_flag=True, help="Don't run `helm dependency update`."
 )
+@click.option(
+    "--archiver",
+    is_flag=True,
+    help="Instead: add Grafana for the HDB++ archive (see archiver-dashboard).",
+)
 @click.pass_context
-def init(ctx: click.Context, dry_run: bool, force: bool, no_helm_update: bool) -> None:
+def init(
+    ctx: click.Context,
+    dry_run: bool,
+    force: bool,
+    no_helm_update: bool,
+    archiver: bool = False,
+) -> None:
     """Add the Taranta charts, values and Make targets to the project."""
-    from ska_taranta_setup.scaffold import init_project
+    from ska_taranta_setup.scaffold import init_archiver, init_project
 
     config = _config(ctx)
-    report = init_project(
-        config, dry_run=dry_run, force=force, helm_update=not no_helm_update
-    )
+    setup = init_archiver if archiver else init_project
+    report = setup(config, dry_run=dry_run, force=force, helm_update=not no_helm_update)
     prefix = "would change" if dry_run else "changed"
     for line in report.changes:
         click.secho(f"  {prefix}: {line}", fg="green")
@@ -77,8 +87,11 @@ def init(ctx: click.Context, dry_run: bool, force: bool, no_helm_update: bool) -
         click.secho(f"  warning: {line}", fg="yellow")
     if not dry_run and report.changes:
         click.echo(
-            "\nNext: `ska-taranta setup` (or `make taranta-dashboards`) to generate "
-            "dashboards, then deploy as usual."
+            "\nNext: `ska-taranta archiver-dashboard` (or `make archiver-dashboard`), "
+            "deploy as usual, then `make grafana-port` and open localhost:3000."
+            if archiver
+            else "\nNext: `ska-taranta setup` (or `make taranta-dashboards`) to "
+            "generate dashboards, then deploy as usual."
         )
 
 
@@ -539,6 +552,186 @@ def upload(
         f"{username} to see them"
         + (" (or pass --token to upload as yourself)." if not token else ".")
     )
+
+
+# --------------------------------------------------------------------------
+# archiver-dashboard
+# --------------------------------------------------------------------------
+
+
+def _archive_source(config: Config, dsn: str | None, offline: bool, namespace: str):
+    """Scan the archive database, or fall back to the archiving configuration."""
+    from ska_taranta_setup.archive import (
+        ArchiveError,
+        find_archive_db,
+        find_archiving_configs,
+        psql_in_container,
+        psql_in_pod,
+        psql_local,
+        scan_configs,
+        scan_database,
+    )
+
+    if dsn:
+        return scan_database(psql_local(dsn))
+    if not offline:
+        from ska_taranta_setup.instances import discover_instances
+
+        devices, _ = discover_instances(config)
+        db = find_archive_db(config.root, devices)
+        if db is None:
+            click.echo("No HDB++ event subscriber configuration found in the project.")
+        else:
+            click.echo(f"Archive database: {db.dbname} on {db.host}:{db.port}")
+            for psql in (psql_in_pod(db, namespace), psql_in_container(db)):
+                if psql is None:
+                    continue
+                try:
+                    return scan_database(psql)
+                except ArchiveError as exc:
+                    click.secho(f"  {exc}", fg="yellow", err=True)
+            click.echo(
+                f"  not running (no pod in namespace {namespace}, "
+                "no Docker Compose container)."
+            )
+    configs = find_archiving_configs(config.root)
+    if not configs:
+        raise click.ClickException(
+            "Nothing to go on: the archive database isn't reachable and the "
+            "project has no yaml2archiving configuration. Deploy it, or pass "
+            "--dsn postgresql://user:password@host:port/hdb."
+        )
+    if not config.snapshot_path.is_file():
+        raise click.ClickException(
+            f"{_rel(config, config.snapshot_path)} is needed to read the archiving "
+            "configuration; run `ska-taranta discover` first."
+        )
+    click.echo("Using the archiving configuration (what will be archived).")
+    return scan_configs(configs, Snapshot.load(config.snapshot_path), config.root)
+
+
+@main.command("archiver-dashboard")
+@click.option(
+    "--dsn",
+    help="Archive database URL, e.g. postgresql://postgres:pw@localhost:5432/hdb "
+    "(needs psql). By default it's found from the event subscriber's config.",
+)
+@click.option(
+    "--offline",
+    is_flag=True,
+    help="Don't query the database: use the yaml2archiving configuration.",
+)
+@click.option(
+    "--from-snapshot",
+    is_flag=True,
+    help="Don't scan at all: regenerate from the last scan.",
+)
+@click.option("--namespace", "-n", help="Kubernetes namespace of the database.")
+@click.option("--output", "-o", type=click.Path(dir_okay=False, path_type=Path))
+@click.option(
+    "--upload",
+    "grafana_url",
+    metavar="URL",
+    help="Also upload to a running Grafana (e.g. http://localhost:3000).",
+)
+@click.option("--grafana-user", default="admin", show_default=True)
+@click.option(
+    "--grafana-password",
+    envvar="GRAFANA_PASSWORD",
+    help="[env: GRAFANA_PASSWORD] (default: prompt)",
+)
+@click.pass_context
+def archiver_dashboard(
+    ctx: click.Context,
+    dsn: str | None,
+    offline: bool,
+    from_snapshot: bool,
+    namespace: str | None,
+    output: Path | None,
+    grafana_url: str | None,
+    grafana_user: str,
+    grafana_password: str | None,
+) -> None:
+    """
+    Generate a Grafana dashboard for what the HDB++ archiver stores.
+
+    Scans the archive database (or, with --offline, the project's
+    yaml2archiving configuration) and writes a dashboard with an explorer
+    (pick devices and attributes), the archiver's status, and a section per
+    device. Options: [tool.ska-taranta-setup.archiver] in pyproject.toml.
+    """
+    from ska_taranta_setup.archive import ArchiveError, ArchiveSnapshot, kube_namespace
+    from ska_taranta_setup.grafana import (
+        GrafanaError,
+        build_dashboard,
+        upload_dashboard,
+        write_dashboard,
+    )
+
+    config = _config(ctx)
+    opts = config.archiver
+    snapshot_path = config.root / opts.snapshot
+    namespace = (
+        namespace or opts.namespace or kube_namespace(config.root, config.project_name)
+    )
+    try:
+        if from_snapshot:
+            snapshot = ArchiveSnapshot.load(snapshot_path)
+        else:
+            snapshot = _archive_source(config, dsn, offline, namespace)
+            snapshot.save(snapshot_path)
+    except (ArchiveError, OSError) as exc:
+        raise click.ClickException(str(exc)) from exc
+    shown = [a for a in snapshot.attributes if not opts.excluded(a.device, a.name)]
+    if not shown:
+        raise click.ClickException(
+            f"No archived attributes found (source: {snapshot.source})."
+        )
+    devices = sorted({a.device for a in shown})
+    click.echo(
+        f"Found {len(shown)} archived attribute(s) on {len(devices)} device(s) "
+        f"from {snapshot.source}"
+        + (
+            f" ({len(snapshot.attributes) - len(shown)} excluded)."
+            if len(shown) < len(snapshot.attributes)
+            else "."
+        )
+    )
+    for device in devices:
+        count = sum(a.device == device for a in shown)
+        click.echo(f"  {device}: {count}")
+
+    title = opts.title or f"{config.title} archive"
+    dashboard = build_dashboard(snapshot, title, opts)
+    if output is None:
+        if opts.output_dir:
+            folder = config.root / opts.output_dir
+        elif config.chart_path is not None:
+            folder = config.chart_path / "grafana"
+        else:
+            folder = config.root / "grafana"
+        output = folder / f"{slugify(title)}.json"
+    write_dashboard(dashboard, output)
+    click.echo(f"Saved {_rel(config, snapshot_path)}\n  wrote {_rel(config, output)}")
+
+    if grafana_url:
+        if grafana_password is None:
+            grafana_password = click.prompt(
+                f"Grafana password for {grafana_user}", hide_input=True
+            )
+        try:
+            url = upload_dashboard(
+                grafana_url, dashboard, grafana_user, grafana_password
+            )
+        except GrafanaError as exc:
+            raise click.ClickException(str(exc)) from exc
+        click.echo(f"Uploaded: {url}")
+    else:
+        click.echo(
+            "Deployed with the chart if it has Grafana (`ska-taranta init "
+            "--archiver`), or import it in Grafana (Dashboards > New > Import), "
+            "or pass --upload URL."
+        )
 
 
 if __name__ == "__main__":

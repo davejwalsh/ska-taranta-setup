@@ -283,6 +283,8 @@ library of whichever account you upload as, and survive tearing minikube down.
 | `ska-taranta attributes` | Lists every attribute of every device class: the section and widget(s) it gets, and for the ones left out, why. Use it to choose what to exclude. `-d REGEX` limits it; `--hidden` shows only what's left out. |
 | `ska-taranta upload` | Logs in to a running Taranta and creates or updates the generated dashboards (matched by name), printing a link to each. Hand-made `.wj` files in the same folder are skipped unless named as arguments. `--user`, `--token`: see [Which account](#which-account-do-dashboards-go-to). |
 | `ska-taranta setup` | `init`, `discover` and `generate` in one go. |
+| `ska-taranta init --archiver` | Adds Grafana to the chart, with the HDB++ archive as its data source, the ConfigMap that ships the archive dashboard, and `archiver.mk` (`make archiver-dashboard`, `make grafana-port`). |
+| `ska-taranta archiver-dashboard` | Scans the HDB++ archive and writes a Grafana dashboard for it. See [HDB++ archive dashboards](#hdb-archive-dashboards-grafana). |
 
 `-C PATH` runs any command against another project; `-v` shows detail.
 
@@ -532,6 +534,70 @@ Everything is shown to begin with. To trim a dashboard:
    To change a widget rather than hide it, use `generate.widgets`
    (e.g. `"pwsl_temp" = "display"`, or `"hide"`).
 3. `uv run ska-taranta generate && make taranta-upload`.
+
+## HDB++ archive dashboards (Grafana)
+
+Taranta only shows live values. To look back at what the HDB++ archiver
+recorded, `ska-taranta archiver-dashboard` generates a Grafana dashboard
+that queries the archive's TimescaleDB directly:
+
+- **Explore**: pick devices and attributes from the dropdowns at the top
+  and plot them together, with each one's latest value, quality and any
+  archiving error.
+- **Archiver**: how many attributes are archived, events and errors in the
+  time range, attributes that have gone silent, and when each last changed.
+- **One section per device**: states, enums and booleans as a coloured
+  timeline (ON/FAULT, OK/FAILED, true/false); numbers plotted, grouped by
+  unit; text and array events in a table.
+
+HDB++ stores changes, not samples, so each value is held until the next
+event: something that last changed a week ago is still a flat line today.
+
+### Set it up
+
+```bash
+uv run ska-taranta init --archiver   # Grafana in the chart, pointed at the archive
+uv run ska-taranta archiver-dashboard  # scan the archive, write the dashboard
+make k8s-install-chart               # deploy as usual (the dashboard ships with it)
+make grafana-port                    # then open http://localhost:3000
+```
+
+Anyone can browse; log in as `admin` (password `admin`, set in
+`values.yaml`) to edit. Re-run `make archiver-dashboard` and redeploy to pick
+up newly archived attributes; Grafana reloads the dashboard by itself.
+
+### Where the attributes come from
+
+1. **The archive database**: its `att_conf` table lists every archived
+   attribute and where its data is. How to connect comes from the event
+   subscriber's `LibConfiguration` (`connect_string=...`), found in the
+   rendered chart or any dsconfig/Compose file. The database is queried with
+   `psql` inside its pod (`kubectl exec`) or its Docker Compose container
+   (`docker exec`), so nothing needs installing. `--dsn
+   postgresql://user:password@host:5432/hdb` uses a local `psql` instead.
+2. **Offline** (`--offline`, or when the database isn't running): the
+   project's yaml2archiving files, typed from `taranta/devices.json`, which
+   is what *will* be archived.
+
+The scan is saved to `taranta/archive.json`; `--from-snapshot` regenerates
+from it without scanning. Not using the chart? Import the JSON in Grafana
+(Dashboards > New > Import), or `--upload http://localhost:3000`.
+
+### Options
+
+```toml
+[tool.ska-taranta-setup.archiver]
+time_from = "now-6h"         # default time range
+refresh = "30s"
+group_by = "unit"            # or "attribute": one plot each
+max_series_per_panel = 6
+columns = 2                  # plots side by side
+panel_height = 8             # Grafana grid rows (30 px)
+collapse_devices = true      # device sections load when opened
+exclude_attributes = ["lrc.*"]           # regexes on the attribute name
+exclude_devices = ["sys/.*"]             # regexes on domain/family/member
+# title, output_dir, snapshot, namespace, grafana_chart_version
+```
 
 ## Development
 

@@ -15,7 +15,12 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any
 
-from ska_taranta_setup.options import GenerateOptions, SubsystemSpec, build
+from ska_taranta_setup.options import (
+    ArchiverOptions,
+    GenerateOptions,
+    SubsystemSpec,
+    build,
+)
 
 TOOL_KEY = "ska-taranta-setup"
 #: Settings file for projects without a pyproject.toml (e.g. C++ with CMake):
@@ -95,6 +100,8 @@ class Config:
     #: ``[[tool.ska-taranta-setup.subsystems]]``: hand-defined subsystem pages
     #: (None: work them out from the devices).
     subsystems: list[SubsystemSpec] | None = None
+    #: ``[tool.ska-taranta-setup.archiver]``: the Grafana archive dashboard.
+    archiver: ArchiverOptions = field(default_factory=ArchiverOptions)
 
     @property
     def snapshot_path(self) -> Path:
@@ -163,6 +170,7 @@ def load_config(root: Path | str = ".") -> Config:
     where = f"tool.{TOOL_KEY}"
     generate = build(GenerateOptions, raw.pop("generate", {}), f"{where}.generate")
     layout = dict(raw.pop("layout", {}))
+    archiver = build(ArchiverOptions, raw.pop("archiver", {}), f"{where}.archiver")
     specs = raw.pop("subsystems", None)
     subsystems = (
         [build(SubsystemSpec, s, f"[{where}.subsystems]") for s in specs]
@@ -179,6 +187,7 @@ def load_config(root: Path | str = ".") -> Config:
         generate=generate,
         layout=layout,
         subsystems=subsystems,
+        archiver=archiver,
     )
     for key, value in known.items():
         setattr(config, key, value)
