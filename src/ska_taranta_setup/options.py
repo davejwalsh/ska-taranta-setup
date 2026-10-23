@@ -168,7 +168,7 @@ class ArchiverOptions:
     #: Dashboard title (default: "<title> archive").
     title: str = ""
     #: Where the dashboard JSON is written (default: ``grafana/`` in the helm
-    #: chart, where ``init --archiver`` provisions it from, else ``grafana/``).
+    #: chart, which ships it to Grafana, else ``grafana/``).
     output_dir: str = ""
     #: Where the scan of the archive is cached.
     snapshot: str = "taranta/archive.json"
@@ -193,8 +193,10 @@ class ArchiverOptions:
     #: the attribute name, or on ``domain/family/member``).
     exclude_attributes: list[str] = field(default_factory=list)
     exclude_devices: list[str] = field(default_factory=list)
-    #: Grafana chart version added by ``init --archiver``.
+    #: Grafana chart version added by ``init`` (Kubernetes), and the image run
+    #: next to a Docker Compose archive.
     grafana_chart_version: str = "14.0.1"
+    grafana_image: str = "grafana/grafana:13.2.4"
 
     def __post_init__(self) -> None:
         """Validate choices."""

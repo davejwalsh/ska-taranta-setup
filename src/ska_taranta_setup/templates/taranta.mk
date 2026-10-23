@@ -56,8 +56,13 @@ taranta-dashboards-live: ## regenerate dashboards from the devices running in $(
 	$(TARANTA_RUN) ska-taranta discover --live
 	$(TARANTA_RUN) ska-taranta generate
 
-taranta-upload: ## upload the generated dashboards to the running Taranta
-	$(TARANTA_RUN) ska-taranta upload --url $(TARANTA_URL)
+# Taranta account to upload to: `make taranta-upload user=WOMBAT` (default:
+# taranta_user in pyproject.toml, else the shared user1). The password is
+# prompted for, or taken from $$TARANTA_PASSWORD.
+TARANTA_USER ?= $(user)
+
+taranta-upload: ## upload the generated dashboards to the running Taranta (user=NAME for another account)
+	$(TARANTA_RUN) ska-taranta upload --url $(TARANTA_URL) $(if $(TARANTA_USER),--user $(TARANTA_USER))
 
 taranta-url: ## print the Taranta URL
 	@echo $(TARANTA_URL)

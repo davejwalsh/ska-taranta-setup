@@ -1,0 +1,30 @@
+{{- /*
+Grafana for the HDB++ archive (added by ska-taranta-setup). Off by default:
+`make grafana` turns it on when the archive is deployed, passing the archive
+database as grafana.archiveDatasource. The dashboards are generated into this
+chart's grafana/ folder. Grafana's sidecars load the ConfigMap and Secret
+below by their labels, and reload them on upgrade.
+*/}}
+{{- if (.Values.grafana).enabled }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-archive-dashboards
+  labels:
+    grafana_dashboard: "1"
+data:
+{{- (.Files.Glob "grafana/*.json").AsConfig | nindent 2 }}
+{{- with .Values.grafana.archiveDatasource }}
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: {{ $.Release.Name }}-archive-datasource
+  labels:
+    grafana_datasource: "1"
+stringData:
+  hdbpp.yaml: |-
+{{ . | indent 4 }}
+{{- end }}
+{{- end }}

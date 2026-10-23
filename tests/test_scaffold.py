@@ -60,6 +60,7 @@ def test_init(project):
         "ska-tango-taranta",
         "ska-tango-taranta-auth",
         "tangogql",
+        "grafana",
     ]
 
     values_text = (project / "charts/my-proj/values.yaml").read_text()
@@ -68,6 +69,10 @@ def test_init(project):
     assert values["global"]["tango_host"] == "databaseds-tango-base:10000"  # untouched
     assert values["ska-tango-taranta"]["enabled"] is True
     assert values["tangogql"]["ska-tango-base"]["enabled"] is False
+    # Grafana for an HDB++ archive is there, but off until `make grafana`.
+    assert values["grafana"]["enabled"] is False
+    assert (project / "charts/my-proj/templates/grafana.yaml").is_file()
+    assert "grafana:" in (project / "archiver.mk").read_text()
 
     makefile = (project / "Makefile").read_text()
     assert makefile.index("-include taranta.mk") < makefile.index(

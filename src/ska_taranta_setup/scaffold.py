@@ -27,7 +27,6 @@ import tomlkit
 from ruamel.yaml import YAML
 from ruamel.yaml.comments import CommentedMap
 
-from ska_taranta_setup.archive import ArchiveDB
 from ska_taranta_setup.config import SETTINGS_FILE, TOOL_KEY, Config
 
 SKAO_HELM_REPO = "https://artefact.skao.int/repository/helm-internal"
@@ -265,7 +264,7 @@ def update_makefile(
     if include in text:
         report.skipped.append(f"Makefile: already includes {name}")
         return
-    what = "Taranta" if name == "taranta.mk" else "HDB++ archive dashboard"
+    what = "Taranta" if name == "taranta.mk" else "Grafana for the HDB++ archive"
     block = f"\n# {what} (ska-taranta-setup)\n{include}\n"
     # Keep PrivateRules.mak last so personal overrides still win.
     marker = "-include PrivateRules.mak"
@@ -376,11 +375,26 @@ def helm_dependency_update(config: Config, report: Report) -> None:
 def init_project(
     config: Config, dry_run: bool = False, force: bool = False, helm_update: bool = True
 ) -> Report:
-    """Wire Taranta into the project at ``config.root``."""
+    """
+    Wire Taranta into the project at ``config.root``.
+
+    Grafana for the HDB++ archive is added too, switched off: ``make grafana``
+    turns it on when the archive is deployed.
+    """
     report = Report()
-    chart_changed = update_chart(config, report, dry_run)
+    chart_changed = update_chart(
+        config,
+        report,
+        dry_run,
+        dependencies=[*chart_dependencies(config), grafana_dependency(config)],
+    )
     update_values(config, report, dry_run)
+    update_values(
+        config, report, dry_run, defaults=grafana_values(), heading=ARCHIVER_HEADING
+    )
+    add_grafana_template(config, report, dry_run)
     update_makefile(config, report, dry_run, force)
+    update_makefile(config, report, dry_run, force, name="archiver.mk")
     update_pyproject(config, report, dry_run)
     gitkeep = config.dashboards_path / ".gitkeep"
     if not config.dashboards_path.exists():
@@ -394,7 +408,7 @@ def init_project(
 
 
 # --------------------------------------------------------------------------
-# init --archiver: Grafana for the HDB++ archive
+# Grafana for the HDB++ archive (off until `make grafana`)
 # --------------------------------------------------------------------------
 
 
@@ -408,60 +422,36 @@ def grafana_dependency(config: Config) -> dict[str, Any]:
     }
 
 
-def grafana_values(db: ArchiveDB) -> dict[str, Any]:
+def grafana_values() -> dict[str, Any]:
     """
-    Grafana with the archive as its default data source.
+    Grafana, off until ``make grafana`` finds the archive deployed.
 
     Anyone can browse (anonymous Viewer); log in as admin to edit. The
-    dashboards come from ConfigMaps labelled ``grafana_dashboard``, which
-    Grafana's sidecar watches.
+    dashboards and the archive data source come from a ConfigMap and a
+    Secret (templates/grafana.yaml), which Grafana's sidecars load.
     """
+    sidecar = {"enabled": True, "label": "", "labelValue": "1"}
     return {
         "grafana": {
-            "enabled": True,
+            "enabled": False,
             "adminUser": "admin",
             "adminPassword": "admin",
             "grafana.ini": {"auth.anonymous": {"enabled": True, "org_role": "Viewer"}},
             "sidecar": {
-                "dashboards": {
-                    "enabled": True,
-                    "label": "grafana_dashboard",
-                    "labelValue": "1",
-                }
-            },
-            "datasources": {
-                "datasources.yaml": {
-                    "apiVersion": 1,
-                    "datasources": [
-                        {
-                            "name": "HDB++",
-                            "uid": "hdbpp",
-                            "type": "grafana-postgresql-datasource",
-                            "url": f"{db.host}:{db.port}",
-                            "user": db.user,
-                            "isDefault": True,
-                            "jsonData": {
-                                "database": db.dbname,
-                                "sslmode": "disable",
-                                "timescaledb": True,
-                                "postgresVersion": 1500,
-                            },
-                            "secureJsonData": {"password": db.password},
-                        }
-                    ],
-                }
+                "dashboards": {**sidecar, "label": "grafana_dashboard"},
+                "datasources": {**sidecar, "label": "grafana_datasource"},
             },
             "testFramework": {"enabled": False},
         }
     }
 
 
-def add_dashboard_template(config: Config, report: Report, dry_run: bool) -> None:
-    """The ConfigMap template that ships the chart's grafana/*.json."""
+def add_grafana_template(config: Config, report: Report, dry_run: bool) -> None:
+    """The template that ships the chart's grafana/*.json and the data source."""
     chart = config.chart_path
     if chart is None or not (chart / "Chart.yaml").is_file():
         return
-    path = chart / "templates" / "grafana-dashboards.yaml"
+    path = chart / "templates" / "grafana.yaml"
     rel = path.relative_to(config.root)
     if path.exists():
         report.skipped.append(f"{rel}: exists")
@@ -470,39 +460,10 @@ def add_dashboard_template(config: Config, report: Report, dry_run: bool) -> Non
         if not dry_run:
             template = resources.files("ska_taranta_setup.templates")
             path.parent.mkdir(parents=True, exist_ok=True)
-            path.write_text(template.joinpath("grafana-dashboards.yaml").read_text())
+            path.write_text(template.joinpath("grafana.yaml").read_text())
     folder = chart / "grafana"
     if not folder.exists():
         report.changes.append(f"{folder.relative_to(config.root)}/: created")
         if not dry_run:
             folder.mkdir()
             (folder / ".gitkeep").touch()
-
-
-def init_archiver(
-    config: Config, dry_run: bool = False, force: bool = False, helm_update: bool = True
-) -> Report:
-    """Add Grafana, pointed at the HDB++ archive, to the project's chart."""
-    from ska_taranta_setup.archive import find_archive_db
-    from ska_taranta_setup.instances import discover_instances
-
-    report = Report()
-    devices, _ = discover_instances(config)
-    db = find_archive_db(config.root, devices)
-    if db is None:
-        db = ArchiveDB(host="CHANGE-ME-archive-db", password="CHANGE-ME")
-        report.warnings.append(
-            "No HDB++ event subscriber configuration found: set the archive "
-            "database in grafana.datasources in values.yaml."
-        )
-    chart_changed = update_chart(
-        config, report, dry_run, dependencies=[grafana_dependency(config)]
-    )
-    update_values(
-        config, report, dry_run, defaults=grafana_values(db), heading=ARCHIVER_HEADING
-    )
-    add_dashboard_template(config, report, dry_run)
-    update_makefile(config, report, dry_run, force, name="archiver.mk")
-    if chart_changed and helm_update and not dry_run:
-        helm_dependency_update(config, report)
-    return report

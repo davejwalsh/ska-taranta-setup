@@ -25,7 +25,6 @@ from ska_taranta_setup.model import (
     Snapshot,
 )
 from ska_taranta_setup.options import ArchiverOptions, OptionsError
-from ska_taranta_setup.scaffold import init_archiver
 
 CONNECT = (
     "connect_string=user=postgres password=tango host=archive-db port=5432 dbname=hdb"
@@ -258,34 +257,76 @@ def test_kube_namespace(tmp_path, monkeypatch):
     assert kube_namespace(tmp_path, "proj") == "other"
 
 
-def test_init_archiver(tmp_path, monkeypatch):
-    """Grafana is added to the chart, pointed at the archive found in the project."""
-    chart = tmp_path / "charts" / "p"
-    chart.mkdir(parents=True)
-    (chart / "Chart.yaml").write_text("apiVersion: v2\nname: p\nversion: 0.1.0\n")
-    (chart / "values.yaml").write_text("global:\n  tango_host: db:10000\n")
-    (tmp_path / "Makefile").write_text("-include PrivateRules.mak\n")
+def test_grafana_template_and_values(tmp_path):
+    """The chart ships the dashboards and, once on, the archive data source."""
+    import subprocess
+
+    from ska_taranta_setup.grafana_deploy import datasource_config
+    from ska_taranta_setup.scaffold import grafana_values
+
+    values = grafana_values()["grafana"]
+    assert values["enabled"] is False
+    assert values["sidecar"]["datasources"]["label"] == "grafana_datasource"
+    source = datasource_config(ArchiveDB.from_connect_string(CONNECT.split("=", 1)[1]))
+    entry = source["datasources"][0]
+    assert (entry["url"], entry["jsonData"]["database"]) == ("archive-db:5432", "hdb")
+    assert entry["secureJsonData"]["password"] == "tango"
+
+    import shutil
+
+    if shutil.which("helm") is None:
+        pytest.skip("helm not installed")
+    from importlib import resources
+
+    chart = tmp_path / "c"
+    (chart / "templates").mkdir(parents=True)
+    (chart / "grafana").mkdir()
+    (chart / "Chart.yaml").write_text("apiVersion: v2\nname: c\nversion: 0.1.0\n")
+    (chart / "grafana" / "d.json").write_text('{"title": "d"}')
+    template = resources.files("ska_taranta_setup.templates") / "grafana.yaml"
+    (chart / "templates" / "grafana.yaml").write_text(template.read_text())
+    (tmp_path / "ds.yaml").write_text(yaml.safe_dump(source))
+
+    def render(*args):
+        out = subprocess.run(
+            ["helm", "template", "r", str(chart), *args],
+            capture_output=True, text=True, check=True,
+        ).stdout  # fmt: skip
+        return [d for d in yaml.safe_load_all(out) if d]
+
+    assert render() == []  # off by default: nothing at all
+    on = ["--set", "grafana.enabled=true"]
+    docs = {
+        d["kind"]: d
+        for d in render(
+            *on, "--set-file", f"grafana.archiveDatasource={tmp_path / 'ds.yaml'}"
+        )
+    }
+    assert docs["ConfigMap"]["metadata"]["labels"] == {"grafana_dashboard": "1"}
+    assert json.loads(docs["ConfigMap"]["data"]["d.json"]) == {"title": "d"}
+    secret = docs["Secret"]
+    assert secret["metadata"]["labels"] == {"grafana_datasource": "1"}
+    assert yaml.safe_load(secret["stringData"]["hdbpp.yaml"]) == source
+    assert {d["kind"] for d in render(*on)} == {"ConfigMap"}  # no source given
+
+
+def test_grafana_needs_a_deployed_archive(tmp_path, monkeypatch):
+    """`grafana` refuses, and starts nothing, unless HDB++ is running."""
+    from click.testing import CliRunner
+
+    from ska_taranta_setup import cli
+
     (tmp_path / "pyproject.toml").write_text('[project]\nname = "p"\n')
-    (tmp_path / "tango.json").write_text(json.dumps({"x": ["libhdb++", CONNECT]}))
     monkeypatch.setattr(
         "ska_taranta_setup.instances.discover_instances", lambda config: ([], "none")
     )
-    report = init_archiver(load_config(tmp_path), helm_update=False)
-    assert not report.warnings
+    result = CliRunner().invoke(cli.main, ["-C", str(tmp_path), "grafana"])
+    assert result.exit_code == 1
+    assert "doesn't configure HDB++" in result.output
 
-    deps = yaml.safe_load((chart / "Chart.yaml").read_text())["dependencies"]
-    assert deps[0]["name"] == "grafana"
-    assert "grafana-community" in deps[0]["repository"]
-    values = yaml.safe_load((chart / "values.yaml").read_text())
-    source = values["grafana"]["datasources"]["datasources.yaml"]["datasources"][0]
-    assert (source["url"], source["jsonData"]["database"]) == ("archive-db:5432", "hdb")
-    assert values["global"]["tango_host"] == "db:10000"  # untouched
-    template = (chart / "templates" / "grafana-dashboards.yaml").read_text()
-    assert '.Files.Glob "grafana/*.json"' in template
-    assert (chart / "grafana" / ".gitkeep").exists()
-    makefile = (tmp_path / "Makefile").read_text()
-    assert makefile.index("-include archiver.mk") < makefile.index("PrivateRules")
-    assert "grafana-port:" in (tmp_path / "archiver.mk").read_text()
-
-    again = init_archiver(load_config(tmp_path), helm_update=False)
-    assert again.changes == []
+    (tmp_path / "tango.json").write_text(json.dumps({"x": ["libhdb++", CONNECT]}))
+    monkeypatch.setattr("ska_taranta_setup.archive.psql_in_pod", lambda db, ns: None)
+    monkeypatch.setattr("ska_taranta_setup.archive.psql_in_container", lambda db: None)
+    result = CliRunner().invoke(cli.main, ["-C", str(tmp_path), "grafana"])
+    assert result.exit_code == 1
+    assert "HDB++ isn't running" in result.output

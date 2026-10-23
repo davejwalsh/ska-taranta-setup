@@ -244,6 +244,10 @@ class Psql:
     command: list[str]
     where: str
     env: dict[str, str] = field(default_factory=dict)
+    #: Where the database runs: "pod", "container" or "local".
+    kind: str = "local"
+    #: The pod's namespace, or the container's name.
+    place: str = ""
 
     def query(self, sql: str) -> list[list[str]]:
         """Rows of text fields."""
@@ -321,6 +325,8 @@ def psql_in_pod(db: ArchiveDB, namespace: str) -> Psql | None:
             *_psql_args(db),
         ],
         f"pod {namespace}/{pod}",
+        kind="pod",
+        place=namespace,
     )
 
 
@@ -351,6 +357,8 @@ def psql_in_container(db: ArchiveDB) -> Psql | None:
             *_psql_args(db),
         ],
         f"container {container[0]}",
+        kind="container",
+        place=container[0],
     )
 
 

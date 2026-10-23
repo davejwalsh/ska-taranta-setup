@@ -168,7 +168,8 @@ make taranta-minikube-setup
 ### 8. Upload the dashboards and open them
 
 ```bash
-make taranta-upload
+make taranta-upload               # as taranta_user, else the shared user1
+make taranta-upload user=WOMBAT   # as another account (password prompted)
 ```
 
 It logs in, creates or updates every dashboard (matched by name, so links
@@ -244,7 +245,7 @@ library of whichever account you upload as, and survive tearing minikube down.
 * By default that's the shared dev account `user1` (password `abc123`), which
   anyone can log in as. Don't upload anything you wouldn't want shared.
 * To use your own account, set `taranta_user` (step 4), or one-off:
-  `ska-taranta upload --user <user>`.
+  `make taranta-upload user=<user>` (or `ska-taranta upload --user <user>`).
 * If your account signs in with Microsoft SSO (no password), log in to Taranta
   in a browser, copy the `taranta_jwt` cookie, and use
   `TARANTA_JWT=<cookie> ska-taranta upload` (or `--token`).
@@ -283,7 +284,7 @@ library of whichever account you upload as, and survive tearing minikube down.
 | `ska-taranta attributes` | Lists every attribute of every device class: the section and widget(s) it gets, and for the ones left out, why. Use it to choose what to exclude. `-d REGEX` limits it; `--hidden` shows only what's left out. |
 | `ska-taranta upload` | Logs in to a running Taranta and creates or updates the generated dashboards (matched by name), printing a link to each. Hand-made `.wj` files in the same folder are skipped unless named as arguments. `--user`, `--token`: see [Which account](#which-account-do-dashboards-go-to). |
 | `ska-taranta setup` | `init`, `discover` and `generate` in one go. |
-| `ska-taranta init --archiver` | Adds Grafana to the chart, with the HDB++ archive as its data source, the ConfigMap that ships the archive dashboard, and `archiver.mk` (`make archiver-dashboard`, `make grafana-port`). |
+| `ska-taranta grafana` | If HDB++ is deployed: scans the archive, writes its dashboard and starts Grafana with it on localhost (`make grafana`). `--off` stops it (`make grafana-off`). See [HDB++ archive dashboards](#hdb-archive-dashboards-grafana). |
 | `ska-taranta archiver-dashboard` | Scans the HDB++ archive and writes a Grafana dashboard for it. See [HDB++ archive dashboards](#hdb-archive-dashboards-grafana). |
 
 `-C PATH` runs any command against another project; `-v` shows detail.
@@ -555,16 +556,31 @@ event: something that last changed a week ago is still a flat line today.
 
 ### Set it up
 
+Grafana is off by default: `ska-taranta init` adds it to the chart (with
+`grafana.enabled: false`) and writes `archiver.mk`, but nothing runs until
+you ask. Once HDB++ is deployed:
+
 ```bash
-uv run ska-taranta init --archiver   # Grafana in the chart, pointed at the archive
-uv run ska-taranta archiver-dashboard  # scan the archive, write the dashboard
-make k8s-install-chart               # deploy as usual (the dashboard ships with it)
-make grafana-port                    # then open http://localhost:3000
+make grafana        # scan the archive, start Grafana, open http://localhost:3000
+make grafana-off    # stop it again
 ```
 
-Anyone can browse; log in as `admin` (password `admin`, set in
-`values.yaml`) to edit. Re-run `make archiver-dashboard` and redeploy to pick
-up newly archived attributes; Grafana reloads the dashboard by itself.
+`make grafana` refuses, and starts nothing, if the project doesn't configure
+HDB++ or the archive isn't running. When it is:
+
+* **Kubernetes**: it upgrades your release with `grafana.enabled=true`,
+  keeping every other value it was deployed with, then forwards Grafana to
+  `localhost:3000` (Ctrl-C stops the forward, not Grafana). The next plain
+  deploy turns it off again; set `grafana.enabled: true` in `values.yaml` to
+  keep it.
+* **Docker Compose**: it runs a Grafana container on the stack's network
+  (named `<project>-grafana`).
+
+Either way the archive is Grafana's data source and the dashboard is loaded
+from the chart's `grafana/` folder (commit it; the database password is never
+written there). Anyone can browse; log in as `admin`/`admin` to edit. Run
+`make grafana` again to pick up newly archived attributes. `GRAFANA_PORT=3001
+make grafana` uses another port.
 
 ### Where the attributes come from
 
